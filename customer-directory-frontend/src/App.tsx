@@ -1,20 +1,26 @@
-import './App.css'
-import CustomerList from './views/CustomerList'
+import { Routes, Route, Navigate } from 'react-router-dom';
+import CustomerList from './views/CustomerList';
+import CustomerDetails from './views/CustomerDetails';
+import Login from './views/Login';
+import Footer from './components/Footer';
+import Navbar from './components/Navbar';
+import "./App.css"
 
 function App() {
   return (
     <>
       <header>
-        <nav>
-          {/* add routes */}
-
-        </nav>
+        <Navbar />
       </header>
       <main>
-        <CustomerList />
+        <Routes>
+          <Route path="/" element={<Navigate to="/customers" replace />} />
+          <Route path="/customers" element={<CustomerList />} />
+          <Route path="/customers/:id" element={<CustomerDetails />} />
+          <Route path="/login" element={<Login />} />
+        </Routes>
       </main>
-      <footer> Copyright @2025. All rights reserved</footer>
-
+      <Footer />
     </>
   )
 }
