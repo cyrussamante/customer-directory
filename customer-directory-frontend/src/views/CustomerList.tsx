@@ -32,7 +32,7 @@ export default function CustomerList() {
                     placeholder="Search customers by name"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    
+
                 />
                 <button disabled={!isLoggedIn} className="addButton" onClick={handleAddClick}>
                     Add Customer
@@ -49,7 +49,7 @@ export default function CustomerList() {
                 </div>
             )}
 
-            {showAddModal ? (<AddCustomerModal />) : <></>}
+            {showAddModal && ( <AddCustomerModal onClose={handleCloseModal}  /> )}
         </ div>
     )
 }
