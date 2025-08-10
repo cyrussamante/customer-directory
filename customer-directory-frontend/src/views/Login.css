@@ -1,0 +1,43 @@
+.login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+}
+
+.loginCard {
+  border: 1px solid rgb(230, 216, 216);
+  border-radius: 8px;
+  padding: 20px;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.form {
+  flex-grow: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  
+}
+
+.formInput {
+  flex-grow: 1;
+  padding: 10px;
+  border: 1px solid grey;
+  border-radius: 8px;
+  width: 100%;
+  margin-bottom: 10px;
+}
+  
+.label {
+  text-align: center;
+  margin: 10px;
+  width: 100%;
+}
