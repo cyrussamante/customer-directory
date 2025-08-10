@@ -1,28 +1,55 @@
 import type Customer from '../types/customer';
 import customers from '../mockData/customerData';
-import CustomerCard from './Customer';
-
-const customerList: Customer[] = customers
-
+import CustomerCard from '../components/CustomerCard';
+import { useState } from "react";
+import "./CustomerList.css";
+import AddCustomerModal from '../components/AddCustomerModal';
 
 export default function CustomerList() {
 
+    const [searchTerm, setSearchTerm] = useState("");
+    const isLoggedIn = true; //need to change
+    const [showAddModal, setShowAddModal] = useState(false);
+
+    const filteredCustomers = customers.filter((customer) =>
+        customer.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+    const handleAddClick = () => {
+        if (isLoggedIn) setShowAddModal(true);
+    };
+
+    const handleCloseModal = () => setShowAddModal(false);
 
     return (
-        <>
-            <h2>Customer List</h2>
-            <div>
-                {customerList.map((customer: Customer, index: number) => {
-                    return (
-                        <div key={index}>
-                            <CustomerCard customer={customer} />
-                        </div>
-                    )
-                }
-                )}
-            </div>
-            <button >Add</button>
-        </>
-    )
+        <div className="customers">
+            <h2 className="heading">Customer List</h2>
 
+            <div className="search">
+                <input
+                    type="text"
+                    className="searchInput"
+                    placeholder="Search customers by name"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    
+                />
+                <button disabled={!isLoggedIn} className="addButton" onClick={handleAddClick}>
+                    Add Customer
+                </button>
+            </div>
+
+            {filteredCustomers.length === 0 ? (
+                <p className="heading">No customers found.</p>
+            ) : (
+                <div className="grid">
+                    {filteredCustomers.map((customer: Customer) => (
+                        <CustomerCard key={customer.id} customer={customer} />
+                    ))}
+                </div>
+            )}
+
+            {showAddModal ? (<AddCustomerModal />) : <></>}
+        </ div>
+    )
 }

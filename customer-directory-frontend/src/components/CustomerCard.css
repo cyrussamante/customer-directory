@@ -1,0 +1,27 @@
+.card {
+    border: 1px solid grey;
+    border-radius: 8px;
+    padding: 20px;
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.card img {
+    width: 80%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+.button {
+    cursor: pointer;
+    background-color: #2563eb;
+    color: white;
+    border-radius: 8px;
+    font-weight: bold;
+    padding: 10px;
+    border: 1px solid grey;
+}

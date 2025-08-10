@@ -9,7 +9,6 @@ body {
 }
 
 header {
-    padding: 10px 0;
     position: sticky;
     top: 0;
     z-index: 100;
@@ -19,8 +18,8 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 20px;
-    background-color: #007bff;
+    padding: 10px 80px;
+    background-color: #2563eb;
     color: white;
 }
 
@@ -58,6 +57,6 @@ footer {
     bottom: 0;
     width: 100%;
     margin-top: 10px;
-    background-color: #007bff;
+    background-color: #2563eb;
     color: white;
 }

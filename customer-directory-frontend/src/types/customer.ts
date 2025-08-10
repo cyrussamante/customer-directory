@@ -5,5 +5,6 @@ export default interface Customer {
     email: string,
     password: string,
     address: string,
+    imageUrl?: string,
     numberOfOrders: number
 }
