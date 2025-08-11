@@ -16,6 +16,8 @@ export default function Login() {
   };
 
   const handleSubmit = () => {
+    //aunticate user
+    //change is logged in state
     navigate('/customers')
   };
 

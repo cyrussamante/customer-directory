@@ -2,6 +2,8 @@ import { Link } from "react-router-dom";
 
 export default function Navbar() {
 
+    const isLoggedIn = true; //need to change
+
     return (
         <nav className="navbar">
             <div className="logo">
@@ -14,7 +16,8 @@ export default function Navbar() {
                 <Link to="/customers">Contact us</Link>
             </div>
             <div>
-                <Link to="/login">Login</Link>
+                {/* if the user is logged in this will logout */}
+                <Link to="/login">{!isLoggedIn ? "Login" : "Logout" }</Link>
             </div>
         </nav>
     );
