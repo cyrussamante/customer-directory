@@ -1,10 +1,12 @@
 import type Customer from '../types/customer';
-import customers from '../mockData/customerData';
-import { useState } from "react";
 import { useParams } from 'react-router';
 import "./CustomerDetails.css"
 
-export default function CustomerDetails() {
+interface props {
+    customers: Customer[]
+}
+
+export default function CustomerDetails({customers}: props) {
     const { id } = useParams();
     const isLoggedIn = true;
     const customer = customers.find((customer: Customer) => customer.id === id);
