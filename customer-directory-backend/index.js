@@ -1,10 +1,13 @@
 
 const express = require('express');
+const customerRouter = require('./routes/customerRoutes')
 
 // Create express app
 const app = express();
 
 app.use(express.json());
+
+app.use('/api/customers', customerRouter)
 
 const PORT = 3000;
 

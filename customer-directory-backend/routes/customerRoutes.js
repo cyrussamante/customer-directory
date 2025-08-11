@@ -1,12 +1,12 @@
 
 const express = require('express');
 
-const {listCustomers} = require('../controllers/customerController');
+const {getCustomers} = require('../controllers/customerController');
 
 
-const router = express.router();
+const router = express.Router();
 
 // GET API
-router.get(listCustomers);
+router.get('/', getCustomers);
 
-module.exports(router);
+module.exports = router;
