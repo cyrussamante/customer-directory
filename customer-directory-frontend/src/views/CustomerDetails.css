@@ -1,0 +1,27 @@
+.details {
+    padding: 40px 120px;
+}
+
+.detailsHead {
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px;
+}
+
+.detailsButtons{
+    display:flex;
+    gap: 40px;
+}
+
+.button.delete {
+    background-color: rgb(178, 47, 47);
+}
+
+.detailsGrid {
+    width: 500px;
+    text-align: left;
+    display: grid;
+    grid-template-columns: 2fr 3fr;
+    gap: 20px; 
+}
