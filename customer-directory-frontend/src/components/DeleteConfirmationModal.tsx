@@ -2,7 +2,7 @@ import "./Modal.css"
 
 interface props {
     onClose: () => void;
-    onConfirm: () => void;
+    onConfirm: (e: any) => void;
 }
 
 export default function DeleteConfirmationModal ({onClose, onConfirm}: props) {

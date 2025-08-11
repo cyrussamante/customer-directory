@@ -2,7 +2,11 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import "./Login.css"
 
-export default function Login() {
+interface props {
+  handleLogin: ()=> void
+}
+
+export default function Login({ handleLogin }: props) {
   
   const initialFormData = { email: '', password: '' }
   const [formData, setFormData] = useState(initialFormData);
@@ -15,9 +19,10 @@ export default function Login() {
     });
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
     //aunticate user
-    //change is logged in state
+    handleLogin()
     navigate('/customers')
   };
 
@@ -26,7 +31,7 @@ export default function Login() {
       <div className="loginCard">
         <h2 className="heading">Login</h2>
 
-        <form className="form" onSubmit={handleSubmit}>
+        <form className="form">
           <label className="label"> Email Address</label>
           <input className="formInput"
             type="email"
@@ -45,7 +50,7 @@ export default function Login() {
             value={formData.password}
             onChange={handleChange}
           />
-          <button className="button" type="submit">Log In</button>
+          <button className="button" onClick={handleSubmit}>Log In</button>
         </form>
 
         <Link to="/customers">Browse customers without logging in</Link>

@@ -7,26 +7,31 @@ import { useNavigate } from 'react-router-dom';
 import EditCustomerModal from '../components/EditCustomerModal';
 
 interface props {
-    customers: Customer[]
+    customers: Customer[],
+    updateCustomer: (customer: Customer) => Promise<void>,
+    deleteCustomer: (customer: Customer) => Promise<void>,
+    isLoggedIn: boolean
 }
 
-export default function CustomerDetails({ customers }: props) {
+export default function CustomerDetails({ customers, updateCustomer, deleteCustomer, isLoggedIn}: props) {
     const { id } = useParams();
-    const isLoggedIn = true;
     const navigate = useNavigate();
     const [showDeleteModal, setDeleteModal] = useState(false);
 
-    let customer = customers.find((customer: Customer) => customer.id === id);
+    const customer = customers.find((customer: Customer) => customer.id === id);
     
     const handleDeleteClick = () => {
         if (isLoggedIn) setDeleteModal(true);
     };
     const handleCloseDeleteModal = () => setDeleteModal(false);
-    const handleDeleteCustomer = () => {
-
-        //send delete request to backend
-        setDeleteModal(false);
-        navigate('/customers');
+    
+    const handleDeleteCustomer = async (e: any) => {
+        e.preventDefault()
+        if (customer){
+            await deleteCustomer(customer);
+            setDeleteModal(false);
+            navigate('/customers');
+        }
     }
 
     const [showEditModal, setEditModal] = useState(false);
@@ -36,9 +41,8 @@ export default function CustomerDetails({ customers }: props) {
     };
     const handleCloseEditModal = () => setEditModal(false);
 
-    const handleEditCustomer = (updatedCustomer: Customer) => {
-        customer = updatedCustomer
-        //send edit request to backend
+    const handleEditCustomer = async (updatedCustomer: Customer) => {
+        await updateCustomer(updatedCustomer)
         setEditModal(false);
     }
 

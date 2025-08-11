@@ -19,7 +19,8 @@ export default function EditCustomerModal({customer, onClose, onSave }: props) {
         });
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = (e: any) => {
+        e.preventDefault();
         const updatedCustomer = formData
         onSave(updatedCustomer)
     };
