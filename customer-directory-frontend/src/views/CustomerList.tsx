@@ -1,11 +1,14 @@
 import type Customer from '../types/customer';
-import customers from '../mockData/customerData';
 import CustomerCard from '../components/CustomerCard';
 import { useState } from "react";
 import "./CustomerList.css";
 import AddCustomerModal from '../components/AddCustomerModal';
 
-export default function CustomerList() {
+interface props {
+    customers: Customer[];
+}
+
+export default function CustomerList({customers}: props) {
 
     const [searchTerm, setSearchTerm] = useState("");
     const isLoggedIn = true; //need to change
@@ -32,7 +35,6 @@ export default function CustomerList() {
                     placeholder="Search customers by name"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-
                 />
                 <button disabled={!isLoggedIn} className="addButton" onClick={handleAddClick}>
                     Add Customer
@@ -49,7 +51,7 @@ export default function CustomerList() {
                 </div>
             )}
 
-            {showAddModal && ( <AddCustomerModal onClose={handleCloseModal}  /> )}
+            {showAddModal && (<AddCustomerModal onClose={handleCloseModal} />)}
         </ div>
     )
 }
