@@ -15,7 +15,6 @@ function App() {
       <main>
         <Routes>
           <Route path="/" element={<Navigate to="/customers" replace />} />
-          <Route path="/customers" element={<CustomerList />} />
           <Route path="/customers/:id" element={<CustomerDetails />} />
           <Route path="/login" element={<Login />} />
         </Routes>
