@@ -6,12 +6,12 @@ import AddCustomerModal from '../components/AddCustomerModal';
 
 interface props {
     customers: Customer[];
+    isLoggedIn: boolean;
 }
 
-export default function CustomerList({customers}: props) {
+export default function CustomerList({customers, isLoggedIn}: props) {
 
     const [searchTerm, setSearchTerm] = useState("");
-    const isLoggedIn = true; //need to change
     const [showAddModal, setShowAddModal] = useState(false);
 
     const filteredCustomers = customers.filter((customer) =>
@@ -27,6 +27,7 @@ export default function CustomerList({customers}: props) {
     return (
         <div className="customers">
             <h2 className="heading">Customer List</h2>
+            <p className="heading">Please login to view details and add a new customers.</p>
 
             <div className="search">
                 <input
@@ -46,7 +47,7 @@ export default function CustomerList({customers}: props) {
             ) : (
                 <div className="grid">
                     {filteredCustomers.map((customer: Customer) => (
-                        <CustomerCard key={customer.id} customer={customer} />
+                        <CustomerCard key={customer.id} customer={customer} isLoggedIn={isLoggedIn}/>
                     ))}
                 </div>
             )}

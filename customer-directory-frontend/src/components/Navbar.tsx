@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
 
-export default function Navbar() {
+interface props {
+    isLoggedIn: boolean
+}
 
-    const isLoggedIn = true; //need to change
+export default function Navbar({isLoggedIn}: props) {
 
     return (
         <nav className="navbar">
@@ -16,7 +18,6 @@ export default function Navbar() {
                 <Link to="/customers">Contact us</Link>
             </div>
             <div>
-                {/* if the user is logged in this will logout */}
                 <Link to="/login">{!isLoggedIn ? "Login" : "Logout" }</Link>
             </div>
         </nav>

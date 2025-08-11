@@ -11,6 +11,8 @@ import type Customer from './types/customer';
 function App() {
 
   const [customers, setCustomers] = useState<Customer[]>([]);
+  const [isLoggedIn, setLogIn ] = useState(false);
+  const handleLogin = () => setLogIn(true);
 
   useEffect(() => { getCustomers() }, []);
 
@@ -18,19 +20,52 @@ function App() {
     await fetch('/api/customers')
       .then(response => response.json())
       .then(data => { setCustomers(data) })
+      .catch((error) => {console.error(error)});
+  };
+
+  const updateCustomer = async function (customer: Customer): Promise<void> {
+    const id = customer.id
+    await fetch(`/api/customers/${id}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(customer),
+    })
+    .then((response) => response.json())
+    .then((data) => {console.log(data);})
+    .catch((error) => {console.error(error)});
+  };
+
+  const deleteCustomer = async function (customer: Customer): Promise<void> {
+    const id = customer.id
+    await fetch(`/api/customers/${id}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(id),
+    })
+    .then((response) => response.json())
+    .then((data) => {console.log(data);})
+    .catch((error) => {console.error(error)});
   };
 
   return (
     <>
       <header>
-        <Navbar />
+        <Navbar isLoggedIn={isLoggedIn} />
       </header>
       <main>
         <Routes>
-          <Route path="/" element={<Navigate to="/customers" replace />} />
-          <Route path="customers" element={<CustomerList customers={customers}/>} />
-          <Route path="/customers/:id" element={<CustomerDetails customers={customers} />} />
-          <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Navigate to="/customers" replace />} />
+        <Route path="customers" element={<CustomerList customers={customers} isLoggedIn={isLoggedIn}/>} /> 
+        <Route path="/customers/:id" element={<CustomerDetails
+            customers={customers}
+            updateCustomer={updateCustomer}
+            deleteCustomer={deleteCustomer}
+            isLoggedIn={isLoggedIn} />} />
+          <Route path="/login" element={<Login handleLogin={handleLogin}/>} />
         </Routes>
       </main>
       <Footer />

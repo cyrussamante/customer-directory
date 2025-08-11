@@ -3,18 +3,20 @@ import { useNavigate } from "react-router-dom";
 import "./CustomerCard.css";
 import type Customer from "../types/customer";
 
-export default function CustomerCard(props: any): ReactElement {
+interface props {
+    customer: Customer,
+    isLoggedIn: boolean
+}
 
-    const customer: Customer = props.customer;
+export default function CustomerCard({customer, isLoggedIn}: props): ReactElement {
+
     const navigate = useNavigate();
-    const isLoggedIn = true;
 
     const handleViewDetails = () => {
         if (isLoggedIn) {
             navigate(`/customers/${customer.id}`);
-        } else {
-            navigate("/login");
         }
+    
     };
 
     return (
@@ -22,7 +24,7 @@ export default function CustomerCard(props: any): ReactElement {
             {/* fix image */}
             <img src={customer?.imageUrl} alt={customer.name} /> 
             <p>{customer.name}</p>
-            <button className="button" onClick={handleViewDetails}>View Details</button>
+            <button disabled={!isLoggedIn} className="button" onClick={handleViewDetails}>View Details</button>
         </div>
     )
 }
