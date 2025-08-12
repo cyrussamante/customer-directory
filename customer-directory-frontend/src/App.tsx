@@ -22,19 +22,15 @@ function App() {
   }, []);
 
   const handleLogin = async function (e: string, p: string) {
-      // const response = await login({ email: e, password: p });
-      // const data = response.data;
-      // if (response.ok && data.token) {
-      //     // Store authentication token
-      //     localStorage.setItem('authToken', data.token);
-      //     setLogIn(true);
-      //     navigate('/customers');
-      // } else {
-      //     throw new Error(data.message || 'Login failed');
-      // }
-      localStorage.setItem('authToken', 'sdfghgfdsasdf');
+      const response = await login({ email: e, password: p });
+      const data = response.data;
+      if (data) {
+          localStorage.setItem('authToken', data);
           setLogIn(true);
           navigate('/customers');
+      } else {
+          throw new Error(data.message || 'Login failed');
+      }
   };
 
   const handleLogout = () => {
