@@ -2,7 +2,7 @@
 const express = require('express');
 
 
-const {getCustomers, createCustomer} = require('../controllers/customerController');
+const {getCustomers, createCustomer, updateCustomer, deleteCustomer} = require('../controllers/customerController');
 
 
 
@@ -19,5 +19,9 @@ router.post (
     .resolve(createCustomer(req, res))
     .catch(next)
 );
+
+router.put('/customers/:id', updateCustomer);
+
+router.delete('/customers/:id', deleteCustomer)
 
 module.exports = router;

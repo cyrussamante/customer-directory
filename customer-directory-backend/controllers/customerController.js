@@ -84,4 +84,24 @@ async function createCustomer(req, res) {
     }
 }
 
-module.exports = {getCustomers, createCustomer}
+async function updateCustomer(req, res) {
+
+    try {
+        const body = req.body || {} ;
+
+
+
+    }
+
+    catch (err) {
+        console.error('Error occured while creating customer: ', err);
+        res.status(500).json({errror: 'internal error'});
+    }
+
+}
+
+async function deleteCustomer(req, res) {
+
+}
+
+module.exports = {getCustomers, createCustomer, updateCustomer, deleteCustomer}
