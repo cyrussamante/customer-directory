@@ -1,38 +1,25 @@
-
 import type Customer from "../types/customer";
-import  axios from 'axios';
-
-// export async function getCustomers(): Promise<Customer[]> {
-
-//     const res = await fetch('/api/customers');
-
-//     if (!res.ok) {
-//         throw new Error(`Unable to get customers: {res.status}`);
-//     }
-
-//     return res.json();
-// }
+import axios from 'axios';
 
 export const getCustomers = () => axios.get<Customer[]>('/api/customers');
 
-export async function createCustomer(customer: Omit<Customer, "id"| "imageUrl">): Promise<Customer> {
+export const createCustomer = (customerData: any): Promise<Customer> =>
+    axios.post('/api/customers/',
+        JSON.stringify(customerData), {
+        headers: { 'Content-Type': 'application/json' }
+    })
 
-try {
-    const response = await fetch('api/customers', {
-        method:'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(customer)
-      });
+export const editCustomer = (id: string, customerData: Customer): Promise<any> =>
+    axios.put(`/api/customers/${id}`,
+        JSON.stringify(customerData), {
+        headers: { 'Content-Type': 'application/json' }
+    });
 
-      return response.json();
-}
+export const removeCustomer = (id: string): Promise<any> => axios.delete(`/api/customers/${id}`);
 
-catch {
-    throw new Error('Unable to add customer');
-}
-
-
-  
-
-  
-}
+export const login = (credentials: any): Promise<any> =>
+    
+    axios.post('/api/login',
+        JSON.stringify(credentials), {
+        headers: { 'Content-Type': 'application/json' }
+    })
