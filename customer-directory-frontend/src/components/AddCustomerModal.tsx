@@ -1,30 +1,28 @@
 import { useState } from "react";
-import type Customer from "../types/customer";
+// import type Customer from "../types/customer";
 import { useNavigate } from "react-router-dom";
-import { createCustomer } from "../api/customersAPI";
+// import { createCustomer } from "../api/customersAPI";
 import "./Modal.css";
 
 interface Props {
   onClose: () => void;
-  onSaved?: (c: Customer) => void; // parent will append
+  onSave: (customer: any) => void; // parent will append
 }
 
-export default function AddCustomerModal({ onClose, onSaved }: Props) {
-  const initialFormData: Customer = {
-    id: "",
+export default function AddCustomerModal({ onClose, onSave }: Props) {
+  const initialFormData = {
     name: "",
     age: 0,
     gender: "",
     email: "",
     password: "",
     address: "",
-    imageUrl: "",
     numberOfOrders: 0,
   };
   const [formData, setFormData] = useState(initialFormData);
   const navigate = useNavigate();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: any) => {
     const { name, type, value } = e.target;
     setFormData((prev) => ({
       ...prev,
@@ -32,7 +30,7 @@ export default function AddCustomerModal({ onClose, onSaved }: Props) {
     }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: any) => {
     e.preventDefault();
 
     // All fields required (image handled by backend)
@@ -49,7 +47,7 @@ export default function AddCustomerModal({ onClose, onSaved }: Props) {
       return;
     }
 
-    const payload: Omit<Customer, "id" | "imageUrl"> = {
+    const payload = {
       name: formData.name.trim(),
       age: Number(formData.age),
       gender: formData.gender.trim(),
@@ -60,8 +58,8 @@ export default function AddCustomerModal({ onClose, onSaved }: Props) {
     };
 
     try {
-      const created = await createCustomer(payload);
-      onSaved?.(created);     // tell parent to append
+    //   const created = await createCustomer(payload);
+      onSave(payload);     // tell parent to append
       onClose();              // close modal
       navigate("/customers"); // stay consistent with your flow
     } catch (err: any) {

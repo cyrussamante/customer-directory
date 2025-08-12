@@ -16,6 +16,9 @@ const defaultImagePath = 'images/default_image.png';
 // Generate and save image in .jpg format
 async function generateImage(id, gender) {
 
+        if (!(gender == 'male') ||!(gender == 'female')) {
+            return defaultImagePath;
+        }
         const url = faker.image.personPortrait({sex:gender, size:512});
         response = await axios.get(url, {'responseType': 'arraybuffer'});
 
