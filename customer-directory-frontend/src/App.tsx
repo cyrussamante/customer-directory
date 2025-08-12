@@ -7,6 +7,8 @@ import Navbar from './components/Navbar';
 import "./App.css"
 import { useEffect, useState } from "react";
 import type Customer from './types/customer';
+import { getCustomers } from './api/customersAPI';
+import { createCustomer } from './api/customersAPI';
 
 function App() {
 
@@ -14,14 +16,14 @@ function App() {
   const [isLoggedIn, setLogIn ] = useState(false);
   const handleLogin = () => setLogIn(true);
 
-  useEffect(() => { getCustomers() }, []);
+  useEffect(() => {
+    getCustomers().then(res => setCustomers(res.data));
+  }, []);
 
-  const getCustomers = async function () {
-    await fetch('/api/customers')
-      .then(response => response.json())
-      .then(data => { setCustomers(data) })
-      .catch((error) => {console.error(error)});
-  };
+  const addCustomer = async function(customer: any): Promise<void> {
+    await createCustomer(customer);
+    getCustomers().then(res => setCustomers(res.data));
+  }
 
   const updateCustomer = async function (customer: Customer): Promise<void> {
     const id = customer.id
@@ -59,7 +61,7 @@ function App() {
       <main>
         <Routes>
         <Route path="/" element={<Navigate to="/customers" replace />} />
-        <Route path="customers" element={<CustomerList customers={customers} isLoggedIn={isLoggedIn}/>} /> 
+        <Route path="customers" element={<CustomerList customers={customers} isLoggedIn={isLoggedIn} addCustomer={addCustomer}/>} /> 
         <Route path="/customers/:id" element={<CustomerDetails
             customers={customers}
             updateCustomer={updateCustomer}

@@ -1,25 +1,22 @@
 import { useState } from "react";
-import type Customer from "../types/customer";
-import { useNavigate } from 'react-router-dom';
-import "./Modal.css"
+import { useNavigate } from "react-router-dom";
+import "./Modal.css";
 
-interface props {
+interface Props {
     onClose: () => void;
+    onSave: (customer: any) => void;
 }
 
-export default function AddCustomerModal({ onClose }: props) {
-
-    const initialFormData: Customer = {
-        id: '',
-        name: '',
+export default function AddCustomerModal({ onClose, onSave }: Props) {
+    const initialFormData = {
+        name: "",
         age: 0,
-        gender: '',
-        email: '',
-        password: '',
-        address: '',
-        imageUrl: '',
-        numberOfOrders: 0
-    }
+        gender: "",
+        email: "",
+        password: "",
+        address: "",
+        numberOfOrders: 0,
+    };
     const [formData, setFormData] = useState(initialFormData);
     const navigate = useNavigate();
 
@@ -27,88 +24,100 @@ export default function AddCustomerModal({ onClose }: props) {
         setFormData({
             ...formData,
             [e.target.name]: e.target.value
+            
         });
     };
 
-    const handleSubmit = () => {
-        //save to backend 
-        navigate('/customers')
+    const handleSubmit = (e: any) => {
+        e.preventDefault();
+
+        const payload = {
+            name: formData.name.trim(),
+            age: formData.age,
+            gender: formData.gender.trim(),
+            email: formData.email.trim(),
+            password: formData.password,
+            address: formData.address.trim(),
+            numberOfOrders: formData.numberOfOrders,
+        };
+
+        try {
+            //   const created = await createCustomer(payload);
+            onSave(payload);     // tell parent to append
+            onClose();              // close modal
+            navigate("/customers"); // stay consistent with your flow
+        } catch (err: any) {
+            alert(err?.message || "Failed to create customer");
+        }
     };
 
     return (
         <div className="modal" onClick={onClose}>
-            <div className="modalCard" onClick={e => e.stopPropagation()}>
+            <div className="modalCard" onClick={(e) => e.stopPropagation()}>
                 <h2 className="heading">Add a new customer</h2>
-                <form className="modalForm">
+
+                <form className="modalForm" onSubmit={handleSubmit}>
                     <div className="modalGrid">
                         <label className="label">Name</label>
                         <input className="modalInput"
-                            type="text"
                             name="name"
-                            placeholder="Name"
                             value={formData.name}
                             onChange={handleChange}
-                        />
+                            placeholder="Name"
+                            type="text"
+                            required />
+
                         <label className="label">Age</label>
                         <input className="modalInput"
                             type="number"
                             name="age"
-                            placeholder="Age"
                             value={formData.age}
                             onChange={handleChange}
-                        />
+                            placeholder="Age"
+                            required />
+
                         <label className="label">Gender</label>
                         <input className="modalInput"
-                            type="text"
                             name="gender"
                             placeholder="Gender"
                             value={formData.gender}
+                            type="text"
                             onChange={handleChange}
-                        />
+                            required />
+
                         <label className="label">Email</label>
                         <input className="modalInput"
                             type="email"
-                            name="email"
                             placeholder="Email"
+                            name="email"
                             value={formData.email}
                             onChange={handleChange}
-                        />
+                            required />
+
                         <label className="label">Password</label>
                         <input className="modalInput"
-                            type="text"
+                            type="password"
                             name="password"
                             placeholder="Password"
                             value={formData.password}
-                            onChange={handleChange}
-                        />
+                            onChange={handleChange} required />
+
                         <label className="label">Address</label>
                         <input className="modalInput"
-                            type="text"
                             name="address"
+                            value={formData.address}
+                            onChange={handleChange}
+                            type="text"
                             placeholder="Address"
-                            value={formData.address}
-                            onChange={handleChange}
-                        />
-                        <label className="label">Image</label>
-                        {/* <input className="modalInput"
-                            type="text"
-                            name="address"
-                            placeholder="Image"
-                            value={formData.address}
-                            onChange={handleChange}
-                        /> */}
-                        {/* replace with upload button */}
+                            required />
                     </div>
+
                     <div className="modalButtons">
-                        <button className="button save" onClick={handleSubmit}>
-                            Save
-                        </button>
-                        <button className="button cancel" onClick={onClose}>
-                            Cancel
-                        </button>
+                        <button className="button save" type="submit">Save</button>
+                        <button className="button cancel" type="button" onClick={onClose}>Cancel</button>
                     </div>
                 </form>
             </div>
         </div>
-    )
+    );
 }

@@ -7,9 +7,10 @@ import AddCustomerModal from '../components/AddCustomerModal';
 interface props {
     customers: Customer[];
     isLoggedIn: boolean;
+    addCustomer: (customer: any) => Promise<void>,
 }
 
-export default function CustomerList({customers, isLoggedIn}: props) {
+export default function CustomerList({customers, isLoggedIn, addCustomer}: props) {
 
     const [searchTerm, setSearchTerm] = useState("");
     const [showAddModal, setShowAddModal] = useState(false);
@@ -23,6 +24,11 @@ export default function CustomerList({customers, isLoggedIn}: props) {
     };
 
     const handleCloseModal = () => setShowAddModal(false);
+
+    const handleAddCustomer = async (customer: any) => {
+        await addCustomer(customer)
+        setShowAddModal(false)
+    }
 
     return (
         <div className="customers">
@@ -52,7 +58,7 @@ export default function CustomerList({customers, isLoggedIn}: props) {
                 </div>
             )}
 
-            {showAddModal && (<AddCustomerModal onClose={handleCloseModal} />)}
+            {showAddModal && (<AddCustomerModal onClose={handleCloseModal} onSave={handleAddCustomer} />)}
         </ div>
     )
 }
