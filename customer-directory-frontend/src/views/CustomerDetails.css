@@ -1,26 +1,42 @@
 .details {
-    padding: 40px 120px;
+    margin: 100px 300px;
+    padding: 40px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .detailsHead {
-    display:flex;
+    display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 10px;
 }
 
-.detailsButtons{
-    display:flex;
+.detailsButtons {
+    display: flex;
     gap: 40px;
 }
 
-.button.delete {
-    background-color: rgb(178, 47, 47);
+.detailsBody {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 80px
 }
 
-.button:disabled {
-    cursor: not-allowed;
-    opacity: 0.6;
+.imageContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.detailsBody img {
+    width: 250px;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 50%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2)
 }
 
 .detailsGrid {
@@ -28,5 +44,13 @@
     text-align: left;
     display: grid;
     grid-template-columns: 2fr 3fr;
-    gap: 20px; 
+    gap: 20px;
+}
+
+.detailsGrid p {
+    margin: 0;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }

@@ -10,7 +10,7 @@ interface props {
     addCustomer: (customer: any) => Promise<void>,
 }
 
-export default function CustomerList({customers, isLoggedIn, addCustomer}: props) {
+export default function CustomerList({ customers, isLoggedIn, addCustomer }: props) {
 
     const [searchTerm, setSearchTerm] = useState("");
     const [showAddModal, setShowAddModal] = useState(false);
@@ -32,28 +32,30 @@ export default function CustomerList({customers, isLoggedIn, addCustomer}: props
 
     return (
         <div className="customers">
-            <h2 className="heading">Customer List</h2>
-            <p className="heading">Please login to view details and add a new customers.</p>
-
+            <h2>Customer List</h2>
             <div className="search">
                 <input
                     type="text"
                     className="searchInput"
-                    placeholder="Search customers by name"
+                    placeholder="Search"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                 />
-                <button disabled={!isLoggedIn} className="addButton" onClick={handleAddClick}>
+                <button disabled={!isLoggedIn} onClick={handleAddClick}>
                     Add Customer
                 </button>
             </div>
+            <div className="searchLabels">
+                <p>Search customers by name</p>
+                {!isLoggedIn ? (<p>Login to add customers</p>) : <></>}
+            </div>
 
             {filteredCustomers.length === 0 ? (
-                <p className="heading">No customers found.</p>
+                <p>No customers found.</p>
             ) : (
                 <div className="grid">
                     {filteredCustomers.map((customer: Customer) => (
-                        <CustomerCard key={customer.id} customer={customer} isLoggedIn={isLoggedIn}/>
+                        <CustomerCard key={customer.id} customer={customer} isLoggedIn={isLoggedIn} />
                     ))}
                 </div>
             )}

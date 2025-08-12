@@ -90,10 +90,10 @@ export default function EditCustomerModal({customer, onClose, onSave }: props) {
                         {/* replace with upload button */}
                     </div>
                     <div className="modalButtons">
-                        <button className="button save" onClick={handleSubmit}>
+                        <button className="save" onClick={handleSubmit}>
                             Save
                         </button>
-                        <button className="button cancel" onClick={onClose}>
+                        <button className="cancel" onClick={onClose}>
                             Cancel
                         </button>
                     </div>

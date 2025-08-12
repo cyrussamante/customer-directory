@@ -42,10 +42,9 @@ export default function AddCustomerModal({ onClose, onSave }: Props) {
         };
 
         try {
-            //   const created = await createCustomer(payload);
-            onSave(payload);     // tell parent to append
-            onClose();              // close modal
-            navigate("/customers"); // stay consistent with your flow
+            onSave(payload);
+            onClose();
+            navigate("/customers");
         } catch (err: any) {
             alert(err?.message || "Failed to create customer");
         }
@@ -113,8 +112,8 @@ export default function AddCustomerModal({ onClose, onSave }: Props) {
                     </div>
 
                     <div className="modalButtons">
-                        <button className="button save" type="submit">Save</button>
-                        <button className="button cancel" type="button" onClick={onClose}>Cancel</button>
+                        <button className="save" type="submit">Save</button>
+                        <button className="cancel" onClick={onClose}>Cancel</button>
                     </div>
                 </form>
             </div>

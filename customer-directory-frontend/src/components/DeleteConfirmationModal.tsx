@@ -14,10 +14,10 @@ export default function DeleteConfirmationModal ({onClose, onConfirm}: props) {
                 <form className="modalForm">
                     <label className="heading">This action cannot be reversed.</label>
                     <div className="modalButtons">
-                        <button className="button delete" onClick={onConfirm}>
+                        <button className="delete" onClick={onConfirm}>
                             Confirm
                         </button>
-                        <button className="button cancel" onClick={onClose}>
+                        <button className="cancel" onClick={onClose}>
                             Cancel
                         </button>
                     </div>

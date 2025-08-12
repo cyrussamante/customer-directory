@@ -1,45 +1,30 @@
 .customers {
-    padding: 40px 80px;
-}
-
-.heading {
-    text-align: center;
-    margin: 20px;
+    padding: 40px 200px;
 }
 
 .search {
     display: flex;
     justify-content: space-between;
-    gap: 80px; 
-    padding: 20px 0;
+    gap: 80px;
+    padding-top: 20px;
+}
+
+.searchLabels {
+    display: flex;
+    justify-content: space-between;
+    color: grey;
 }
 
 .searchInput {
-    flex-grow: 1;
+    flex: 1;
     padding: 10px;
-    border: 1px solid grey;
-    border-radius: 8px;   
-}
-
-.addButton {
-    cursor: pointer;
-    background-color:  #2563eb;
-    color: white;
+    border: 1px solid #ddd;
     border-radius: 8px;
-    font-weight: bold;
-    padding: 10px;
-    border: 1px solid grey;
-
-}
-
-.addButton:disabled {
-    cursor: not-allowed;
-    opacity: 0.6;
 }
 
 .grid {
-    margin-top: 20px;
+    margin-top: 40px;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 80px;
+    gap: 60px;
 }

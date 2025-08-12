@@ -22,15 +22,15 @@ function App() {
   }, []);
 
   const handleLogin = async function (e: string, p: string) {
-      const response = await login({ email: e, password: p });
-      const data = response.data;
-      if (data) {
-          localStorage.setItem('authToken', data);
-          setLogIn(true);
-          navigate('/customers');
-      } else {
-          throw new Error(data.message || 'Login failed');
-      }
+    const response = await login({ email: e, password: p });
+    const data = response.data;
+    if (data) {
+      localStorage.setItem('authToken', data);
+      setLogIn(true);
+      navigate('/customers');
+    } else {
+      throw new Error(data.message || 'Login failed');
+    }
   };
 
   const handleLogout = () => {
@@ -46,7 +46,7 @@ function App() {
 
   const updateCustomer = async function (customer: Customer): Promise<void> {
     const id = customer.id
-    const response = await editCustomer(id, customer) ;
+    const response = await editCustomer(id, customer);
     if (!response.ok) {
       throw new Error('Failed to update customer');
     };
@@ -68,7 +68,10 @@ function App() {
       <main>
         <Routes>
           <Route path="/" element={<Navigate to="/customers" replace />} />
-          <Route path="customers" element={<CustomerList customers={customers} isLoggedIn={isLoggedIn} addCustomer={addCustomer} />} />
+          <Route path="customers" element={<CustomerList
+            customers={customers}
+            isLoggedIn={isLoggedIn}
+            addCustomer={addCustomer} />} />
           <Route path="/customers/:id" element={<CustomerDetails
             customers={customers}
             updateCustomer={updateCustomer}

@@ -9,10 +9,8 @@ export default function Navbar({ isLoggedIn, onLogout }: props) {
 
     return (
         <nav className="navbar">
-            <div className="logo">
-                <h2>Customer Directory</h2>
-            </div>
-            <div>
+            <h2>Customer Directory</h2>
+            <div className="options">
                 <Link to="/customers">Home</Link>
                 <Link to="/customers">Customers</Link>
                 <Link to="/customers">Orders</Link>
@@ -20,9 +18,7 @@ export default function Navbar({ isLoggedIn, onLogout }: props) {
             </div>
             <div>
                 {isLoggedIn ? (
-                    <div>
-                        <Link to="/customers" onClick={onLogout}>Logout</Link>
-                    </div>
+                    <Link to="/customers" onClick={onLogout}>Logout</Link>
                 ) : (
                     <Link to="/login">Login</Link>
                 )}
