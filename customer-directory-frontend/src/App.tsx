@@ -7,6 +7,7 @@ import Navbar from './components/Navbar';
 import "./App.css"
 import { useEffect, useState } from "react";
 import type Customer from './types/customer';
+import { getCustomers } from './api/customersAPI';
 
 function App() {
 
@@ -14,14 +15,13 @@ function App() {
   const [isLoggedIn, setLogIn ] = useState(false);
   const handleLogin = () => setLogIn(true);
 
-  useEffect(() => { getCustomers() }, []);
-
-  const getCustomers = async function () {
-    await fetch('/api/customers')
-      .then(response => response.json())
-      .then(data => { setCustomers(data) })
-      .catch((error) => {console.error(error)});
-  };
+  useEffect(() => {
+    (async () => { 
+        const data = await getCustomers();
+        console.log(data);
+        setCustomers(data);
+    })()
+  }, []);
 
   const updateCustomer = async function (customer: Customer): Promise<void> {
     const id = customer.id
