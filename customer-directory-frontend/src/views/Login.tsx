@@ -3,11 +3,10 @@ import { useNavigate, Link } from 'react-router-dom';
 import "./Login.css"
 
 interface props {
-  handleLogin: ()=> void
+  handleLogin: (email: string, password: string) => void
 }
 
 export default function Login({ handleLogin }: props) {
-  
   const initialFormData = { email: '', password: '' }
   const [formData, setFormData] = useState(initialFormData);
   const navigate = useNavigate();
@@ -21,8 +20,7 @@ export default function Login({ handleLogin }: props) {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    //aunticate user
-    handleLogin()
+    handleLogin(formData.email, formData.password)
     navigate('/customers')
   };
 

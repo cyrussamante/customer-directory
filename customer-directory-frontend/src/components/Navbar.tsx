@@ -2,9 +2,10 @@ import { Link } from "react-router-dom";
 
 interface props {
     isLoggedIn: boolean
+    onLogout: () => void;
 }
 
-export default function Navbar({isLoggedIn}: props) {
+export default function Navbar({ isLoggedIn, onLogout }: props) {
 
     return (
         <nav className="navbar">
@@ -18,7 +19,13 @@ export default function Navbar({isLoggedIn}: props) {
                 <Link to="/customers">Contact us</Link>
             </div>
             <div>
-                <Link to="/login">{!isLoggedIn ? "Login" : "Logout" }</Link>
+                {isLoggedIn ? (
+                    <div>
+                        <Link to="/customers" onClick={onLogout}>Logout</Link>
+                    </div>
+                ) : (
+                    <Link to="/login">Login</Link>
+                )}
             </div>
         </nav>
     );

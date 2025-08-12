@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import CustomerList from './views/CustomerList';
 import CustomerDetails from './views/CustomerDetails';
 import Login from './views/Login';
@@ -7,67 +7,78 @@ import Navbar from './components/Navbar';
 import "./App.css"
 import { useEffect, useState } from "react";
 import type Customer from './types/customer';
-import { getCustomers } from './api/customersAPI';
-import { createCustomer } from './api/customersAPI';
+import { getCustomers, createCustomer, editCustomer, removeCustomer, login } from './api/customersAPI';
 
 function App() {
 
   const [customers, setCustomers] = useState<Customer[]>([]);
-  const [isLoggedIn, setLogIn ] = useState(false);
-  const handleLogin = () => setLogIn(true);
+  const [isLoggedIn, setLogIn] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     getCustomers().then(res => setCustomers(res.data));
+    const token = localStorage.getItem('authToken');
+    setLogIn(!!token);
   }, []);
 
-  const addCustomer = async function(customer: any): Promise<void> {
+  const handleLogin = async function (e: string, p: string) {
+      // const response = await login({ email: e, password: p });
+      // const data = response.data;
+      // if (response.ok && data.token) {
+      //     // Store authentication token
+      //     localStorage.setItem('authToken', data.token);
+      //     setLogIn(true);
+      //     navigate('/customers');
+      // } else {
+      //     throw new Error(data.message || 'Login failed');
+      // }
+      localStorage.setItem('authToken', 'sdfghgfdsasdf');
+          setLogIn(true);
+          navigate('/customers');
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('authToken');
+    setLogIn(false);
+    navigate('/customers');
+  };
+
+  const addCustomer = async function (customer: any): Promise<void> {
     await createCustomer(customer);
     getCustomers().then(res => setCustomers(res.data));
   }
 
   const updateCustomer = async function (customer: Customer): Promise<void> {
     const id = customer.id
-    await fetch(`/api/customers/${id}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(customer),
-    })
-    .then((response) => response.json())
-    .then((data) => {console.log(data);})
-    .catch((error) => {console.error(error)});
+    const response = await editCustomer(id, customer) ;
+    if (!response.ok) {
+      throw new Error('Failed to update customer');
+    };
   };
 
   const deleteCustomer = async function (customer: Customer): Promise<void> {
     const id = customer.id
-    await fetch(`/api/customers/${id}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(id),
-    })
-    .then((response) => response.json())
-    .then((data) => {console.log(data);})
-    .catch((error) => {console.error(error)});
+    const response = await removeCustomer(id);
+    if (!response.ok) {
+      throw new Error('Failed to delete customer');
+    }
   };
 
   return (
     <>
       <header>
-        <Navbar isLoggedIn={isLoggedIn} />
+        <Navbar isLoggedIn={isLoggedIn} onLogout={handleLogout} />
       </header>
       <main>
         <Routes>
-        <Route path="/" element={<Navigate to="/customers" replace />} />
-        <Route path="customers" element={<CustomerList customers={customers} isLoggedIn={isLoggedIn} addCustomer={addCustomer}/>} /> 
-        <Route path="/customers/:id" element={<CustomerDetails
+          <Route path="/" element={<Navigate to="/customers" replace />} />
+          <Route path="customers" element={<CustomerList customers={customers} isLoggedIn={isLoggedIn} addCustomer={addCustomer} />} />
+          <Route path="/customers/:id" element={<CustomerDetails
             customers={customers}
             updateCustomer={updateCustomer}
             deleteCustomer={deleteCustomer}
             isLoggedIn={isLoggedIn} />} />
-          <Route path="/login" element={<Login handleLogin={handleLogin}/>} />
+          <Route path="/login" element={<Login handleLogin={handleLogin} />} />
         </Routes>
       </main>
       <Footer />
