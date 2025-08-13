@@ -1,105 +1,91 @@
-const customers = [
-    {
-        id: "1",
-        name: "Alice Johnson",
-        age: 28,
-        gender: "female",
-        email: "alice.johnson@example.com",
-        password: "password123",
-        address: "123 Maple St, Springfield, IL",
-        numberOfOrders: 5
-    },
-    {
-        id: "2",
-        name: "Bob Smith",
-        age: 34,
-        gender: "female",
-        email: "bob.smith@example.com",
-        password: "securepass456",
-        address: "456 Oak St, Metropolis, IL",
-        numberOfOrders: 12
-    },
-    {
-        id: "3",
-        name: "Charlie Brown",
-        age: 22,
-        gender: "female",
-        email: "charlie.brown@example.com",
-        password: "mypassword789",
-        address: "789 Pine St, Gotham, NY",
-        numberOfOrders: 3
-    },
-    {
-        id: "4",
-        name: "Diana Prince",
-        age: 30,
-        gender: "female",
-        email: "diana.prince@example.com",
-        password: "wonderwoman321",
-        address: "321 Elm St, Themyscira, WA",
-        numberOfOrders: 8
-    },
-    {
-        id: "5",
-        name: "Ethan Hunt",
-        age: 40,
-        gender: "female",
-        email: "ethan.hunt@example.com",
-        password: "missionimpossible",
-        address: "654 Cedar St, Los Angeles, CA",
-        numberOfOrders: 15
-    },
-    {
-        id: "6",
-        name: "Fiona Gallagher",
-        age: 26,
-        gender: "female",
-        email: "fiona.gallagher@example.com",
-        password: "shameless2025",
-        address: "987 Birch St, Chicago, IL",
-        numberOfOrders: 7
-    },
-    {
-        id: "7",
-        name: "George Costanza",
-        age: 35,
-        gender: "female",
-        email: "george.costanza@example.com",
-        password: "seinfeldfan",
-        address: "135 Willow St, New York, NY",
-        numberOfOrders: 10
-    },
-    {
-        id: "8",
-        name: "Hannah Baker",
-        age: 19,
-        gender: "female",
-        email: "hannah.baker@example.com",
-        password: "thirteenreasons",
-        address: "246 Spruce St, Liberty, MO",
-        numberOfOrders: 2
-    },
-    {
-        id: "9",
-        name: "Ian Malcolm",
-        age: 45,
-        gender: "female",
-        email: "ian.malcolm@example.com",
-        password: "dinosaursrule",
-        address: "369 Fir St, Isla Nublar, PR",
-        numberOfOrders: 6
-    },
-    {
-        id: "10",
-        name: "Jessica Jones",
-        age: 32,
-        gender: "female",
-        email: "jessica.jones@example.com",
-        password: "aliasinvestigations",
-        address: "852 Maple Ave, Hell's Kitchen, NY",
-        numberOfOrders: 4
-    }
-];
+// customerData.js
+const fs = require('fs/promises');
+const path = require('path');
 
-// Export the list of customers
-module.exports = {customers};
+const dataPath = path.join(__dirname, 'data.json');
+
+async function loadFile() {
+    const rawData = await fs.readFile(dataPath, 'utf-8');
+    const parsedData = JSON.parse(rawData);
+
+    return parsedData;
+}
+
+async function saveFile(db) {
+    const content = JSON.stringify(db, null, 2);
+    await fs.writeFile(dataPath, content, 'utf8');
+}
+
+function formatCustomerDetails(customer) {
+    const formatted = { ...customer };
+    if ('age' in formatted) formatted.age = Number(formatted.age);
+    if ('numberOfOrders' in formatted) formatted.numberOfOrders = Number(formatted.numberOfOrders);
+    return formatted;
+}
+
+async function getAllCustomers() {
+    const db = await loadFile();
+    return db.customers;
+}
+
+async function getCustomerById(id) {
+    const db = await loadFile();
+    return db.customers.find(x => String(x.id) === String(id)) || null;
+}
+
+async function createCustomer(customer) {
+    if (!customer || !customer.id) {
+        throw new Error('createCustomer: missing id (controller must assign UUID)');
+    }
+
+    const db = await loadFile();
+
+    const formatted = formatCustomerDetails(customer);
+    db.customers.push(formatted);
+    await saveFile(db);
+    return formatted;
+}
+
+async function updateCustomer(id, update) {
+    const db = await loadFile();
+    const index = db.customers.findIndex(x => String(x.id) === String(id));
+    if (index === -1) throw new Error("Unable to find customer");
+
+    const formatted = formatCustomerDetails(update);
+    db.customers[index] = {
+        ...db.customers[index],
+        ...formatted,
+        id: db.customers[index].id, //Keep the id as it was before
+    };
+
+    await saveFile(db);
+    return db.customers[index];
+}
+
+async function deleteCustomer(id) {
+    const db = await loadFile();
+
+
+    const customer = db.customers.find(c => String(c.id) === String(id));
+    if (!customer) return false;
+
+    // Delete associated image if not default
+    if (customer.imageUrl && customer.imageUrl !== '/images/default_image.png') {
+        try {
+            const imgFile = path.join(path.join(__dirname, 'images'), path.basename(customer.imageUrl));
+            await fs.unlink(imgFile);
+        } catch (err) {
+            console.warn(`Could not delete image file for ${id}:`, err.message);
+        }
+    }
+
+    // Remove customer from the array
+    db.customers = db.customers.filter(c => String(c.id) !== String(id));
+    await saveFile(db);
+
+    return true;
+}
+
+module.exports = {
+    getAllCustomers, getCustomerById, createCustomer, updateCustomer, deleteCustomer,
+};
