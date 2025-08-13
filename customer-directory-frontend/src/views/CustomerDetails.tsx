@@ -4,8 +4,7 @@ import "./CustomerDetails.css"
 import DeleteConfirmationModal from '../components/DeleteConfirmationModal';
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
-import EditCustomerModal from '../components/EditCustomerModal';
-// import Modal from '../components/Modal';
+import Modal from '../components/Modal';
 
 interface props {
     customers: Customer[],
@@ -65,24 +64,19 @@ export default function CustomerDetails({ customers, updateCustomer, deleteCusto
                             <img src={customer?.imageUrl} alt={customer.name} />
                         </div>
                         <div className="detailsGrid">
-                            <p>Age: </p> <p>{customer.age}</p>
-                            <p>Gender: </p> <p>{customer.gender}</p>
-                            <p>Email: </p> <p>{customer.email}</p>
-                            <p>Address: </p> <p>{customer.address}</p>
-                            <p>Number of Orders: </p> <p>{customer.numberOfOrders}</p>
+                            <p>Age </p> <p>{customer.age}</p>
+                            <p>Gender </p> <p>{customer.gender}</p>
+                            <p>Email </p> <p>{customer.email}</p>
+                            <p>Address </p> <p>{customer.address}</p>
+                            <p>Number of Orders </p> <p>{customer.numberOfOrders}</p>
                         </div>
                     </div>
 
-                    {showEditModal && (<EditCustomerModal
-                        customer={customer}
-                        onClose={handleCloseEditModal}
-                        onSave={handleEditCustomer} />)}
-
-                    {/* {showEditModal && (<Modal
+                    {showEditModal && (<Modal
                         mode={'edit'}
                         customer={customer}
                         onClose={handleCloseEditModal}
-                        onSave={handleEditCustomer} />)} */}
+                        onSave={handleEditCustomer} />)}
 
                     {showDeleteModal && (<DeleteConfirmationModal
                         onClose={handleCloseDeleteModal}

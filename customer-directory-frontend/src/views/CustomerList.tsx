@@ -2,8 +2,7 @@ import type Customer from '../types/customer';
 import CustomerCard from '../components/CustomerCard';
 import { useState } from "react";
 import "./CustomerList.css";
-import AddCustomerModal from '../components/AddCustomerModal';
-// import Modal from '../components/Modal';
+import Modal from '../components/Modal';
 
 interface props {
     customers: Customer[];
@@ -47,7 +46,8 @@ export default function CustomerList({ customers, isLoggedIn, addCustomer }: pro
                 </button>
             </div>
             <div className="searchLabels">
-                <p>Search customers by name</p>
+                <p></p>
+                {/* <p>Search customers by name</p> */}
                 {!isLoggedIn ? (<p>Login to add customers</p>) : <></>}
             </div>
 
@@ -60,15 +60,11 @@ export default function CustomerList({ customers, isLoggedIn, addCustomer }: pro
                     ))}
                 </div>
             )}
-
-            {showAddModal && (<AddCustomerModal
-                onClose={handleCloseModal}
-                onSave={handleAddCustomer} />)}
-            {/* 
+            
             {showAddModal && (<Modal
                 mode={'add'}
                 onClose={handleCloseModal}
-                onSave={handleAddCustomer} />)} */}
+                onSave={handleAddCustomer} />)}
         </ div>
     )
 }
