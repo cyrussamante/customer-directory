@@ -8,7 +8,7 @@ const axios = require('axios').default;
 const data = require('../customerData'); // async data layer
 
 const imageDirectory = path.join(__dirname, '..', 'images');
-const defaultImagePath = '/images/default_image.png';
+const defaultImagePath = '/images/default.png';
 
 
 // Generate and save image (PNG)
@@ -47,8 +47,13 @@ async function createCustomer(req, res) {
     try {
         const body = req.body || {};
         let id = randomUUID();
-        imageUrl = await generateImage(id, body.gender)
 
+        imageUrl = defaultImagePath;
+        // If gender follows the given rules
+        if (body.gender === 'male ' || body.gender === 'female') {
+            imageUrl = await generateImage(id, body.gender)
+        }
+        
         const newCustomer = {
             id,
             name: String(body.name),
@@ -85,13 +90,7 @@ async function updateCustomer(req, res) {
             return res.status(404).json({ message: 'Customer not found.' });
         }
 
-        // If the gender changes then generate new image
-        if (checkCustomer.gender != body.gender) {
-            body.imageUrl = await generateImage(id, body.gender);
-        }
-
         const updated = await data.updateCustomer(id, body);
-
         if (!updated) return res.status(404).json({ message: 'Unable to update customer info' });
 
         return res.json(updated)
