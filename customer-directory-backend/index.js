@@ -10,9 +10,7 @@ const app = express();
 
 app.use(express.json());
 
-const imageDirectory = path.join(__dirname, 'images');
-
-app.use('/images', express.static(imageDirectory));
+app.use('/images', express.static(path.join(__dirname, 'images')));
 
 app.use('/api/customers', customerRouter)
 

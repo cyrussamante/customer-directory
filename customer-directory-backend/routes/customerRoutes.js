@@ -2,8 +2,7 @@
 const express = require('express');
 
 
-const {getCustomers, createCustomer, updateCustomer, deleteCustomer} = require('../controllers/customerController');
-
+const { getCustomers, createCustomer, updateCustomer, deleteCustomer } = require('../controllers/customerController');
 
 
 
@@ -13,15 +12,15 @@ const router = express.Router();
 router.get('/', getCustomers);
 
 // POST /api/customers
-router.post (
+router.post(
     '/',
     (req, res, next) => Promise
-    .resolve(createCustomer(req, res))
-    .catch(next)
+        .resolve(createCustomer(req, res))
+        .catch(next)
 );
 
-router.put('/customers/:id', updateCustomer);
+router.put('/:id', updateCustomer);
 
-router.delete('/customers/:id', deleteCustomer)
+router.delete('/:id', deleteCustomer)
 
 module.exports = router;
