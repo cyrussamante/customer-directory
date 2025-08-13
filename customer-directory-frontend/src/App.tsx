@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import CustomerList from './views/CustomerList';
 import CustomerDetails from './views/CustomerDetails';
 import Login from './views/Login';
@@ -7,13 +7,12 @@ import Navbar from './components/Navbar';
 import "./App.css"
 import { useEffect, useState } from "react";
 import type Customer from './types/customer';
-import { getCustomers, createCustomer, editCustomer, removeCustomer, login } from './api/customersAPI';
+import { getCustomers, createCustomer, editCustomer, removeCustomer } from './api/customersAPI';
 
 function App() {
 
   const [customers, setCustomers] = useState<Customer[]>([]);
   const [isLoggedIn, setLogIn] = useState(false);
-  const navigate = useNavigate();
 
   useEffect(() => {
     getCustomers().then(res => setCustomers(res.data));
@@ -21,22 +20,11 @@ function App() {
     setLogIn(!!token);
   }, []);
 
-  const handleLogin = async function (e: string, p: string) {
-    const response = await login({ email: e, password: p });
-    const data = response.data;
-    if (data) {
-      localStorage.setItem('authToken', data);
-      setLogIn(true);
-      navigate('/customers');
-    } else {
-      throw new Error(data.message || 'Login failed');
-    }
-  };
+  const handleLogin = () => setLogIn(true);
 
   const handleLogout = () => {
     localStorage.removeItem('authToken');
     setLogIn(false);
-    navigate('/customers');
   };
 
   const addCustomer = async function (customer: any): Promise<void> {
@@ -47,11 +35,9 @@ function App() {
   const updateCustomer = async function (customer: Customer): Promise<void> {
     const id = customer.id;
     const response = await editCustomer(id, customer);
-    // Axios resolves only for 2xx; there's no response.ok
     if (response.status < 200 || response.status >= 300) {
       throw new Error('Failed to update customer');
     }
-    // (optional but helpful) reflect the change in local state
     setCustomers(prev => prev.map(c => (c.id === id ? { ...c, ...customer } : c)));
   };
 
@@ -61,7 +47,6 @@ function App() {
     if (response.status !== 204) {
       throw new Error('Failed to delete customer');
     }
-    // (optional) update UI immediately
     setCustomers(prev => prev.filter(c => c.id !== id));
   };
 

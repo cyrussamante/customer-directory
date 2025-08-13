@@ -41,8 +41,9 @@ main {
 footer {
     text-align: center;
     padding: 10px 0;
-    position: fixed;
     bottom: 0;
+    position: fixed;
+    z-index: 100;
     width: 100%;
     margin-top: 10px;
     background-color: #2563eb;

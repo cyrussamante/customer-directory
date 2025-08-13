@@ -1,5 +1,6 @@
 import { useRef, useEffect } from "react";
 import "./Modal.css"
+import WarningIcon from '@mui/icons-material/Warning';
 
 interface props {
     onClose: () => void;
@@ -29,7 +30,10 @@ export default function DeleteConfirmationModal({ onClose, onConfirm }: props) {
         <dialog className="modal" ref={dialogRef} onClose={onClose}>
             <div className="modalForm">
                 <h2 className="modalHeading">Are you sure you want to delete?</h2>
-                <p className="modalSubheading">This action cannot be reversed.</p>
+                <div className="hint">
+                        <WarningIcon />
+                        <p className="modalSubheading">This action cannot be reversed.</p>
+                    </div>
                 <div className="modalButtons">
                     <button className="delete" onClick={handleConfirm}>
                         Confirm
