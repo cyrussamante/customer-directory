@@ -8,29 +8,29 @@
       "email": "alice.johnson@example.com",
       "password": "password123",
       "address": "123 Maple St, Springfield, IL",
-      "imageUrl": "./images/default.png",
+      "imageUrl": "/images/customer-1.png",
       "numberOfOrders": 5
     },
     {
       "id": "2",
       "name": "Bob Smith",
       "age": 34,
-      "gender": "female",
+      "gender": "male",
       "email": "bob.smith@example.com",
       "password": "securepass456",
       "address": "456 Oak St, Metropolis, IL",
-      "imageUrl": "./images/default.png",
+      "imageUrl": "/images/customer-2.png",
       "numberOfOrders": 12
     },
     {
       "id": "3",
       "name": "Charlie Brown",
       "age": 22,
-      "gender": "female",
+      "gender": "male",
       "email": "charlie.brown@example.com",
       "password": "mypassword789",
       "address": "789 Pine St, Gotham, NY",
-      "imageUrl": "./images/default.png",
+      "imageUrl": "/images/customer-3.png",
       "numberOfOrders": 3
     },
     {
@@ -41,18 +41,18 @@
       "email": "diana.prince@example.com",
       "password": "wonderwoman321",
       "address": "321 Elm St, Themyscira, WA",
-      "imageUrl": "./images/default.png",
+      "imageUrl": "/images/customer-4.png",
       "numberOfOrders": 8
     },
     {
       "id": "5",
       "name": "Ethan Hunt",
       "age": 40,
-      "gender": "female",
+      "gender": "male",
       "email": "ethan.hunt@example.com",
       "password": "missionimpossible",
       "address": "654 Cedar St, Los Angeles, CA",
-      "imageUrl": "./images/default.png",
+      "imageUrl": "/images/customer-5.png",
       "numberOfOrders": 15
     },
     {
@@ -63,18 +63,18 @@
       "email": "fiona.gallagher@example.com",
       "password": "shameless2025",
       "address": "987 Birch St, Chicago, IL",
-      "imageUrl": "./images/default.png",
+      "imageUrl": "/images/customer-6.png",
       "numberOfOrders": 7
     },
     {
       "id": "7",
       "name": "George Costanza",
       "age": 35,
-      "gender": "female",
+      "gender": "male",
       "email": "george.costanza@example.com",
       "password": "seinfeldfan",
       "address": "135 Willow St, New York, NY",
-      "imageUrl": "./images/default.png",
+      "imageUrl": "/images/customer-7.png",
       "numberOfOrders": 10
     },
     {
@@ -85,30 +85,52 @@
       "email": "hannah.baker@example.com",
       "password": "thirteenreasons",
       "address": "246 Spruce St, Liberty, MO",
-      "imageUrl": "./images/default.png",
+      "imageUrl": "/images/customer-8.png",
       "numberOfOrders": 2
     },
     {
       "id": "9",
       "name": "Ian Malcolm",
       "age": 45,
-      "gender": "female",
+      "gender": "male",
       "email": "ian.malcolm@example.com",
       "password": "dinosaursrule",
       "address": "369 Fir St, Isla Nublar, PR",
-      "imageUrl": "./images/default.png",
+      "imageUrl": "/images/customer-9.png",
       "numberOfOrders": 6
     },
     {
-      "id": "10",
-      "name": "Jessica Jones",
-      "age": 32,
+      "id": "c38bcb1f-7501-4999-a3c2-28f601f41078",
+      "name": "Anushka Sharma",
+      "age": 23,
       "gender": "female",
-      "email": "jessica.jones@example.com",
-      "password": "aliasinvestigations",
-      "address": "852 Maple Ave, Hell's Kitchen, NY",
-      "imageUrl": "./images/default.png",
-      "numberOfOrders": 4
+      "email": "inreet@gmail.com",
+      "password": "sdfgnfdsdfg",
+      "address": "321 Elm St, Themyscira, WA",
+      "imageUrl": "/images/customer-c38bcb1f-7501-4999-a3c2-28f601f41078.png",
+      "numberOfOrders": 0
+    },
+    {
+      "id": "f70bd3ce-77e7-4de8-b593-a4bbead3e07e",
+      "name": "Mr Smith",
+      "age": 23,
+      "gender": "male",
+      "email": "adam.smith@example.com",
+      "password": "asdfghgfd",
+      "address": "987 Birch St, Chicago, IL",
+      "imageUrl": "/images/customer-f70bd3ce-77e7-4de8-b593-a4bbead3e07e.png",
+      "numberOfOrders": 0
+    },
+    {
+      "id": "9d92cda5-4ee1-434a-a646-f38dbd391aa2",
+      "name": "Anushka",
+      "age": 25,
+      "gender": "female",
+      "email": "anushka.sharma@gmail.com",
+      "password": "asdfghgf",
+      "address": "123 Maple St, Springfield, IL",
+      "imageUrl": "/images/customer-9d92cda5-4ee1-434a-a646-f38dbd391aa2.png",
+      "numberOfOrders": 0
     }
   ]
 }
