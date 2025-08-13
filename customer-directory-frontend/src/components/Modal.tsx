@@ -3,11 +3,13 @@ import { useNavigate } from "react-router-dom";
 import "./Modal.css";
 
 interface Props {
+    mode: 'add' | 'edit';
+    customer?: any;
     onClose: () => void;
     onSave: (customer: any) => void;
 }
 
-export default function AddCustomerModal({ onClose, onSave }: Props) {
+export default function Modal({ mode, customer, onClose, onSave }: Props) {
 
     const initialFormData = {
         name: "",
@@ -18,7 +20,8 @@ export default function AddCustomerModal({ onClose, onSave }: Props) {
         address: "",
         numberOfOrders: 0,
     };
-    const [formData, setFormData] = useState(initialFormData);
+
+    const [formData, setFormData] = useState(mode === 'edit' ? customer : initialFormData);
     const navigate = useNavigate();
     const dialogRef = useRef<HTMLDialogElement>(null);
 
@@ -47,13 +50,25 @@ export default function AddCustomerModal({ onClose, onSave }: Props) {
             numberOfOrders: formData.numberOfOrders,
         };
 
-        try {
-            onSave(payload);
-        } catch (err: any) {
-            alert(err?.message || "Failed to create customer");
+        if (mode === 'add') {
+            try {
+                onSave(payload);
+            } catch (err: any) {
+                alert(err?.message || "Failed to create customer");
+            }
+            dialogRef.current?.close();
+            navigate("/customers");
         }
-        dialogRef.current?.close();
-        navigate("/customers");
+
+        if (mode === 'edit') {
+            const updatedCustomer = {
+                id: customer.id,
+                ...payload,
+                imageUrl: customer.imageUrl
+            }
+            onSave(updatedCustomer)
+            dialogRef.current?.close();
+        }
     };
 
     const handleClose = () => {
@@ -63,7 +78,9 @@ export default function AddCustomerModal({ onClose, onSave }: Props) {
 
     return (
         <dialog className="modal" ref={dialogRef} onClose={onClose}>
-            <h2 className="modalHeading">Add a new customer</h2>
+            <h2 className="modalHeading">
+                {mode === 'add' ? 'Add a new customer' : 'Edit customer details'}
+            </h2>
             <form className="modalForm">
                 <div className="modalGrid">
                     <label>Name</label>

@@ -6,37 +6,30 @@
 }
 
 .loginCard {
-  border: 1px solid rgb(230, 216, 216);
+  border: 1px solid #ddd;
   border-radius: 8px;
-  padding: 20px;
-  width: 300px;
+  padding: 40px;
+  width: 350px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 20px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .form {
-  flex-grow: 1;
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  
 }
 
 .formInput {
-  flex-grow: 1;
   padding: 10px;
-  border: 1px solid grey;
+  border: 1px solid #ddd;
   border-radius: 8px;
   width: 100%;
   margin-bottom: 10px;
-}
-  
-.label {
-  margin: 10px;
-  width: 100%;
 }

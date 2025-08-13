@@ -1,11 +1,6 @@
-html, body {
-    height: 100%;
-    margin: 0;
-}
-
 body {
     display: flex;
-    flex-direction: column; 
+    flex-direction: column;
 }
 
 header {
@@ -18,26 +13,19 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 80px;
+    padding: 10px 120px;
     background-color: #2563eb;
     color: white;
 }
 
-.navbar .logo h2 {
-    margin: 0;
-}
-
-.navbar div {
-    display: flex;
-    gap: 15px;
-}
-
 .navbar a {
     color: white;
-    padding: 8px 12px;
-    border-radius: 4px;
-    transition: background-color 0.3s;
-    font-weight: bold;
+    padding: 8px 20px;
+    border-radius: 8px;
+}
+
+.options {
+    padding-right: 140px
 }
 
 .navbar a:hover {
@@ -45,9 +33,9 @@ header {
 }
 
 main {
-    flex: 1; 
-    padding: 20px;
-    min-height: 80vh; 
+    flex: 1;
+    padding: 0 80px;
+    min-height: 80vh;
 }
 
 footer {

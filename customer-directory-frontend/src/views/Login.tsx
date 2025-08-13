@@ -7,6 +7,7 @@ interface props {
 }
 
 export default function Login({ handleLogin }: props) {
+
   const initialFormData = { email: '', password: '' }
   const [formData, setFormData] = useState(initialFormData);
   const navigate = useNavigate();
@@ -27,8 +28,7 @@ export default function Login({ handleLogin }: props) {
   return (
     <div className="login">
       <div className="loginCard">
-        <h2 className="heading">Login</h2>
-
+        <h2>Login</h2>
         <form className="form">
           <label className="label"> Email Address</label>
           <input className="formInput"
@@ -48,9 +48,8 @@ export default function Login({ handleLogin }: props) {
             value={formData.password}
             onChange={handleChange}
           />
-          <button className="button" onClick={handleSubmit}>Log In</button>
+          <button onClick={handleSubmit}>Log In</button>
         </form>
-
         <Link to="/customers">Browse customers without logging in</Link>
       </div>
     </div>

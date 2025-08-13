@@ -1,3 +1,4 @@
+import { useRef, useEffect } from "react";
 import "./Modal.css"
 
 interface props {
@@ -5,24 +6,39 @@ interface props {
     onConfirm: (e: any) => void;
 }
 
-export default function DeleteConfirmationModal ({onClose, onConfirm}: props) {
+export default function DeleteConfirmationModal({ onClose, onConfirm }: props) {
+    const dialogRef = useRef<HTMLDialogElement>(null);
+
+    useEffect(() => {
+        if (dialogRef.current) {
+            dialogRef.current.showModal();
+        }
+    }, []);
+
+    const handleConfirm = (e: any) => {
+        onConfirm(e);
+        dialogRef.current?.close();
+    };
+
+    const handleClose = () => {
+        dialogRef.current?.close();
+        onClose();
+    };
 
     return (
-        <div className="modal" onClick={onClose}>
-            <div className="modalCard" onClick={e => e.stopPropagation()}>
-                <h2 className="heading">Are you sure you want to delete?</h2>
-                <form className="modalForm">
-                    <label className="heading">This action cannot be reversed.</label>
-                    <div className="modalButtons">
-                        <button className="button delete" onClick={onConfirm}>
-                            Confirm
-                        </button>
-                        <button className="button cancel" onClick={onClose}>
-                            Cancel
-                        </button>
-                    </div>
-                </form>
+        <dialog className="modal" ref={dialogRef} onClose={onClose}>
+            <div className="modalForm">
+                <h2 className="modalHeading">Are you sure you want to delete?</h2>
+                <p className="modalSubheading">This action cannot be reversed.</p>
+                <div className="modalButtons">
+                    <button className="delete" onClick={handleConfirm}>
+                        Confirm
+                    </button>
+                    <button className="cancel" onClick={handleClose}>
+                        Cancel
+                    </button>
+                </div>
             </div>
-        </div>
+        </dialog>
     )
 }

@@ -8,7 +8,7 @@ interface props {
     isLoggedIn: boolean
 }
 
-export default function CustomerCard({customer, isLoggedIn}: props): ReactElement {
+export default function CustomerCard({ customer, isLoggedIn }: props): ReactElement {
 
     const navigate = useNavigate();
 
@@ -16,15 +16,13 @@ export default function CustomerCard({customer, isLoggedIn}: props): ReactElemen
         if (isLoggedIn) {
             navigate(`/customers/${customer.id}`);
         }
-    
     };
 
     return (
         <div className="card">
-            {/* fix image */}
-            <img src={customer?.imageUrl} alt={customer.name} /> 
+            <img src={customer?.imageUrl} alt={customer.name} />
             <p>{customer.name}</p>
-            <button disabled={!isLoggedIn} className="button" onClick={handleViewDetails}>View Details</button>
+            <button disabled={!isLoggedIn} onClick={handleViewDetails}>View Details</button>
         </div>
     )
 }
