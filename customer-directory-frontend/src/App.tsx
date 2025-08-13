@@ -45,19 +45,24 @@ function App() {
   }
 
   const updateCustomer = async function (customer: Customer): Promise<void> {
-    const id = customer.id
+    const id = customer.id;
     const response = await editCustomer(id, customer);
-    if (!response.ok) {
+    // Axios resolves only for 2xx; there's no response.ok
+    if (response.status < 200 || response.status >= 300) {
       throw new Error('Failed to update customer');
-    };
+    }
+    // (optional but helpful) reflect the change in local state
+    setCustomers(prev => prev.map(c => (c.id === id ? { ...c, ...customer } : c)));
   };
 
   const deleteCustomer = async function (customer: Customer): Promise<void> {
-    const id = customer.id
+    const id = customer.id;
     const response = await removeCustomer(id);
-    if (!response.ok) {
+    if (response.status !== 204) {
       throw new Error('Failed to delete customer');
     }
+    // (optional) update UI immediately
+    setCustomers(prev => prev.filter(c => c.id !== id));
   };
 
   return (
