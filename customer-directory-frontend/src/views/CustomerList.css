@@ -45,7 +45,8 @@
     align-items: center;
     color: #ff9800;
     gap: 10px;
-    margin-bottom: 0;   
+    margin-bottom: 0;  
+    justify-content: center; 
 }
 
 .noCustomers {
