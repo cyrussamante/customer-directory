@@ -6,10 +6,12 @@ const path = require('path');
 const fs = require('fs');
 const customerRouter = require('./routes/customerRoutes');
 const loginRouter = require('./routes/loginRoutes');
+const cors = require('cors');
 
 // Create express app
 const app = express();
 
+app.use(cors())
 app.use(express.json());
 
 app.use('/images', express.static(path.join(__dirname, 'images')));
