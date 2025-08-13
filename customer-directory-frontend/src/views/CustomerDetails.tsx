@@ -5,6 +5,7 @@ import DeleteConfirmationModal from '../components/DeleteConfirmationModal';
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import EditCustomerModal from '../components/EditCustomerModal';
+// import Modal from '../components/Modal';
 
 interface props {
     customers: Customer[],
@@ -76,6 +77,12 @@ export default function CustomerDetails({ customers, updateCustomer, deleteCusto
                         customer={customer}
                         onClose={handleCloseEditModal}
                         onSave={handleEditCustomer} />)}
+
+                    {/* {showEditModal && (<Modal
+                        mode={'edit'}
+                        customer={customer}
+                        onClose={handleCloseEditModal}
+                        onSave={handleEditCustomer} />)} */}
 
                     {showDeleteModal && (<DeleteConfirmationModal
                         onClose={handleCloseDeleteModal}

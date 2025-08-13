@@ -3,6 +3,7 @@ import CustomerCard from '../components/CustomerCard';
 import { useState } from "react";
 import "./CustomerList.css";
 import AddCustomerModal from '../components/AddCustomerModal';
+// import Modal from '../components/Modal';
 
 interface props {
     customers: Customer[];
@@ -60,7 +61,14 @@ export default function CustomerList({ customers, isLoggedIn, addCustomer }: pro
                 </div>
             )}
 
-            {showAddModal && (<AddCustomerModal onClose={handleCloseModal} onSave={handleAddCustomer} />)}
+            {showAddModal && (<AddCustomerModal
+                onClose={handleCloseModal}
+                onSave={handleAddCustomer} />)}
+            {/* 
+            {showAddModal && (<Modal
+                mode={'add'}
+                onClose={handleCloseModal}
+                onSave={handleAddCustomer} />)} */}
         </ div>
     )
 }
