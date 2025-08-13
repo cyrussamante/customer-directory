@@ -2,6 +2,7 @@ import type { ReactElement } from "react";
 import { useNavigate } from "react-router-dom";
 import "./CustomerCard.css";
 import type Customer from "../types/customer";
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 interface props {
     customer: Customer,
@@ -20,9 +21,14 @@ export default function CustomerCard({ customer, isLoggedIn }: props): ReactElem
 
     return (
         <div className="card">
-            <img src={customer?.imageUrl} alt={customer.name} />
-            <p>{customer.name}</p>
-            <button disabled={!isLoggedIn} onClick={handleViewDetails}>View Details</button>
+            <div className="icon">
+                {!isLoggedIn && <VisibilityOffIcon />}
+            </div>
+            <div className="cardBody">
+                <img src={customer?.imageUrl} alt={customer.name} />
+                <p>{customer.name}</p>
+                <button disabled={!isLoggedIn} onClick={handleViewDetails}>View Details</button>
+            </div>
         </div>
     )
 }

@@ -2,6 +2,13 @@
     padding: 40px 200px;
 }
 
+.customersHeader {
+    display: flex;
+    align-items: center;
+    color: '#333';
+    gap: 10px; 
+}
+
 .search {
     display: flex;
     justify-content: space-between;
@@ -20,6 +27,36 @@
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 8px;
+}
+
+.searchInput:focus {
+    outline: none;
+    border-color: #4a90e2;
+    box-shadow: 0 0 5px rgba(74, 144, 226, 0.3);
+}
+
+.searchLabels {
+    display: flex;
+    justify-content: right;
+}
+
+.hint {
+    display: flex;
+    align-items: center;
+    color: #ff9800;
+    gap: 10px;
+    margin-bottom: 0;   
+}
+
+.noCustomers {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    border-radius: 12px;
+    text-align: center; 
+    color: #666;
+    gap: 10px;
 }
 
 .grid {

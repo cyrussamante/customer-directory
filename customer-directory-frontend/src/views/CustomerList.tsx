@@ -3,6 +3,9 @@ import CustomerCard from '../components/CustomerCard';
 import { useState } from "react";
 import "./CustomerList.css";
 import Modal from '../components/Modal';
+import WarningIcon from '@mui/icons-material/Warning';
+import ListIcon from '@mui/icons-material/List';
+import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied';
 
 interface props {
     customers: Customer[];
@@ -32,12 +35,15 @@ export default function CustomerList({ customers, isLoggedIn, addCustomer }: pro
 
     return (
         <div className="customers">
-            <h2>Customer List</h2>
+            <div className="customersHeader">
+                <ListIcon />
+                <h2>Customer List</h2>
+            </div>
             <div className="search">
                 <input
                     type="text"
                     className="searchInput"
-                    placeholder="Search"
+                    placeholder="Search customers"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                 />
@@ -46,13 +52,19 @@ export default function CustomerList({ customers, isLoggedIn, addCustomer }: pro
                 </button>
             </div>
             <div className="searchLabels">
-                <p></p>
-                {/* <p>Search customers by name</p> */}
-                {!isLoggedIn ? (<p>Login to add customers</p>) : <></>}
+                {!isLoggedIn && (
+                    <div className="hint">
+                        <WarningIcon />
+                        <p>Login to add customers</p>
+                    </div>
+                )}
             </div>
 
             {filteredCustomers.length === 0 ? (
-                <p>No customers found.</p>
+                <div className="noCustomers">
+                    <SentimentDissatisfiedIcon />
+                    <p>No customers found.</p>
+                </div>
             ) : (
                 <div className="grid">
                     {filteredCustomers.map((customer: Customer) => (
@@ -60,7 +72,7 @@ export default function CustomerList({ customers, isLoggedIn, addCustomer }: pro
                     ))}
                 </div>
             )}
-            
+
             {showAddModal && (<Modal
                 mode={'add'}
                 onClose={handleCloseModal}

@@ -49,6 +49,11 @@ export default function Modal({ mode, customer, onClose, onSave }: Props) {
             address: formData.address.trim(),
             numberOfOrders: formData.numberOfOrders,
         };
+        const isAnyFieldEmpty = Object.values(payload).some(value => value === '' );
+        if (isAnyFieldEmpty) {
+            alert('Please fill in all fields');
+            return;
+        }
 
         if (mode === 'add') {
             try {
