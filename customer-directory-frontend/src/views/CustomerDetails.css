@@ -1,6 +1,6 @@
 .details {
-    margin: 100px 300px;
-    padding: 40px;
+    margin: 40px 300px;
+    padding: 20px;
     border: 1px solid #ddd;
     border-radius: 8px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
@@ -8,21 +8,24 @@
 
 .detailsHead {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
+    gap: 10px;
 }
 
 .detailsButtons {
     display: flex;
-    gap: 40px;
+    flex-wrap: wrap;
+    gap: 10px;
 }
 
 .detailsBody {
     margin-top: 20px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 80px
+    flex-direction: column;
+    gap: 20px
 }
 
 .imageContainer {
@@ -32,19 +35,20 @@
 }
 
 .detailsBody img {
-    width: 250px;
-    height: 300px;
+    width: 200px;
+    height: 200px;
     object-fit: cover;
     border-radius: 50%;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2)
 }
 
 .detailsGrid {
-    width: 500px;
+    width: 100%;
+    max-width: 500px;
     text-align: left;
     display: grid;
-    grid-template-columns: 2fr 3fr;
-    gap: 20px;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
 }
 
 .detailsGrid p {
