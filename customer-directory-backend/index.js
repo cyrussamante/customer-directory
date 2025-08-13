@@ -1,4 +1,6 @@
 
+require('dotenv').config(); // Load the .env file
+
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
@@ -14,8 +16,9 @@ app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use('/api/customers', customerRouter)
 app.use('/api/login', loginRouter)
 
-const PORT = 3000;
+module.exports = {app}; // Allows app to be discoverable for tests
 
-app.listen(PORT, () => {
-    console.log(`Listening on localhost:${PORT}`);
-})
+if (require.main === module) {                  
+    const PORT = process.env.PORT;
+    app.listen(PORT, () => console.log(`Listening on http://localhost:${PORT}`));
+  }
