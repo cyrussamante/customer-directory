@@ -8,6 +8,7 @@ const customerRouter = require('./routes/customerRoutes');
 const loginRouter = require('./routes/loginRoutes');
 const cors = require('cors');
 
+
 // Create express app
 const app = express();
 
@@ -17,6 +18,7 @@ app.use(express.json());
 app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use('/api/customers', customerRouter)
 app.use('/api/login', loginRouter)
+app.use('/api/ai', require('./routes/chatRoutes'))
 
 module.exports = {app}; // Allows app to be discoverable for tests
 

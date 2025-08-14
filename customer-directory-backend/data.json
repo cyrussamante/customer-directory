@@ -24,7 +24,7 @@
     },
     {
       "id": "3",
-      "name": "Charlie Brown",
+      "name": "Charlie Adams",
       "age": 22,
       "gender": "male",
       "email": "charlie.brown@example.com",
@@ -98,17 +98,6 @@
       "address": "369 Fir St, Isla Nublar, PR",
       "imageUrl": "/images/customer-9.png",
       "numberOfOrders": 6
-    },
-    {
-      "id": "c38bcb1f-7501-4999-a3c2-28f601f41078",
-      "name": "Anushka Sharma",
-      "age": 23,
-      "gender": "female",
-      "email": "inreet@gmail.com",
-      "password": "sdfgnfdsdfg",
-      "address": "321 Elm St, Themyscira, WA",
-      "imageUrl": "/images/customer-c38bcb1f-7501-4999-a3c2-28f601f41078.png",
-      "numberOfOrders": 0
     },
     {
       "id": "f70bd3ce-77e7-4de8-b593-a4bbead3e07e",

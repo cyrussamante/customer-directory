@@ -8,6 +8,7 @@ import "./App.css"
 import { useEffect, useState } from "react";
 import type Customer from './types/customer';
 import { getCustomers, createCustomer, editCustomer, removeCustomer } from './api/customersAPI';
+import ChatBot from './components/ChatBot';
 
 function App() {
 
@@ -69,6 +70,7 @@ function App() {
             isLoggedIn={isLoggedIn} />} />
           <Route path="/login" element={<Login handleLogin={handleLogin} />} />
         </Routes>
+      <ChatBot/>
       </main>
       <Footer />
     </>

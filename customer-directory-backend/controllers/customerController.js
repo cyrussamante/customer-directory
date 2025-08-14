@@ -50,7 +50,7 @@ async function createCustomer(req, res) {
 
         imageUrl = defaultImagePath;
         // If gender follows the given rules
-        if (body.gender === 'male ' || body.gender === 'female') {
+        if (body.gender === 'male' || body.gender === 'female') {
             imageUrl = await generateImage(id, body.gender)
         }
         
