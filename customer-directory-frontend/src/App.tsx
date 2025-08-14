@@ -70,7 +70,7 @@ function App() {
             isLoggedIn={isLoggedIn} />} />
           <Route path="/login" element={<Login handleLogin={handleLogin} />} />
         </Routes>
-      <ChatBot/>
+      {isLoggedIn && <ChatBot/>}
       </main>
       <Footer />
     </>

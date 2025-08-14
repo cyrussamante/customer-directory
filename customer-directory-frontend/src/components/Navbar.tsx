@@ -9,7 +9,7 @@ export default function Navbar({ isLoggedIn, onLogout }: props) {
 
     return (
         <nav className="navbar">
-            <h2>Customer Directory</h2>
+            <h2>Client Atlas</h2>
             <div className="options">
                 <Link to="/customers">Home</Link>
                 <Link to="/customers">Customers</Link>

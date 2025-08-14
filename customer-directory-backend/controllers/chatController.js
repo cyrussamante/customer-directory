@@ -1,4 +1,4 @@
-const { askGroq } = require('../services/groqClient');
+const { askGroq } = require('../external/groqClient');
 const data = require('../customerData');
 
 function projectCustomers(customers) {
