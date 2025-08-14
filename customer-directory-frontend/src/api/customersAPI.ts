@@ -1,7 +1,7 @@
 import type Customer from "../types/customer";
 import axios from 'axios';
 const rootUrl = `https://customerdirectory-1.onrender.com`
-export const getCustomers = () => axios.get<Customer[]>(`${rootUrl}/api/customers`);
+export const getCustomers = () => axios.get<Customer[]>(`/api/customers`);
 
 export const createCustomer = (customerData: any): Promise<Customer> =>
     axios.post('/api/customers/',
