@@ -143,6 +143,15 @@ export default function Modal({ mode, customer, onClose, onSave }: Props) {
                         placeholder="Address"
                         required
                     />
+                    <label>Number of Orders</label>
+                    <input className="modalInput"
+                        name="numberOfOrders"
+                        value={formData.numberOfOrders}
+                        onChange={handleChange}
+                        type="number"
+                        placeholder="Orders"
+                        required
+                    />
                 </div>
 
                 <div className="modalButtons">

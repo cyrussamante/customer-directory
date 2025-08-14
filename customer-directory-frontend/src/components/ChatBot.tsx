@@ -7,7 +7,7 @@ type Msg = { role: 'user' | 'bot'; text: string };
 export default function ChatBot() {
   const [open, setOpen] = useState(false);
   const [msgs, setMsgs] = useState<Msg[]>([
-    { role: 'bot', text: 'Ask me anything about your clients (e.g., "names with more than 5 orders").' }
+    { role: 'bot', text: 'Ask any questions about your clients 😎' }
   ]);
   const [input, setInput] = useState('');
   const [busy, setBusy] = useState(false);

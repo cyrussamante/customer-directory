@@ -3,7 +3,7 @@ const fs = require('fs/promises');
 const path = require('path');
 
 const dataPath = path.resolve(process.env.DATA_PATH)
-console.log(dataPath)
+
 
 async function loadFile() {
     const rawData = await fs.readFile(dataPath, 'utf-8');
