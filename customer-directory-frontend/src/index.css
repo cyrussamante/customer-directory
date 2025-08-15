@@ -18,7 +18,7 @@ a {
 
 button {
     cursor: pointer;
-    background-color: #2563eb;
+    background-color: #337ab7;
     color: white;
     border-radius: 8px;
     font-weight: bold;
@@ -35,7 +35,7 @@ button.cancel {
 }
 
 button.delete {
-    background-color: #d32f2f;
+    background-color: #D0271D;
 }
 
 button:disabled {
