@@ -4,6 +4,12 @@
     width: 100%;
 }
 
+@media (max-width: 768px) {
+    .customers {
+        width: auto;
+    }
+}
+
 .customersHeader {
     display: flex;
     align-items: center;
