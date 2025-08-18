@@ -1,32 +1,41 @@
 .customers {
-    padding: 40px 200px;
+    padding: 2vw 5vw;
+    box-sizing: border-box;
+    width: 100%;
 }
 
 .customersHeader {
     display: flex;
     align-items: center;
-    color: '#333';
-    gap: 10px; 
+    color: #333;
+    gap: 1em;
+    font-size: 1.2em;
+    flex-wrap: wrap;
 }
 
 .search {
     display: flex;
+    flex-wrap: wrap;
+    gap: 2vw;
+    padding-top: 2vw;
     justify-content: space-between;
-    gap: 80px;
-    padding-top: 20px;
 }
 
 .searchLabels {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     color: grey;
+    flex: 1 1 100px;
+    flex-wrap: wrap;
 }
 
 .searchInput {
-    flex: 1;
-    padding: 10px;
+    flex: 1 1 200px;
+    min-width: 120px;
+    padding: 1em;
     border: 1px solid #ddd;
     border-radius: 8px;
+    box-sizing: border-box;
 }
 
 .searchInput:focus {
@@ -35,34 +44,33 @@
     box-shadow: 0 0 5px rgba(74, 144, 226, 0.3);
 }
 
-.searchLabels {
-    display: flex;
-    justify-content: right;
-}
-
 .hint {
     display: flex;
     align-items: center;
     color: #ff9800;
-    gap: 10px;
-    margin-bottom: 0;  
-    justify-content: center; 
+    gap: 1em;
+    margin-bottom: 0;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
 .noCustomers {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 40px;
+    padding: 5vw;
     border-radius: 12px;
-    text-align: center; 
+    text-align: center;
     color: #666;
-    gap: 10px;
+    gap: 1em;
+    flex-wrap: wrap;
 }
 
 .grid {
-    margin: 40px 0;
+    margin: 2vw 1em;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 60px;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 50px;
+    justify-items: center;
+    padding-bottom: 2em;
 }
