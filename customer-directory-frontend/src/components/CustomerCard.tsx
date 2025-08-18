@@ -1,7 +1,7 @@
 import type { ReactElement } from "react";
 import { useNavigate } from "react-router-dom";
 import "./CustomerCard.css";
-import type Customer from "../types/customer";
+import type { Customer } from '../types/appState';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 interface props {

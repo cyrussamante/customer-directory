@@ -1,4 +1,4 @@
-import type Customer from '../types/customer';
+import type { Customer } from '../types/appState';
 import { useParams } from 'react-router';
 import "./CustomerDetails.css"
 import DeleteConfirmationModal from '../components/DeleteConfirmationModal';

@@ -1,5 +1,6 @@
-import type Customer from "../types/customer";
+import type { Customer } from '../types/appState';
 import axios from 'axios';
+
 const rootUrl = `https://customerdirectory-1.onrender.com`
 export const getCustomers = () => axios.get<Customer[]>(`/api/customers`);
 

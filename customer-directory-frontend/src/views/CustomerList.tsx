@@ -1,4 +1,4 @@
-import type Customer from '../types/customer';
+import type { Customer } from '../types/appState';
 import CustomerCard from '../components/CustomerCard';
 import { useState } from "react";
 import "./CustomerList.css";
