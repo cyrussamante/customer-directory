@@ -3,7 +3,8 @@
     padding: 40px;
     border: 1px solid #ddd;
     border-radius: 8px;
-    width: 500px;
+    width: 70vw;
+    max-width: 700px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
@@ -44,18 +45,23 @@
 }
 
 .detailsGrid {
-    width: 100%;
+    /* width: 100%; */
     max-width: 500px;
     text-align: left;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 4fr;
     gap: 10px;
 }
 
 .detailsGrid p {
     margin: 0;
-    padding: 20px;
+    padding: 10px;
     border: 1px solid #ddd;
     border-radius: 8px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.detailsGrid .classifier {
+    font-weight: bold;
+    color: #333;
 }

@@ -64,11 +64,11 @@ export default function CustomerDetails({ customers, updateCustomer, deleteCusto
                             <img src={customer?.imageUrl} alt={customer.name} />
                         </div>
                         <div className="detailsGrid">
-                            <p>Age </p> <p>{customer.age}</p>
-                            <p>Gender </p> <p>{customer.gender}</p>
-                            <p>Email </p> <p>{customer.email}</p>
-                            <p>Address </p> <p>{customer.address}</p>
-                            <p>Number of Orders </p> <p>{customer.numberOfOrders}</p>
+                            <p className="classifier">Age </p> <p>{customer.age}</p>
+                            <p className="classifier">Gender </p> <p>{customer.gender}</p>
+                            <p className="classifier">Email </p> <p>{customer.email}</p>
+                            <p className="classifier">Address </p> <p>{customer.address}</p>
+                            <p className="classifier">Number of Orders </p> <p>{customer.numberOfOrders}</p>
                         </div>
                     </div>
 
