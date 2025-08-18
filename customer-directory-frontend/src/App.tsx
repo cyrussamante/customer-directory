@@ -6,27 +6,21 @@ import Footer from './components/Footer';
 import Navbar from './components/Navbar';
 import "./App.css"
 import { useEffect, useState } from "react";
-import type Customer from './types/customer';
+import type { Customer } from './types/appState';
 import { getCustomers, createCustomer, editCustomer, removeCustomer } from './api/customersAPI';
-import ChatBot from './components/ChatBot';
+//import ChatBot from './components/ChatBot';
 
 function App() {
 
   const [customers, setCustomers] = useState<Customer[]>([]);
-  const [isLoggedIn, setLogIn] = useState(false);
 
   useEffect(() => {
     getCustomers().then(res => setCustomers(res.data));
     const token = localStorage.getItem('authToken');
-    setLogIn(!!token);
+
+    //fix this how do based on the token i get which user is logged in
+    //setLogIn(!!token);
   }, []);
-
-  const handleLogin = () => setLogIn(true);
-
-  const handleLogout = () => {
-    localStorage.removeItem('authToken');
-    setLogIn(false);
-  };
 
   const addCustomer = async function (customer: any): Promise<void> {
     await createCustomer(customer);
@@ -54,23 +48,24 @@ function App() {
   return (
     <>
       <header>
-        <Navbar isLoggedIn={isLoggedIn} onLogout={handleLogout} />
+        <Navbar />
       </header>
       <main>
         <Routes>
           <Route path="/" element={<Navigate to="/customers" replace />} />
           <Route path="customers" element={<CustomerList
             customers={customers}
-            isLoggedIn={isLoggedIn}
+            isLoggedIn={true}
             addCustomer={addCustomer} />} />
           <Route path="/customers/:id" element={<CustomerDetails
             customers={customers}
             updateCustomer={updateCustomer}
             deleteCustomer={deleteCustomer}
-            isLoggedIn={isLoggedIn} />} />
-          <Route path="/login" element={<Login handleLogin={handleLogin} />} />
+            isLoggedIn={true} />} />
+          <Route path="/login" element={<Login/>} />
         </Routes>
-      {isLoggedIn && <ChatBot/>}
+        {/* remove chatbot */}
+      {/* {isLoggedIn && <ChatBot/>} */}
       </main>
       <Footer />
     </>
