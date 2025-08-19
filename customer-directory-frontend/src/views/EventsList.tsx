@@ -8,20 +8,18 @@ import ListIcon from '@mui/icons-material/List';
 import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied';
 import { useSelector, useDispatch } from 'react-redux';
 import type { RootState } from '../redux/store';
+import { addEvent } from '../redux/actions';
+import { createEvent } from '../api/eventsAPI';
 
-interface props {
-    events: Event[]
-    addEvent: (event: any) => Promise<void>,
-}
 
-export default function EventsList({ events, addEvent }: props) {
+
+export default function EventsList() {
 
     const [searchTerm, setSearchTerm] = useState("");
     const [showAddModal, setShowAddModal] = useState(false);
     const isLoggedIn = useSelector((state: RootState) => state.app.isLoggedIn);
+    const events: Event[] = useSelector((state: RootState) => state.app.events);
     const dispatch = useDispatch();
-
-    
 
     const filteredEvents = events.filter((event) =>
         event.title.toLowerCase().includes(searchTerm.toLowerCase())
@@ -34,7 +32,8 @@ export default function EventsList({ events, addEvent }: props) {
     const handleCloseModal = () => setShowAddModal(false);
 
     const handleAddEvent = async (event: any) => {
-        await addEvent(event)
+        const response = await createEvent(event)
+        dispatch(addEvent(response.data))
         setShowAddModal(false)
     }
 

@@ -3,7 +3,7 @@ import axios from 'axios';
 
 export const getEvents = () => axios.get<Event[]>(`/api/events`);
 
-export const createEvent = (eventData: any): Promise<Event> =>
+export const createEvent = (eventData: any): Promise<any> =>
     axios.post('/api/events/',
         JSON.stringify(eventData), {
         headers: { 'Content-Type': 'application/json' }

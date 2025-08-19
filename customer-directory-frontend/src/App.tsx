@@ -6,17 +6,14 @@ import Footer from './components/Footer';
 import Navbar from './components/Navbar';
 import "./App.css"
 import { useEffect } from "react";
-import type { Customer } from './types/appState';
 import { getCustomers } from './api/customersAPI';
+import { getEvents } from './api/eventsAPI';
 import { useDispatch } from 'react-redux';
-import { setCustomers, setLogin } from './redux/actions';
+import { setCustomers, setLogin, setEvents } from './redux/actions';
 import EventsList from './views/EventsList';
 //import ChatBot from './components/ChatBot';
 
 function App() {
-
-  const [customers, setCustomers] = useState<Customer[]>([]);
-  const [events, setEvents] = useState<Event[]>([]);
 
   const dispatch = useDispatch();
 
@@ -24,7 +21,10 @@ function App() {
     const fetchData = async () => {
       const response = await getCustomers();
       dispatch(setCustomers(response.data));
-  
+
+      const responseEvent = await getEvents();
+      dispatch(setEvents(responseEvent.data));
+
       const token = localStorage.getItem('authToken');
       if (token) {
         // fix this: how do based on the token i get which user info from bsckend and setlogin
@@ -45,7 +45,8 @@ function App() {
           <Route path="/" element={<Navigate to="/customers" replace />} />
           <Route path="customers" element={<CustomerList />} />
           <Route path="/customers/:id" element={<CustomerDetails />} />
-          <Route path="/login" element={<Login/>} />
+          <Route path="events" element={<EventsList />} />
+          <Route path="/login" element={<Login />} />
         </Routes>
       </main>
       <Footer />
