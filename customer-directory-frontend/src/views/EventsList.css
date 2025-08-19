@@ -1,16 +1,16 @@
-.customers {
+.events {
     padding: 2vw 5vw;
     box-sizing: border-box;
     width: 100%;
 }
 
 @media (max-width: 768px) {
-    .customers {
+    .events {
         width: auto;
     }
 }
 
-.customersHeader {
+.eventsHeader {
     display: flex;
     align-items: center;
     color: #333;
@@ -60,7 +60,7 @@
     flex-wrap: wrap;
 }
 
-.noCustomers {
+.noEvents {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -72,11 +72,11 @@
     flex-wrap: wrap;
 }
 
-.customerGrid {
+.eventsGrid {
     margin: 2vw 1em;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 50px;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 0.8fr));
+    gap: 40px;
     justify-items: center;
     padding-bottom: 2em;
 }

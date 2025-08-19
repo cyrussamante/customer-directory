@@ -1,0 +1,68 @@
+.eventDetails {
+    margin-top: 3em;
+    padding: 40px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    width: 70vw;
+    max-width: 700px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
+}
+
+.eventDetailsHead {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.eventDetailsButtons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.eventDetailsBody {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px
+}
+
+.eventImageContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.eventDetailsBody img {
+    width: 30vw;
+    max-width: 70vw;
+    height: 200px;
+    object-fit: cover;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2)
+}
+
+.eventDetailsGrid {
+    /* width: 100%; */
+    max-width: 500px;
+    text-align: left;
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    gap: 10px;
+}
+
+.eventDetailsGrid p {
+    margin: 0;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.eventDetailsGrid .classifier {
+    font-weight: bold;
+    color: #333;
+}

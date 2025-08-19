@@ -1,26 +1,28 @@
-import type { Customer } from '../types/appState';
-import CustomerCard from '../components/CustomerCard';
+import type { Event } from '../types/appState';
+import EventsCard from '../components/EventsCard';
 import { useState } from "react";
-import "./CustomerList.css";
+import "./EventsList.css";
 import Modal from '../components/Modal';
 import WarningIcon from '@mui/icons-material/Warning';
 import ListIcon from '@mui/icons-material/List';
 import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied';
 import { useSelector, useDispatch } from 'react-redux';
 import type { RootState } from '../redux/store';
-import { createCustomer } from '../api/customersAPI';
-import { addCustomer } from '../redux/actions';
+import { addEvent } from '../redux/actions';
+import { createEvent } from '../api/eventsAPI';
 
-export default function CustomerList() {
+
+
+export default function EventsList() {
 
     const [searchTerm, setSearchTerm] = useState("");
     const [showAddModal, setShowAddModal] = useState(false);
     const isLoggedIn = useSelector((state: RootState) => state.app.isLoggedIn);
-    const customers: Customer[] = useSelector((state: RootState) => state.app.customers);
+    const events: Event[] = useSelector((state: RootState) => state.app.events);
     const dispatch = useDispatch();
 
-    const filteredCustomers = customers.filter((customer) =>
-        customer.name.toLowerCase().includes(searchTerm.toLowerCase())
+    const filteredEvents = events.filter((event) =>
+        event.title.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     const handleAddClick = () => {
@@ -29,48 +31,48 @@ export default function CustomerList() {
 
     const handleCloseModal = () => setShowAddModal(false);
 
-    const handleAddCustomer = async (customer: any) => {
-        const response = await createCustomer(customer)
-        dispatch(addCustomer(response.data))
+    const handleAddEvent = async (event: any) => {
+        const response = await createEvent(event)
+        dispatch(addEvent(response.data))
         setShowAddModal(false)
     }
 
     return (
-        <div className="customers">
-            <div className="customersHeader">
+        <div className="events">
+            <div className="eventsHeader">
                 <ListIcon />
-                <h2>Customer List</h2>
+                <h2>Events</h2>
             </div>
             <div className="search">
                 <input
                     type="text"
                     className="searchInput"
-                    placeholder="Search customers"
+                    placeholder="Search events"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                 />
                 <button disabled={!isLoggedIn} onClick={handleAddClick}>
-                    Add Customer
+                    Add Event
                 </button>
             </div>
             <div className="searchLabels">
                 {!isLoggedIn && (
                     <div className="hint">
                         <WarningIcon />
-                        <p>Login to add customers</p>
+                        <p>Login to add events</p>
                     </div>
                 )}
             </div>
 
-            {filteredCustomers.length === 0 ? (
-                <div className="noCustomers">
+            {filteredEvents.length === 0 ? (
+                <div className="noEvents">
                     <SentimentDissatisfiedIcon />
-                    <p>No customers found.</p>
+                    <p>No events found.</p>
                 </div>
             ) : (
-                <div className="customerGrid">
-                    {filteredCustomers.map((customer: Customer) => (
-                        <CustomerCard key={customer.id} customer={customer} />
+                <div className="eventsGrid">
+                    {filteredEvents.map((event: Event) => (
+                        <EventsCard key={event.id} event={event} isLoggedIn={isLoggedIn} />
                     ))}
                 </div>
             )}
@@ -78,7 +80,7 @@ export default function CustomerList() {
             {showAddModal && (<Modal
                 mode={'add'}
                 onClose={handleCloseModal}
-                onSave={handleAddCustomer} />)}
+                onSave={handleAddEvent} />)}
         </ div>
     )
 }

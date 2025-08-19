@@ -5,6 +5,7 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs');
 const customerRouter = require('./routes/customerRoutes');
+const eventRouter = require('./routes/eventRoutes');
 const loginRouter = require('./routes/loginRoutes');
 const cors = require('cors');
 
@@ -17,6 +18,7 @@ app.use(express.json());
 
 app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use('/api/customers', customerRouter)
+app.use('/api/events', eventRouter)
 app.use('/api/login', loginRouter)
 app.use('/api/ai', require('./routes/chatRoutes'))
 
