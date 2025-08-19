@@ -24,15 +24,8 @@ function App() {
   useEffect(() => {
     getCustomers().then(res => setCustomers(res.data));
     const token = localStorage.getItem('authToken');
-    //fix this: how do based on the token i get which user info from bsckend and setlogin
-    // if (token) {
-    //   dispatch(setLogin({ user}));
-    // }
-  }, []);
-
-  useEffect(() => {
     getEvents().then(res => setEvents(res.data));
-    const token = localStorage.getItem('authToken');
+
     //fix this: how do based on the token i get which user info from bsckend and setlogin
     // if (token) {
     //   dispatch(setLogin({ user}));

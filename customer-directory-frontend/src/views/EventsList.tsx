@@ -21,6 +21,8 @@ export default function EventsList({ events, addEvent }: props) {
     const isLoggedIn = useSelector((state: RootState) => state.app.isLoggedIn);
     const dispatch = useDispatch();
 
+    
+
     const filteredEvents = events.filter((event) =>
         event.title.toLowerCase().includes(searchTerm.toLowerCase())
     );

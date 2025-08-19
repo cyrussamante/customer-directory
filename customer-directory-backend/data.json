@@ -125,10 +125,10 @@
   "events": [
     {
       "id": "1",
-      "title": "Alice Johnson",
+      "title": "Event Title 1",
       "startDateTime": "2023-10-01T10:00:00Z",
       "endDateTime": "2023-10-01T12:00:00Z",
-      "location": "alice.johnson@example.com",
+      "location": "Toronto",
       "price": 1,
       "bannerImage": "123 Maple St, Springfield, IL",
       "description": "hello",
