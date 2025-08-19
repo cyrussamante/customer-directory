@@ -8,6 +8,16 @@ export const ADD_CUSTOMER = "ADD_CUSTOMER";
 export const UPDATE_CUSTOMER = "UPDATE_CUSTOMER";
 export const DELETE_CUSTOMER = "DELETE_CUSTOMER";
 
+export const SET_EVENTS = "SET_EVENTS";
+export const ADD_EVENT = "ADD_EVENT";
+export const UPDATE_EVENT = "UPDATE_EVENT";
+export const DELETE_EVENT = "DELETE_EVENT";
+
+export const SET_REGISTRATIONS = "SET_REGISTRATIONS";
+export const ADD_REGISTRATION = "ADD_REGISTRATION";
+export const UPDATE_REGISTRATION = "UPDATE_REGISTRATION";
+export const DELETE_REGISTRATION = "DELETE_REGISTRATION";
+
 export const setLogin = (user: User) => ({
   type: LOGIN,
   payload: { user },
@@ -35,4 +45,44 @@ export const updateCustomer = (customer: Customer) => ({
 export const deleteCustomer = (customerId: string) => ({
   type: DELETE_CUSTOMER,
   payload: { customerId },
+});
+
+export const setEvents = (events: Event[]) => ({
+  type: SET_EVENTS,
+  payload: { events },
+});
+
+export const addEvent = (event: Event) => ({
+  type: ADD_EVENT,
+  payload: { event },
+});
+
+export const updateEvent = (event: Event) => ({
+  type: UPDATE_EVENT,
+  payload: { event },
+});
+
+export const deleteEvent = (eventId: string) => ({
+  type: DELETE_EVENT,
+  payload: { eventId },
+});
+
+export const setRegistrations = (registrations: Registration[]) => ({
+  type: SET_REGISTRATIONS,
+  payload: { registrations },
+});
+
+export const addRegistration = (registration: Registration) => ({
+  type: ADD_REGISTRATION,
+  payload: { registration },
+});
+
+export const updateRegistration = (registration: Registration) => ({
+  type: UPDATE_REGISTRATION,
+  payload: { registration },
+});
+
+export const deleteRegistration = (registrationId: string) => ({
+  type: DELETE_REGISTRATION,
+  payload: { registrationId },
 });

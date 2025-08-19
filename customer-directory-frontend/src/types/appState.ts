@@ -1,4 +1,4 @@
-export default interface AppState {
+export interface AppState {
     isLoggedIn: boolean
     user: User | null,
     customers: Customer[],

@@ -8,18 +8,22 @@ import "./App.css"
 import { useEffect, useState } from "react";
 import type { Customer } from './types/appState';
 import { getCustomers, createCustomer, editCustomer, removeCustomer } from './api/customersAPI';
+import { useDispatch } from 'react-redux';
+import { setLogin } from './redux/actions';
 //import ChatBot from './components/ChatBot';
 
 function App() {
 
   const [customers, setCustomers] = useState<Customer[]>([]);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     getCustomers().then(res => setCustomers(res.data));
     const token = localStorage.getItem('authToken');
-
-    //fix this how do based on the token i get which user is logged in
-    //setLogIn(!!token);
+    //fix this: how do based on the token i get which user info from bsckend and setlogin
+    // if (token) {
+    //   dispatch(setLogin({ user}));
+    // }
   }, []);
 
   const addCustomer = async function (customer: any): Promise<void> {
@@ -55,13 +59,12 @@ function App() {
           <Route path="/" element={<Navigate to="/customers" replace />} />
           <Route path="customers" element={<CustomerList
             customers={customers}
-            isLoggedIn={true}
             addCustomer={addCustomer} />} />
           <Route path="/customers/:id" element={<CustomerDetails
             customers={customers}
             updateCustomer={updateCustomer}
             deleteCustomer={deleteCustomer}
-            isLoggedIn={true} />} />
+             />} />
           <Route path="/login" element={<Login/>} />
         </Routes>
         {/* remove chatbot */}

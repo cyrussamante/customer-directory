@@ -5,20 +5,24 @@ import DeleteConfirmationModal from '../components/DeleteConfirmationModal';
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import Modal from '../components/Modal';
+import { useDispatch, useSelector } from 'react-redux';
+import type { RootState } from '../redux/store';
+
 
 interface props {
     customers: Customer[],
     updateCustomer: (customer: Customer) => Promise<void>,
     deleteCustomer: (customer: Customer) => Promise<void>,
-    isLoggedIn: boolean
 }
 
-export default function CustomerDetails({ customers, updateCustomer, deleteCustomer, isLoggedIn }: props) {
+export default function CustomerDetails({ customers, updateCustomer, deleteCustomer }: props) {
     const { id } = useParams();
     const navigate = useNavigate();
     const [showDeleteModal, setDeleteModal] = useState(false);
     const [showEditModal, setEditModal] = useState(false);
     const customer = customers.find((customer: Customer) => customer.id === id);
+    const isLoggedIn = useSelector((state: RootState) => state.app.isLoggedIn);
+    const dispatch = useDispatch();
 
     const handleDeleteClick = () => {
         if (isLoggedIn) setDeleteModal(true);

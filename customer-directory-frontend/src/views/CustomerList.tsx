@@ -6,17 +6,20 @@ import Modal from '../components/Modal';
 import WarningIcon from '@mui/icons-material/Warning';
 import ListIcon from '@mui/icons-material/List';
 import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied';
+import { useSelector, useDispatch } from 'react-redux';
+import type { RootState } from '../redux/store';
 
 interface props {
     customers: Customer[];
-    isLoggedIn: boolean;
     addCustomer: (customer: any) => Promise<void>,
 }
 
-export default function CustomerList({ customers, isLoggedIn, addCustomer }: props) {
+export default function CustomerList({ customers, addCustomer }: props) {
 
     const [searchTerm, setSearchTerm] = useState("");
     const [showAddModal, setShowAddModal] = useState(false);
+    const isLoggedIn = useSelector((state: RootState) => state.app.isLoggedIn);
+    const dispatch = useDispatch();
 
     const filteredCustomers = customers.filter((customer) =>
         customer.name.toLowerCase().includes(searchTerm.toLowerCase())

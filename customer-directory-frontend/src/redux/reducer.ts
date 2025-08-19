@@ -1,5 +1,5 @@
-import type AppState from "../types/appState";
-import { ADD_CUSTOMER, DELETE_CUSTOMER, LOGOUT, SET_CUSTOMERS, LOGIN, UPDATE_CUSTOMER} from "./actions";
+import type { AppState } from "../types/appState";
+import { ADD_CUSTOMER, ADD_EVENT, ADD_REGISTRATION, DELETE_CUSTOMER, DELETE_EVENT, DELETE_REGISTRATION, LOGOUT, SET_CUSTOMERS, SET_EVENTS, SET_REGISTRATIONS, LOGIN, UPDATE_CUSTOMER, UPDATE_EVENT, UPDATE_REGISTRATION } from "./actions";
 
 const initialState: AppState = {
     isLoggedIn: false,
@@ -56,7 +56,66 @@ const appReducer = (state = initialState, action: any) => {
                 ),
             };
 
-        
+        case SET_EVENTS:
+            return {
+                ...state,
+                events: action.payload.events,
+            };
+
+        case ADD_EVENT:
+            return {
+                ...state,
+                events: [...state.events, action.payload.event],
+            };
+
+        case UPDATE_EVENT:
+            return {
+                ...state,
+                events: state.events.map(event =>
+                    event.id === action.payload.event.id
+                        ? action.payload.event
+                        : event
+                ),
+            };
+
+        case DELETE_EVENT:
+            return {
+                ...state,
+                events: state.events.filter(
+                    event => event.id !== action.payload.eventId
+                ),
+            };
+
+        case SET_REGISTRATIONS:
+            return {
+                ...state,
+                registrations: action.payload.registrations,
+            };
+
+        case ADD_REGISTRATION:
+            return {
+                ...state,
+                registrations: [...state.registrations || [], action.payload.registration],
+            };
+
+        case UPDATE_REGISTRATION:
+            return {
+                ...state,
+                registrations: (state.registrations || []).map(registration =>
+                    registration.id === action.payload.registration.id
+                        ? action.payload.registration
+                        : registration
+                ),
+            };
+
+        case DELETE_REGISTRATION:
+            return {
+                ...state,
+                registrations: (state.registrations || []).filter(
+                    registration => registration.id !== action.payload.registrationId
+                ),
+            };
+
         default:
             return state;
     }

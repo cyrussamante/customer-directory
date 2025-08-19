@@ -4,8 +4,7 @@ import "./Login.css"
 import { login } from '../api/customersAPI';
 import { setLogin } from '../redux/actions';
 import { useDispatch, useSelector } from 'react-redux'
-import type AppState from '../types/appState';
-
+import type { AppState } from '../types/appState';
 export default function Login() {
 
   const initialFormData = { email: '', password: '' }

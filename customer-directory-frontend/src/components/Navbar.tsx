@@ -1,11 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import type AppState from "../types/appState";
 import { setLogout } from "../redux/actions";
-
+import type { RootState } from "../redux/store";
 
 export default function Navbar() {
-    const isLoggedIn = useSelector((state: AppState) => state.isLoggedIn);
+    const isLoggedIn = useSelector((state: RootState) => state.app.isLoggedIn);
     const dispatch = useDispatch();
 
     const handleLogout = () => {
