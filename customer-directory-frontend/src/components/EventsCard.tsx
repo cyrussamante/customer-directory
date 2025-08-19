@@ -13,7 +13,7 @@ export default function EventsCard({ event, isLoggedIn }: props): ReactElement {
 
     const navigate = useNavigate();
 
-    const handleViewDetails = () => {
+    const handleRegisterEvent = () => {
         if (isLoggedIn) {
             navigate(`/events/${event.id}`);
         }
@@ -21,19 +21,21 @@ export default function EventsCard({ event, isLoggedIn }: props): ReactElement {
 
     return (
         <div className="eventCard">
+            <div className="eventCardBody">
+                <img src={event?.bannerImage ? event.bannerImage : '/images/default-event.png'} alt={event.title} />
+                <div className="event-info">
+                    <div className="title-location">
+                        <h1>{event.title}</h1>
+                        <p>{event.location}</p>
+                    </div>
+                    <p>{event.startDateTime.toString()} - {event.endDateTime.toString()}</p>
+                    <p>{event.description}</p>
+                    <button disabled={!isLoggedIn} onClick={handleRegisterEvent}>Register for Event</button>
+
+                </div>
+            </div>
             <div className="eventCardIcon">
                 {!isLoggedIn && <VisibilityOffIcon />}
-            </div>
-            <div className="eventCardBody">
-                <img src={event?.bannerImage} alt={event.title} />
-                <div className="title-date">
-                    <h1>{event.title}</h1>
-                    <p>{event.startDateTime.toString()} - {event.endDateTime.toString()}</p>
-                </div>
-                <p>{event.location}</p>
-                <p>{event.description}</p>
-                <p>{event.capacity}</p>
-                <button disabled={!isLoggedIn} onClick={handleViewDetails}>View Details</button>
             </div>
         </div>
     )

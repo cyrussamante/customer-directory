@@ -69,7 +69,7 @@ async function deleteEvent(id) {
     if (!event) return false;
 
     // Delete associated image if not default
-    if (event.imageUrl && event.imageUrl !== '/images/default_image.png') {
+    if (event.imageUrl && event.imageUrl !== '/images/default-event.png') {
         try {
             const imgFile = path.join(path.join(__dirname, 'images'), path.basename(event.imageUrl));
             await fs.unlink(imgFile);

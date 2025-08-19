@@ -27,7 +27,7 @@ export default function CustomerCard({ customer }: props): ReactElement {
                 {!isLoggedIn && <VisibilityOffIcon />}
             </div>
             <div className="cardBody">
-                <img src={customer?.imageUrl} alt={customer.name} />
+                <img className="customerImg" src={customer?.imageUrl} alt={customer.name} />
                 <p>{customer.name}</p>
                 <button disabled={!isLoggedIn} onClick={handleViewDetails}>View Details</button>
             </div>
