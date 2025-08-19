@@ -7,49 +7,51 @@ import { useNavigate } from 'react-router-dom';
 import Modal from '../components/Modal';
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState } from '../redux/store';
+import { editCustomer, removeCustomer } from '../api/customersAPI';
+import { deleteCustomer, updateCustomer } from '../redux/actions';
 
-
-interface props {
-    customers: Customer[],
-    updateCustomer: (customer: Customer) => Promise<void>,
-    deleteCustomer: (customer: Customer) => Promise<void>,
-}
-
-export default function CustomerDetails({ customers, updateCustomer, deleteCustomer }: props) {
+export default function CustomerDetails() {
     const { id } = useParams();
     const navigate = useNavigate();
     const [showDeleteModal, setDeleteModal] = useState(false);
     const [showEditModal, setEditModal] = useState(false);
+    const customers = useSelector((state: RootState) => state.app.customers);
     const customer = customers.find((customer: Customer) => customer.id === id);
-    const isLoggedIn = useSelector((state: RootState) => state.app.isLoggedIn);
     const dispatch = useDispatch();
 
-    const handleDeleteClick = () => {
-        if (isLoggedIn) setDeleteModal(true);
-    };
+    const handleDeleteClick = () => setDeleteModal(true);
+
     const handleCloseDeleteModal = () => setDeleteModal(false);
 
     const handleDeleteCustomer = async (e: any) => {
         e.preventDefault()
         if (customer) {
-            await deleteCustomer(customer);
+            console.log(customer)
+            console.log(customer.id)
+            const response = await removeCustomer(customer.id);
+            if (response.status !== 204) {
+            throw new Error('Failed to delete customer');
+            }
+            dispatch(deleteCustomer(customer.id));
             setDeleteModal(false);
             navigate('/customers');
         }
     }
 
-    const handleEditClick = () => {
-        if (isLoggedIn) setEditModal(true);
-    };
-
+    const handleEditClick = () => setEditModal(true);
+    
     const handleCloseEditModal = () => setEditModal(false);
 
-    const handleCloseClick = () => navigate('/customers');
-
     const handleEditCustomer = async (updatedCustomer: Customer) => {
-        await updateCustomer(updatedCustomer)
+        const response = await editCustomer(customer.id, updatedCustomer);
+        if (response.status < 200 || response.status >= 300) {
+          throw new Error('Failed to update customer');
+        }
+        dispatch(updateCustomer(updatedCustomer));
         setEditModal(false);
     }
+
+    const handleCloseProfileClick = () => navigate('/customers');
 
     return (
         <div className="details">
@@ -58,9 +60,9 @@ export default function CustomerDetails({ customers, updateCustomer, deleteCusto
                     <div className="detailsHead">
                         <h2>{customer.name}</h2>
                         <div className="detailsButtons">
-                            <button disabled={!isLoggedIn} className="edit" onClick={handleEditClick} >Edit Details </button>
-                            <button disabled={!isLoggedIn} className="delete" onClick={handleDeleteClick} >Delete</button>
-                            <button onClick={handleCloseClick} >Close Profile</button>
+                            <button className="edit" onClick={handleEditClick} >Edit Details </button>
+                            <button className="delete" onClick={handleDeleteClick} >Delete</button>
+                            <button onClick={handleCloseProfileClick} >Close Profile</button>
                         </div>
                     </div>
                     <div className="detailsBody">

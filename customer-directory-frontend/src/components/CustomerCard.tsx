@@ -3,14 +3,16 @@ import { useNavigate } from "react-router-dom";
 import "./CustomerCard.css";
 import type { Customer } from '../types/appState';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import { useSelector } from "react-redux";
+import type { RootState } from "../redux/store";
 
 interface props {
     customer: Customer,
-    isLoggedIn: boolean
 }
 
-export default function CustomerCard({ customer, isLoggedIn }: props): ReactElement {
+export default function CustomerCard({ customer }: props): ReactElement {
 
+    const isLoggedIn = useSelector((state: RootState) => state.app.isLoggedIn);
     const navigate = useNavigate();
 
     const handleViewDetails = () => {
