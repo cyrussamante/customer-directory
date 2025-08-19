@@ -11,6 +11,7 @@ import { getEvents } from './api/eventsAPI';
 import { useDispatch } from 'react-redux';
 import { setCustomers, setLogin, setEvents } from './redux/actions';
 import EventsList from './views/EventsList';
+import EventDetails from './views/EventDetails';
 //import ChatBot from './components/ChatBot';
 
 function App() {
@@ -46,6 +47,7 @@ function App() {
           <Route path="customers" element={<CustomerList />} />
           <Route path="/customers/:id" element={<CustomerDetails />} />
           <Route path="events" element={<EventsList />} />
+          <Route path="/events/:id" element={<EventDetails />} />
           <Route path="/login" element={<Login />} />
         </Routes>
       </main>

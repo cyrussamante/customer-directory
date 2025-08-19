@@ -70,7 +70,7 @@ export default function EventsList() {
                     <p>No events found.</p>
                 </div>
             ) : (
-                <div className="grid">
+                <div className="eventsGrid">
                     {filteredEvents.map((event: Event) => (
                         <EventsCard key={event.id} event={event} isLoggedIn={isLoggedIn} />
                     ))}
