@@ -127,9 +127,35 @@
       "id": "1",
       "title": "Event Title 1",
       "startDateTime": "2023-10-01T10:00:00Z",
-      "endDateTime": "2023-10-01T12:00:00Z",
       "location": "Toronto",
       "price": 1,
+      "description": "hello",
+      "capacity": 5
+    },
+    {
+      "id": "2",
+      "title": "Event Title 2",
+      "startDateTime": "2023-10-02T11:00:00Z",
+      "location": "Vancouver",
+      "price": 2,
+      "description": "hello",
+      "capacity": 5
+    },
+    {
+      "id": "3",
+      "title": "Event Title 3",
+      "startDateTime": "2023-10-03T12:00:00Z",
+      "location": "Montreal",
+      "price": 3,
+      "description": "hello",
+      "capacity": 5
+    },
+    {
+      "id": "4",
+      "title": "Event Title 4",
+      "startDateTime": "2023-10-04T13:00:00Z",
+      "location": "Quebec City",
+      "price": 3,
       "description": "hello",
       "capacity": 5
     }

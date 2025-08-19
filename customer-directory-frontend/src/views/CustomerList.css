@@ -72,7 +72,7 @@
     flex-wrap: wrap;
 }
 
-.grid {
+.customerGrid {
     margin: 2vw 1em;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));

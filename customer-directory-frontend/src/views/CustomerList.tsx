@@ -68,7 +68,7 @@ export default function CustomerList() {
                     <p>No customers found.</p>
                 </div>
             ) : (
-                <div className="grid">
+                <div className="customerGrid">
                     {filteredCustomers.map((customer: Customer) => (
                         <CustomerCard key={customer.id} customer={customer} />
                     ))}

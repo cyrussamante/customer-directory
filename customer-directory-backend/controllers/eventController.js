@@ -58,7 +58,6 @@ async function createEvent(req, res) {
             id,
             title: String(body.title),
             startDateTime: body.startDateTime,
-            endDateTime: body.endDateTime,
             location: String(body.location),
             price: body.price,
             bannerImage: String(body.bannerImage),

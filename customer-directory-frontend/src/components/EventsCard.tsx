@@ -13,7 +13,13 @@ export default function EventsCard({ event, isLoggedIn }: props): ReactElement {
 
     const navigate = useNavigate();
 
-    const handleRegisterEvent = () => {
+    // Format dates to readable strings
+    const start = new Date(event.startDateTime);
+    const formattedStart = start.toLocaleString(undefined, {
+        year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'
+    });
+
+    const navigateToEventDetails = () => {
         if (isLoggedIn) {
             navigate(`/events/${event.id}`);
         }
@@ -24,13 +30,15 @@ export default function EventsCard({ event, isLoggedIn }: props): ReactElement {
             <div className="eventCardBody">
                 <img src={event?.bannerImage ? event.bannerImage : '/images/default-event.png'} alt={event.title} />
                 <div className="event-info">
-                    <div className="title-location">
-                        <h1>{event.title}</h1>
-                        <p>{event.location}</p>
+                    <div className="event-specifics">
+                        <div className="title-location">
+                            <p className="event-title">{event.title}</p>
+                            <p className="event-location">{event.location}</p>
+                        </div>
+                        <p className="event-dates">{formattedStart}</p>
                     </div>
-                    <p>{event.startDateTime.toString()} - {event.endDateTime.toString()}</p>
-                    <p>{event.description}</p>
-                    <button disabled={!isLoggedIn} onClick={handleRegisterEvent}>Register for Event</button>
+                    <p className="event-description">{event.description}</p>
+                    <button className="event-button" disabled={!isLoggedIn} onClick={navigateToEventDetails}>View Details</button>
 
                 </div>
             </div>
