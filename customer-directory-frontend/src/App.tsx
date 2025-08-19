@@ -5,49 +5,31 @@ import Login from './views/Login';
 import Footer from './components/Footer';
 import Navbar from './components/Navbar';
 import "./App.css"
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import type { Customer } from './types/appState';
-import { getCustomers, createCustomer, editCustomer, removeCustomer } from './api/customersAPI';
+import { getCustomers } from './api/customersAPI';
 import { useDispatch } from 'react-redux';
-import { setLogin } from './redux/actions';
+import { setCustomers, setLogin } from './redux/actions';
 //import ChatBot from './components/ChatBot';
 
 function App() {
-
-  const [customers, setCustomers] = useState<Customer[]>([]);
+  
   const dispatch = useDispatch();
 
   useEffect(() => {
-    getCustomers().then(res => setCustomers(res.data));
-    const token = localStorage.getItem('authToken');
-    //fix this: how do based on the token i get which user info from bsckend and setlogin
-    // if (token) {
-    //   dispatch(setLogin({ user}));
-    // }
-  }, []);
-
-  const addCustomer = async function (customer: any): Promise<void> {
-    await createCustomer(customer);
-    getCustomers().then(res => setCustomers(res.data));
-  }
-
-  const updateCustomer = async function (customer: Customer): Promise<void> {
-    const id = customer.id;
-    const response = await editCustomer(id, customer);
-    if (response.status < 200 || response.status >= 300) {
-      throw new Error('Failed to update customer');
-    }
-    setCustomers(prev => prev.map(c => (c.id === id ? { ...c, ...customer } : c)));
-  };
-
-  const deleteCustomer = async function (customer: Customer): Promise<void> {
-    const id = customer.id;
-    const response = await removeCustomer(id);
-    if (response.status !== 204) {
-      throw new Error('Failed to delete customer');
-    }
-    setCustomers(prev => prev.filter(c => c.id !== id));
-  };
+    const fetchData = async () => {
+      const response = await getCustomers();
+      dispatch(setCustomers(response.data));
+  
+      const token = localStorage.getItem('authToken');
+      if (token) {
+        // fix this: how do based on the token i get which user info from bsckend and setlogin
+        //  const userInfo = await getUserInfo(token); 
+        // dispatch(setLogin(userInfo.data)); 
+      }
+    };
+    fetchData();
+  }, [dispatch]);
 
   return (
     <>
@@ -57,18 +39,10 @@ function App() {
       <main>
         <Routes>
           <Route path="/" element={<Navigate to="/customers" replace />} />
-          <Route path="customers" element={<CustomerList
-            customers={customers}
-            addCustomer={addCustomer} />} />
-          <Route path="/customers/:id" element={<CustomerDetails
-            customers={customers}
-            updateCustomer={updateCustomer}
-            deleteCustomer={deleteCustomer}
-             />} />
+          <Route path="customers" element={<CustomerList />} />
+          <Route path="/customers/:id" element={<CustomerDetails />} />
           <Route path="/login" element={<Login/>} />
         </Routes>
-        {/* remove chatbot */}
-      {/* {isLoggedIn && <ChatBot/>} */}
       </main>
       <Footer />
     </>
