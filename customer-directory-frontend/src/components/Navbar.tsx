@@ -1,11 +1,16 @@
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { setLogout } from "../redux/actions";
+import type { RootState } from "../redux/store";
 
-interface props {
-    isLoggedIn: boolean
-    onLogout: () => void;
-}
+export default function Navbar() {
+    const isLoggedIn = useSelector((state: RootState) => state.app.isLoggedIn);
+    const dispatch = useDispatch();
 
-export default function Navbar({ isLoggedIn, onLogout }: props) {
+    const handleLogout = () => {
+        localStorage.removeItem('authToken');
+        dispatch(setLogout());
+      };
 
     return (
         <nav className="navbar">
@@ -18,7 +23,7 @@ export default function Navbar({ isLoggedIn, onLogout }: props) {
             </div>
             <div>
                 {isLoggedIn ? (
-                    <Link to="/customers" onClick={onLogout}>Logout</Link>
+                    <Link to="/customers" onClick={handleLogout}>Logout</Link>
                 ) : (
                     <Link to="/login">Login</Link>
                 )}

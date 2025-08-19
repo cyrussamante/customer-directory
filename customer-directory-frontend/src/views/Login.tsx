@@ -2,16 +2,15 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import "./Login.css"
 import { login } from '../api/customersAPI';
-
-interface props {
-  handleLogin: () => void
-}
-
-export default function Login({ handleLogin }: props) {
+import { setLogin } from '../redux/actions';
+import { useDispatch, useSelector } from 'react-redux'
+import type { AppState } from '../types/appState';
+export default function Login() {
 
   const initialFormData = { email: '', password: '' }
   const [formData, setFormData] = useState(initialFormData);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleChange = (e: any) => {
     setFormData({
@@ -30,7 +29,16 @@ export default function Login({ handleLogin }: props) {
       }
       const data = response.data;
       localStorage.setItem('authToken', data);
-      handleLogin()
+
+      dispatch(setLogin({
+        //for test only
+        id: '',
+        name: '',
+        email: formData.email, 
+        password: formData.password,
+        role: "admin",
+        token: data
+      } ))
       navigate('/customers');
     } catch (error) {
       alert('Login failed! Try again.');
