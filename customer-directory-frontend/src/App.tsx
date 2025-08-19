@@ -6,19 +6,32 @@ import Footer from './components/Footer';
 import Navbar from './components/Navbar';
 import "./App.css"
 import { useEffect, useState } from "react";
-import type { Customer } from './types/appState';
+import type { Customer, Event } from './types/appState';
 import { getCustomers, createCustomer, editCustomer, removeCustomer } from './api/customersAPI';
+import { getEvents, createEvent, editEvent, removeEvent } from './api/eventsAPI';
 import { useDispatch } from 'react-redux';
 import { setLogin } from './redux/actions';
+import EventsList from './views/EventsList';
 //import ChatBot from './components/ChatBot';
 
 function App() {
 
   const [customers, setCustomers] = useState<Customer[]>([]);
+  const [events, setEvents] = useState<Event[]>([]);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
     getCustomers().then(res => setCustomers(res.data));
+    const token = localStorage.getItem('authToken');
+    //fix this: how do based on the token i get which user info from bsckend and setlogin
+    // if (token) {
+    //   dispatch(setLogin({ user}));
+    // }
+  }, []);
+
+  useEffect(() => {
+    getEvents().then(res => setEvents(res.data));
     const token = localStorage.getItem('authToken');
     //fix this: how do based on the token i get which user info from bsckend and setlogin
     // if (token) {
@@ -49,6 +62,11 @@ function App() {
     setCustomers(prev => prev.filter(c => c.id !== id));
   };
 
+  const addEvent = async function (event: any): Promise<void> {
+    await createEvent(event);
+    getEvents().then(res => setEvents(res.data));
+  }
+
   return (
     <>
       <header>
@@ -64,11 +82,14 @@ function App() {
             customers={customers}
             updateCustomer={updateCustomer}
             deleteCustomer={deleteCustomer}
-             />} />
-          <Route path="/login" element={<Login/>} />
+          />} />
+          <Route path="events" element={<EventsList
+            events={events}
+            addEvent={addEvent} />} />
+          <Route path="/login" element={<Login />} />
         </Routes>
         {/* remove chatbot */}
-      {/* {isLoggedIn && <ChatBot/>} */}
+        {/* {isLoggedIn && <ChatBot/>} */}
       </main>
       <Footer />
     </>

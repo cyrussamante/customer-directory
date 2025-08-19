@@ -18,8 +18,8 @@ export default function Navbar() {
             <div className="options">
                 <Link to="/customers">Home</Link>
                 <Link to="/customers">Customers</Link>
-                <Link to="/customers">Orders</Link>
-                <Link to="/customers">Contact us</Link>
+                <Link to="/events">Events</Link>
+                <Link to="/customers">Contact</Link>
             </div>
             <div>
                 {isLoggedIn ? (

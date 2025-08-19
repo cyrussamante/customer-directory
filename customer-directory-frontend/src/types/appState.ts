@@ -37,6 +37,7 @@ export interface Event {
     price?: number,
     bannerImage?: string,
     description: string,
+    capacity: number,   
 }
 
 export interface Registration {
