@@ -8,17 +8,15 @@ import ListIcon from '@mui/icons-material/List';
 import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied';
 import { useSelector, useDispatch } from 'react-redux';
 import type { RootState } from '../redux/store';
+import { createCustomer } from '../api/customersAPI';
+import { addCustomer } from '../redux/actions';
 
-interface props {
-    customers: Customer[];
-    addCustomer: (customer: any) => Promise<void>,
-}
-
-export default function CustomerList({ customers, addCustomer }: props) {
+export default function CustomerList() {
 
     const [searchTerm, setSearchTerm] = useState("");
     const [showAddModal, setShowAddModal] = useState(false);
     const isLoggedIn = useSelector((state: RootState) => state.app.isLoggedIn);
+    const customers: Customer[] = useSelector((state: RootState) => state.app.customers);
     const dispatch = useDispatch();
 
     const filteredCustomers = customers.filter((customer) =>
@@ -32,7 +30,8 @@ export default function CustomerList({ customers, addCustomer }: props) {
     const handleCloseModal = () => setShowAddModal(false);
 
     const handleAddCustomer = async (customer: any) => {
-        await addCustomer(customer)
+        const response = await createCustomer(customer)
+        dispatch(addCustomer(response.data))
         setShowAddModal(false)
     }
 
@@ -71,7 +70,7 @@ export default function CustomerList({ customers, addCustomer }: props) {
             ) : (
                 <div className="grid">
                     {filteredCustomers.map((customer: Customer) => (
-                        <CustomerCard key={customer.id} customer={customer} isLoggedIn={isLoggedIn} />
+                        <CustomerCard key={customer.id} customer={customer} />
                     ))}
                 </div>
             )}
