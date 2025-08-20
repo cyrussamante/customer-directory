@@ -10,7 +10,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import EventsList from './views/EventsList';
 import EventDetails from './views/EventDetails';
 import Register from './views/Register';
-import CustomerProfile from './views/customerProfile';
 import type { RootState } from './redux/store';
 import configureHomePage from './helpers/function';
 import { setLogin } from './redux/actions';
