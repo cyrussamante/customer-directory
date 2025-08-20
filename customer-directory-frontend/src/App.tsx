@@ -32,13 +32,13 @@ function App() {
 
         //mock data for test only
         const user: User = {
-          id: '2',
+          id: '3',
           name: 'inreet',
           email: 'wasadmin@test.com',
           password: '1234',
           //for test only
-          //role: "admin",
-          //role: 'employee',
+          // role: "admin",
+          // role: 'employee',
           role: 'customer',
           token: token
         }

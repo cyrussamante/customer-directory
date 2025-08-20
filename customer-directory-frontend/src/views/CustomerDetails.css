@@ -4,7 +4,7 @@
     border: 1px solid #ddd;
     border-radius: 8px;
     width: 70vw;
-    max-width: 700px;
+    max-width: 500px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
@@ -67,16 +67,17 @@
 }
 
 .detailsPage {
+    margin: 2vw 1em;
     display: grid;
-    grid-template-columns: 1fr;
-    justify-content: center;
+    grid-template-columns: 1fr 1fr;
     gap: 10px;
+    justify-items: center;
+    padding-bottom: 2em;
 }
 
-@media (min-width: 768px) {
+@media (max-width: 768px) {
     .detailsPage {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: 1fr;
     }
-
-
 }
+

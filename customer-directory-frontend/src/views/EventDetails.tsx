@@ -90,13 +90,15 @@ export default function EventDetails() {
                             <p className="classifier">Capacity </p> <p>{event.capacity}</p>
                             <p className="classifier">Description </p> <p>{event.description}</p>
                         </div>
-                        <div className="eventDetailsActions">
-                            {!isRegistered && userRole === 'customer' ? (
-                                <button onClick={handleRegisterEventClick} >Register Event</button>
-                            ) : (
-                                <button className="delete" onClick={handleUnRegisterEventClick} >Unregister Event</button>
-                            )}
-                        </div>
+                        {userRole === 'customer' && (
+                            <div className="eventDetailsActions">
+                                {!isRegistered ? (
+                                    <button onClick={handleRegisterEventClick} >Register Event</button>
+                                ) : (
+                                    <button className="delete" onClick={handleUnRegisterEventClick} >Unregister Event</button>
+                                )}
+                            </div>
+                        )}
                     </div>
 
                     {showEditModal && (<EventModal
