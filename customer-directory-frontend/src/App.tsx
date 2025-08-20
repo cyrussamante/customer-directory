@@ -39,9 +39,9 @@ function App() {
           email: 'wasadmin@test.com',
           password: '1234',
           //for test only
-          role: "admin",
+          //role: "admin",
           //role: 'employee',
-          //role: 'customer',
+          role: 'customer',
           token: token
         }
         dispatch(setLogin(user)); 

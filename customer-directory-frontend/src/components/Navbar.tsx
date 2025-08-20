@@ -23,12 +23,7 @@ export default function Navbar() {
                 ) : (
                     <Link to="/customers">Customers</Link>
                 )}
-
-                { userRole === 'customer' ? (
-                    <Link to="/customerEvents">Events</Link>
-                ) : (
-                    <Link to="/events">Events</Link>
-                )}
+                <Link to="/events">Events</Link>
                 <Link to="/customers">Contact</Link>
             </div>
             <div>
