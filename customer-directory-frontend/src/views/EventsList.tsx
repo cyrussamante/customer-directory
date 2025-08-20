@@ -17,6 +17,7 @@ export default function EventsList() {
 
     const [searchTerm, setSearchTerm] = useState("");
     const [showAddModal, setShowAddModal] = useState(false);
+    const userRole = useSelector((state: RootState) => state.app.user.role);
     const isLoggedIn = useSelector((state: RootState) => state.app.isLoggedIn);
     const events: Event[] = useSelector((state: RootState) => state.app.events);
     const dispatch = useDispatch();
@@ -51,9 +52,11 @@ export default function EventsList() {
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                 />
-                <button disabled={!isLoggedIn} onClick={handleAddClick}>
-                    Add Event
-                </button>
+                {userRole === 'admin' && (
+                    <button onClick={handleAddClick}>
+                        Add Event
+                    </button>
+                )}
             </div>
             <div className="searchLabels">
                 {!isLoggedIn && (

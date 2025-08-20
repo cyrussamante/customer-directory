@@ -37,7 +37,6 @@ export default function EventsCard({ event, isLoggedIn }: props): ReactElement {
                         </div>
                         <p className="event-dates">{formattedStart}</p>
                     </div>
-                    <p className="event-description">{event.description}</p>
                     <button className="event-button" disabled={!isLoggedIn} onClick={navigateToEventDetails}>View Details</button>
 
                 </div>
