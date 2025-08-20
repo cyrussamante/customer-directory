@@ -58,7 +58,7 @@ const appReducer = (state = initialState, action: any) => {
         case SET_CUSTOMER:
             return {
                 ...state,
-                customers: action.payload.customer
+                customers: [...state.customers, action.payload.customer]
             };
 
         case SET_EVENTS:

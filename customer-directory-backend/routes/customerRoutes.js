@@ -2,7 +2,7 @@
 const express = require('express');
 
 
-const { getCustomers, createCustomer, updateCustomer, deleteCustomer } = require('../controllers/customerController');
+const { getCustomers, getCustomer, createCustomer, updateCustomer, deleteCustomer } = require('../controllers/customerController');
 
 
 
@@ -10,6 +10,8 @@ const router = express.Router();
 
 // GET API
 router.get('/', getCustomers);
+
+router.get('/:id', getCustomer);
 
 // POST /api/customers
 router.post(

@@ -45,7 +45,7 @@ function App() {
           token: token
         }
         dispatch(setLogin(user)); 
-        configureHomePage(user.role, dispatch, navigate);
+        configureHomePage(user, dispatch, navigate);
       }
 
     };
