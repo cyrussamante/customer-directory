@@ -15,7 +15,7 @@ export default function RegisteredEvents() {
             <h2>Registered Events</h2>
             <div className="registeredEventList">
                 {events
-                    .filter(() => true)
+                    .filter(() => true)// TODO: filter based on registered events.
                     .map((event: Event) => (
                         
                         <div key={event.id} className="eventItem">
