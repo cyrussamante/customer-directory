@@ -6,25 +6,25 @@ import type { RootState } from "../redux/store";
 export default function Navbar() {
     const isLoggedIn = useSelector((state: RootState) => state.app.isLoggedIn);
     const userRole = useSelector((state: RootState) => state.app.user.role);
+    const id = useSelector((state: RootState) => state.app.user.id);
+
     const dispatch = useDispatch();
 
     const handleLogout = () => {
         localStorage.removeItem('authToken');
         dispatch(setLogout());
-      };
+    };
 
     return (
         <nav className="navbar">
             <h2>Client Atlas</h2>
             <div className="options">
-                <Link to="/customers">Home</Link>
+                <Link to="/events">Events</Link>
                 {userRole === 'customer' ? (
-                    <Link to="/customerProfile">Profile</Link>
+                    <Link to={`/customers/${id}`}>Profile</Link>
                 ) : (
                     <Link to="/customers">Customers</Link>
                 )}
-                <Link to="/events">Events</Link>
-                <Link to="/customers">Contact</Link>
             </div>
             <div>
                 {isLoggedIn ? (

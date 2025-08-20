@@ -1,7 +1,7 @@
 {
   "customers": [
     {
-      "id": "123",
+      "id": "1",
       "name": "Alice Johnson",
       "age": 28,
       "gender": "female",

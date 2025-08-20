@@ -17,6 +17,7 @@ export default function CustomerDetails() {
     const [showEditModal, setEditModal] = useState(false);
     const customers = useSelector((state: RootState) => state.app.customers);
     const customer = customers.find((customer: Customer) => customer.id === id);
+    const userRole = useSelector((state: RootState) => state.app.user.role);
     const dispatch = useDispatch();
 
     const handleDeleteClick = () => setDeleteModal(true);
@@ -30,7 +31,7 @@ export default function CustomerDetails() {
             console.log(customer.id)
             const response = await removeCustomer(customer.id);
             if (response.status !== 204) {
-            throw new Error('Failed to delete customer');
+                throw new Error('Failed to delete customer');
             }
             dispatch(deleteCustomer(customer.id));
             setDeleteModal(false);
@@ -39,13 +40,13 @@ export default function CustomerDetails() {
     }
 
     const handleEditClick = () => setEditModal(true);
-    
+
     const handleCloseEditModal = () => setEditModal(false);
 
     const handleEditCustomer = async (updatedCustomer: Customer) => {
         const response = await editCustomer(customer.id, updatedCustomer);
         if (response.status < 200 || response.status >= 300) {
-          throw new Error('Failed to update customer');
+            throw new Error('Failed to update customer');
         }
         dispatch(updateCustomer(updatedCustomer));
         setEditModal(false);
@@ -61,8 +62,8 @@ export default function CustomerDetails() {
                         <h2>{customer.name}</h2>
                         <div className="detailsButtons">
                             <button className="edit" onClick={handleEditClick} >Edit Details </button>
-                            <button className="delete" onClick={handleDeleteClick} >Delete</button>
-                            <button onClick={handleCloseProfileClick} >Close Profile</button>
+                            {userRole === 'admin' && <button className="delete" onClick={handleDeleteClick} >Delete</button>}
+                            {userRole === 'admin' && <button onClick={handleCloseProfileClick} >Close Profile</button>}
                         </div>
                     </div>
                     <div className="detailsBody">

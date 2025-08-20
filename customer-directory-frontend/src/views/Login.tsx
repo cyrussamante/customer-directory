@@ -36,7 +36,7 @@ export default function Login() {
 
       //mock data for test only
       const user: User = {
-        id: '123',
+        id: '2',
         name: 'inreet',
         email: formData.email,
         password: formData.password,

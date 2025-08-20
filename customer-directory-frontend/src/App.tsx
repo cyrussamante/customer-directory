@@ -12,7 +12,6 @@ import EventDetails from './views/EventDetails';
 import Register from './views/Register';
 import CustomerProfile from './views/customerProfile';
 import type { RootState } from './redux/store';
-import CustomerEventList from './views/CustomerEventList';
 import configureHomePage from './helpers/function';
 import { setLogin } from './redux/actions';
 import type { User } from './types/appState';
@@ -34,7 +33,7 @@ function App() {
 
         //mock data for test only
         const user: User = {
-          id: '123',
+          id: '2',
           name: 'inreet',
           email: 'wasadmin@test.com',
           password: '1234',
@@ -65,8 +64,6 @@ function App() {
           <Route path="/customers/:id" element={<CustomerDetails />} />
           <Route path="/events" element={<EventsList />} />
           <Route path="/events/:id" element={<EventDetails />} />
-          <Route path="/customerProfile" element={<CustomerProfile />} /> 
-          <Route path="/customerEvents" element={<CustomerEventList />} />
         </Routes>
       </main>
       {isLoggedIn && <Footer />}
