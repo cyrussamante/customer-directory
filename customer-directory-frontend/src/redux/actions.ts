@@ -7,6 +7,7 @@ export const SET_CUSTOMERS = "SET_CUSTOMERS";
 export const ADD_CUSTOMER = "ADD_CUSTOMER";
 export const UPDATE_CUSTOMER = "UPDATE_CUSTOMER";
 export const DELETE_CUSTOMER = "DELETE_CUSTOMER";
+export const SET_CUSTOMER = "SET_CUSTOMER";
 
 export const SET_EVENTS = "SET_EVENTS";
 export const ADD_EVENT = "ADD_EVENT";
@@ -45,6 +46,11 @@ export const updateCustomer = (customer: Customer) => ({
 export const deleteCustomer = (customerId: string) => ({
   type: DELETE_CUSTOMER,
   payload: { customerId },
+});
+
+export const setCustomer = (customer: Customer) => ({
+  type: SET_CUSTOMER,
+  payload: { customer },
 });
 
 export const setEvents = (events: Event[]) => ({

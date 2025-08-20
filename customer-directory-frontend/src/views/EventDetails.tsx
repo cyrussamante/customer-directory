@@ -101,7 +101,7 @@ export default function EventDetails() {
 
                     {showEditModal && (<EventModal
                         mode={'edit'}
-                        customer={event}
+                        event={event}
                         onClose={handleCloseEditModal}
                         onSave={handleEditEvent} />)}
 

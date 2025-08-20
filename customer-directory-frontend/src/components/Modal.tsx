@@ -42,10 +42,11 @@ export default function Modal({ mode, customer, onClose, onSave }: Props) {
         e.preventDefault();
         const payload = {
             name: formData.name.trim(),
-            age: formData.age,
-            gender: formData.gender.trim(),
             email: formData.email.trim(),
             password: formData.password,
+            role: 'customer',
+            age: formData.age,
+            gender: formData.gender.trim(),
             address: formData.address.trim(),
             numberOfOrders: formData.numberOfOrders,
         };
