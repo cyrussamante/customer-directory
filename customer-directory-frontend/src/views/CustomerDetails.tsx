@@ -56,8 +56,8 @@ export default function CustomerDetails() {
     const handleCloseProfileClick = () => navigate('/customers');
 
     return (
-        <>
-            <div className="details">
+        <div className="detailsPage">
+            <div className="customerDetails">
                 {customer ? (
                     <>
                         <div className="detailsHead">
@@ -96,7 +96,7 @@ export default function CustomerDetails() {
                 )}
             </div>
             <RegisteredEvents />
-        </>
+        </div>
 
     )
 }

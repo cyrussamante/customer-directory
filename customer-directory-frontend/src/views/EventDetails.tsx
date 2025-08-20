@@ -63,7 +63,7 @@ export default function EventDetails() {
     const handleCloseProfileClick = () => navigate('/events');
 
     return (
-        <div className="details">
+        <div className="eventDetails">
             {event ? (
                 <>
                     <div className="eventDetailsHead">

@@ -1,4 +1,4 @@
-.details {
+.customerDetails {
     margin-top: 3em;
     padding: 40px;
     border: 1px solid #ddd;
@@ -64,4 +64,19 @@
 .detailsGrid .classifier {
     font-weight: bold;
     color: #333;
+}
+
+.detailsPage {
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-content: center;
+    gap: 20px;
+}
+
+@media (min-width: 768px) {
+    .detailsPage {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+
 }
