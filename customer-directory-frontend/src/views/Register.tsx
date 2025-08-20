@@ -5,6 +5,7 @@ import { register } from '../api/accountAPI';
 import { setLogin } from '../redux/actions';
 import { useDispatch } from 'react-redux'
 import type { User } from '../types/appState';
+import configureHomePage from '../helpers/function';
 
 export default function Register() {
 
@@ -27,14 +28,6 @@ export default function Register() {
         });
     };
 
-    const configureHomePage = () => {
-        if (formData.role === 'customer') {
-            navigate('/customerProfile');
-        } else {
-            navigate('/customers');
-        }
-    }
-
     const handleSubmit = async (e: any) => {
         e.preventDefault();
         const payload = {
@@ -53,7 +46,7 @@ export default function Register() {
             if (response.status === 200) {
                 const user = response.data;
                 dispatch(setLogin(user));
-                configureHomePage();
+                configureHomePage(user.role, dispatch, navigate);
             } else {
                 alert('Registration failed. Please try again.');
             }

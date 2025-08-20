@@ -2,28 +2,22 @@ import type { ReactElement } from "react";
 import { useNavigate } from "react-router-dom";
 import "./EventsCard.css";
 import type { Event } from '../types/appState';
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 interface props {
-    event: Event,
-    isLoggedIn: boolean
+    event: Event
 }
 
-export default function EventsCard({ event, isLoggedIn }: props): ReactElement {
+export default function EventsCard({ event }: props): ReactElement {
 
     const navigate = useNavigate();
-
+    
     // Format dates to readable strings
     const start = new Date(event.startDateTime);
     const formattedStart = start.toLocaleString(undefined, {
         year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'
     });
 
-    const navigateToEventDetails = () => {
-        if (isLoggedIn) {
-            navigate(`/events/${event.id}`);
-        }
-    };
+    const navigateToEventDetails = () => navigate(`/events/${event.id}`);
 
     return (
         <div className="eventCard">
@@ -37,12 +31,8 @@ export default function EventsCard({ event, isLoggedIn }: props): ReactElement {
                         </div>
                         <p className="event-dates">{formattedStart}</p>
                     </div>
-                    <button className="event-button" disabled={!isLoggedIn} onClick={navigateToEventDetails}>View Details</button>
-
+                    <button className="event-button" onClick={navigateToEventDetails}>View Details</button>
                 </div>
-            </div>
-            <div className="eventCardIcon">
-                {!isLoggedIn && <VisibilityOffIcon />}
             </div>
         </div>
     )

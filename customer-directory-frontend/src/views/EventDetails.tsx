@@ -1,22 +1,26 @@
-import type { Event } from '../types/appState';
+import type { Event, Registration } from '../types/appState';
 import { useParams } from 'react-router';
 import "./EventDetails.css"
 import DeleteConfirmationModal from '../components/DeleteConfirmationModal';
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
-import Modal from '../components/Modal';
+import EventModal from '../components/EventModal';
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState } from '../redux/store';
 import { editEvent, removeEvent } from '../api/eventsAPI';
 import { deleteEvent, updateEvent } from '../redux/actions';
 
-export default function CustomerDetails() {
+export default function EventDetails() {
     const { id } = useParams();
     const navigate = useNavigate();
     const [showDeleteModal, setDeleteModal] = useState(false);
     const [showEditModal, setEditModal] = useState(false);
     const events = useSelector((state: RootState) => state.app.events);
     const event = events.find((event: Event) => event.id === id);
+    const userRole = useSelector((state: RootState) => state.app.user.role);
+    //const registrations = useSelector((state: RootState) => state.app.registrations);
+    //const isRegistered = registrations.some((registration: Registration) => registration.eventId === id);
+    const isRegistered = true;
     const dispatch = useDispatch();
 
     const handleDeleteClick = () => setDeleteModal(true);
@@ -50,9 +54,11 @@ export default function CustomerDetails() {
         dispatch(updateEvent(updatedEvent));
         setEditModal(false);
     }
-    
-//  TODO - work on register event.
+
+    //  TODO - work on register event.
     const handleRegisterEventClick = () => navigate('/events');
+
+    const handleUnRegisterEventClick = () => navigate('/events');
 
     const handleCloseProfileClick = () => navigate('/events');
 
@@ -63,8 +69,12 @@ export default function CustomerDetails() {
                     <div className="eventDetailsHead">
                         <h2>{event.title}</h2>
                         <div className="eventDetailsButtons">
-                            <button className="edit" onClick={handleEditClick} >Edit Details </button>
-                            <button className="delete" onClick={handleDeleteClick} >Delete</button>
+                            {userRole === 'admin' && (
+                                <>
+                                    <button className="edit" onClick={handleEditClick} >Edit Details </button>
+                                    <button className="delete" onClick={handleDeleteClick} >Delete</button>
+                                </>
+                            )}
                             <button onClick={handleCloseProfileClick} >Close Event</button>
                         </div>
                     </div>
@@ -81,11 +91,15 @@ export default function CustomerDetails() {
                             <p className="classifier">Description </p> <p>{event.description}</p>
                         </div>
                         <div className="eventDetailsActions">
-                            <button onClick={handleRegisterEventClick} >Register Event</button>
+                            {!isRegistered && userRole === 'customer' ? (
+                                <button onClick={handleRegisterEventClick} >Register Event</button>
+                            ) : (
+                                <button className="delete" onClick={handleUnRegisterEventClick} >Unregister Event</button>
+                            )}
                         </div>
                     </div>
 
-                    {showEditModal && (<Modal
+                    {showEditModal && (<EventModal
                         mode={'edit'}
                         customer={event}
                         onClose={handleCloseEditModal}

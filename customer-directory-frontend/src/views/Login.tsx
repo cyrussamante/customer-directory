@@ -5,6 +5,7 @@ import { login } from '../api/accountAPI';
 import { setLogin } from '../redux/actions';
 import { useDispatch } from 'react-redux'
 import type { User } from '../types/appState';
+import configureHomePage from '../helpers/function';
 export default function Login() {
 
   const initialFormData = { email: '', password: '' }
@@ -18,14 +19,6 @@ export default function Login() {
       [e.target.name]: e.target.value
     });
   };
-
-  const configureHomePage = (role: string) => {
-    if (role === 'customer') {
-      navigate('/customerProfile');
-    } else {
-      navigate('/customers');
-    }
-  }
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -51,11 +44,11 @@ export default function Login() {
         //to test employee view
         //role: 'employee',
         // to test customer view
-         role: 'customer',
+        role: 'customer',
         token: data
       }
       dispatch(setLogin(user))
-      configureHomePage(user.role);
+      configureHomePage(user.role, dispatch, navigate);
     } catch (error) {
       alert('Login failed! Try again.');
     }

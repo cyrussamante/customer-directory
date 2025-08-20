@@ -2,8 +2,7 @@ import type { Event } from '../types/appState';
 import EventsCard from '../components/EventsCard';
 import { useState } from "react";
 import "./EventsList.css";
-import Modal from '../components/Modal';
-import WarningIcon from '@mui/icons-material/Warning';
+import EventModal from '../components/EventModal';
 import ListIcon from '@mui/icons-material/List';
 import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied';
 import { useSelector, useDispatch } from 'react-redux';
@@ -11,14 +10,11 @@ import type { RootState } from '../redux/store';
 import { addEvent } from '../redux/actions';
 import { createEvent } from '../api/eventsAPI';
 
-
-
 export default function EventsList() {
 
     const [searchTerm, setSearchTerm] = useState("");
     const [showAddModal, setShowAddModal] = useState(false);
     const userRole = useSelector((state: RootState) => state.app.user.role);
-    const isLoggedIn = useSelector((state: RootState) => state.app.isLoggedIn);
     const events: Event[] = useSelector((state: RootState) => state.app.events);
     const dispatch = useDispatch();
 
@@ -26,9 +22,7 @@ export default function EventsList() {
         event.title.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-    const handleAddClick = () => {
-        if (isLoggedIn) setShowAddModal(true);
-    };
+    const handleAddClick = () => setShowAddModal(true);
 
     const handleCloseModal = () => setShowAddModal(false);
 
@@ -58,14 +52,6 @@ export default function EventsList() {
                     </button>
                 )}
             </div>
-            <div className="searchLabels">
-                {!isLoggedIn && (
-                    <div className="hint">
-                        <WarningIcon />
-                        <p>Login to add events</p>
-                    </div>
-                )}
-            </div>
 
             {filteredEvents.length === 0 ? (
                 <div className="noEvents">
@@ -75,12 +61,12 @@ export default function EventsList() {
             ) : (
                 <div className="eventsGrid">
                     {filteredEvents.map((event: Event) => (
-                        <EventsCard key={event.id} event={event} isLoggedIn={isLoggedIn} />
+                        <EventsCard key={event.id} event={event} />
                     ))}
                 </div>
             )}
 
-            {showAddModal && (<Modal
+            {showAddModal && (<EventModal
                 mode={'add'}
                 onClose={handleCloseModal}
                 onSave={handleAddEvent} />)}
