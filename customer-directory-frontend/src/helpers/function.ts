@@ -1,20 +1,22 @@
-import { getCustomers } from "../api/customersAPI";
+import { getCustomerInfo, getCustomers } from "../api/customersAPI";
 import { getEvents } from "../api/eventsAPI";
-import { setEvents, setCustomers } from "../redux/actions";
+import { setEvents, setCustomers, setCustomer } from "../redux/actions";
+import type { User } from "../types/appState";
 
 
-export default async function configureHomePage (role: string, dispatch: any, navigate: any) {
+export default async function configureHomePage (user: User, dispatch: any, navigate: any) {
 
     const responseEvent = await getEvents();
     dispatch(setEvents(responseEvent.data));
-    
-    if (role === 'customer') {
+  
+    if (user.role === 'customer') {
+      console.log("I am here")
+      const response = await getCustomerInfo(user.id);
+      dispatch(setCustomer(response.data));
       navigate('/events');
-
     } else {
       const response = await getCustomers();
       dispatch(setCustomers(response.data));
       navigate('/customers');
-      
     }
   }

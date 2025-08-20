@@ -4,6 +4,9 @@ import axios from 'axios';
 const rootUrl = `https://customerdirectory-1.onrender.com`
 export const getCustomers = () => axios.get<Customer[]>(`/api/customers`);
 
+export const getCustomerInfo = (id: string): Promise<any> =>
+    axios.get<Customer>(`/api/customers/${id}`);
+
 export const createCustomer = (customerData: any): Promise<any> =>
     axios.post('/api/customers/',
         JSON.stringify(customerData), {

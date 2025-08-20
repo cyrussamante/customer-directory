@@ -4,24 +4,25 @@ import "./Modal.css";
 
 interface Props {
     mode: 'add' | 'edit';
-    customer?: any;
+    event?: any;
     onClose: () => void;
-    onSave: (customer: any) => void;
+    onSave: (event: any) => void;
 }
 
-export default function EventModal({ mode, customer, onClose, onSave }: Props) {
+export default function EventModal({ mode, event, onClose, onSave }: Props) {
 
     const initialFormData = {
-        name: "",
-        age: 0,
-        gender: "",
-        email: "",
-        password: "",
-        address: "",
-        numberOfOrders: 0,
+        title: "",
+        startDateTime: "",
+        endDateTime: "",
+        location: "",
+        price: 0,
+        bannerImage: "",
+        description: "",
+        capacity: 0,
     };
 
-    const [formData, setFormData] = useState(mode === 'edit' ? customer : initialFormData);
+    const [formData, setFormData] = useState(mode === 'edit' ? event : initialFormData);
     const navigate = useNavigate();
     const dialogRef = useRef<HTMLDialogElement>(null);
 
@@ -41,13 +42,14 @@ export default function EventModal({ mode, customer, onClose, onSave }: Props) {
     const handleSubmit = (e: any) => {
         e.preventDefault();
         const payload = {
-            name: formData.name.trim(),
-            age: formData.age,
-            gender: formData.gender.trim(),
-            email: formData.email.trim(),
-            password: formData.password,
-            address: formData.address.trim(),
-            numberOfOrders: formData.numberOfOrders,
+            title: formData.title.trim(),
+            startDateTime: formData.startDateTime,
+            endDateTime: formData.endDateTime,
+            location: formData.location.trim(),
+            price: formData.price,
+            description: formData.description.trim(),
+            capacity: formData.capacity,  
+            bannerImage: formData.bannerImage.trim(),
         };
         const isAnyFieldEmpty = Object.values(payload).some(value => value === '' );
         if (isAnyFieldEmpty) {
@@ -59,19 +61,19 @@ export default function EventModal({ mode, customer, onClose, onSave }: Props) {
             try {
                 onSave(payload);
             } catch (err: any) {
-                alert(err?.message || "Failed to create customer");
+                alert(err?.message || "Failed to create event");
             }
             dialogRef.current?.close();
-            navigate("/customers");
+            navigate("/events");
         }
 
         if (mode === 'edit') {
-            const updatedCustomer = {
-                id: customer.id,
+            const updatedEvent = {
+                id: event.id,
                 ...payload,
-                imageUrl: customer.imageUrl
+                bannerImage: event.bannerImage
             }
-            onSave(updatedCustomer)
+            onSave(updatedEvent)
             dialogRef.current?.close();
         }
     };
@@ -84,72 +86,33 @@ export default function EventModal({ mode, customer, onClose, onSave }: Props) {
     return (
         <dialog className="modal" ref={dialogRef} onClose={onClose}>
             <h2 className="modalHeading">
-                {mode === 'add' ? 'Add a new customer' : 'Edit customer details'}
+                {mode === 'add' ? 'Add a new event' : 'Edit event details'}
             </h2>
             <form className="modalForm">
                 <div className="modalGrid">
-                    <label>Name</label>
+                    <label>Title</label>
                     <input className="modalInput"
                         name="name"
-                        value={formData.name}
+                        value={formData.title}
                         onChange={handleChange}
-                        placeholder="Name"
+                        placeholder="Title"
                         type="text"
                         required
                     />
-                    <label>Age</label>
+                    <label>Start Date & Time</label>
                     <input className="modalInput"
-                        type="number"
-                        name="age"
-                        value={formData.age}
-                        onChange={handleChange}
-                        placeholder="Age"
-                        required
-                    />
-                    <label>Gender</label>
-                    <input className="modalInput"
-                        name="gender"
-                        placeholder="Gender"
-                        value={formData.gender}
-                        type="text"
+                        type="datetime-local"
+                        name="startDateTime"
+                        value={formData.startDateTime}
                         onChange={handleChange}
                         required
                     />
-                    <label>Email</label>
+                    <label>End Date & Time</label>
                     <input className="modalInput"
-                        type="email"
-                        placeholder="Email"
-                        name="email"
-                        value={formData.email}
+                        type="datetime-local"
+                        name="endDateTime"
+                        value={formData.endDateTime}
                         onChange={handleChange}
-                        required
-                    />
-                    <label>Password</label>
-                    <input className="modalInput"
-                        type="password"
-                        name="password"
-                        placeholder="Password"
-                        value={formData.password}
-                        onChange={handleChange}
-                        required
-                    />
-
-                    <label>Address</label>
-                    <input className="modalInput"
-                        name="address"
-                        value={formData.address}
-                        onChange={handleChange}
-                        type="text"
-                        placeholder="Address"
-                        required
-                    />
-                    <label>Number of Orders</label>
-                    <input className="modalInput"
-                        name="numberOfOrders"
-                        value={formData.numberOfOrders}
-                        onChange={handleChange}
-                        type="number"
-                        placeholder="Orders"
                         required
                     />
                 </div>

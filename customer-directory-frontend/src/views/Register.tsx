@@ -46,7 +46,7 @@ export default function Register() {
             if (response.status === 200) {
                 const user = response.data;
                 dispatch(setLogin(user));
-                configureHomePage(user.role, dispatch, navigate);
+                configureHomePage(user, dispatch, navigate);
             } else {
                 alert('Registration failed. Please try again.');
             }

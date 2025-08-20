@@ -15,13 +15,9 @@ export interface User {
     token: string
 }
 
-export interface Customer {
-    id: string,
-    name: string,
+export interface Customer extends User {
     age: number,
     gender: string,
-    email: string,
-    password: string,
     address: string,
     imageUrl?: string,
     numberOfOrders: number,
@@ -35,9 +31,9 @@ export interface Event {
     endDateTime: Date,
     location: string,
     price?: number,
-    bannerImage?: string,
     description: string,
     capacity: number,   
+    bannerImage?: string,
 }
 
 export interface Registration {

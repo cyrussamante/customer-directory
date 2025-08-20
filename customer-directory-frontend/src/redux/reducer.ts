@@ -1,5 +1,5 @@
 import type { AppState } from "../types/appState";
-import { ADD_CUSTOMER, ADD_EVENT, ADD_REGISTRATION, DELETE_CUSTOMER, DELETE_EVENT, DELETE_REGISTRATION, LOGOUT, SET_CUSTOMERS, SET_EVENTS, SET_REGISTRATIONS, LOGIN, UPDATE_CUSTOMER, UPDATE_EVENT, UPDATE_REGISTRATION } from "./actions";
+import { ADD_CUSTOMER, ADD_EVENT, ADD_REGISTRATION, DELETE_CUSTOMER, DELETE_EVENT, DELETE_REGISTRATION, LOGOUT, SET_CUSTOMERS, SET_EVENTS, SET_REGISTRATIONS, LOGIN, UPDATE_CUSTOMER, UPDATE_EVENT, UPDATE_REGISTRATION, SET_CUSTOMER } from "./actions";
 
 const initialState: AppState = {
     isLoggedIn: false,
@@ -47,13 +47,18 @@ const appReducer = (state = initialState, action: any) => {
                 ),
             };
 
-
         case DELETE_CUSTOMER:
             return {
                 ...state,
                 customers: state.customers.filter(
                     customer => customer.id !== action.payload.customerId
                 ),
+            };
+
+        case SET_CUSTOMER:
+            return {
+                ...state,
+                customers: [...state.customers, action.payload.customer]
             };
 
         case SET_EVENTS:

@@ -42,6 +42,21 @@ async function getCustomers(req, res) {
     }
 }
 
+/** GET /customers/:id */
+async function getCustomer(req, res) {
+    try {
+        const { id } = req.params;
+        const customer = await data.getCustomerById(id);
+        if (!customer) {
+            return res.status(404).json({ message: 'Customer not found.' });
+        }
+        return res.json(customer);
+    } catch (err) {
+        console.error('getCustomer error:', err);
+        res.status(500).json({ error: 'internal error' });
+    }
+}
+
 async function createCustomer(req, res) {
 
     try {
@@ -118,4 +133,4 @@ async function deleteCustomer(req, res) {
 
 }
 
-module.exports = { getCustomers, createCustomer, updateCustomer, deleteCustomer }
+module.exports = { getCustomers, getCustomer, createCustomer, updateCustomer, deleteCustomer }

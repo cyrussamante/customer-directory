@@ -40,15 +40,15 @@ export default function Login() {
         name: 'inreet',
         email: formData.email,
         password: formData.password,
-        //role: "admin",
+        role: "customer",
         //to test employee view
         //role: 'employee',
         // to test customer view
-        role: 'customer',
+        //role: 'customer',
         token: data
       }
       dispatch(setLogin(user))
-      configureHomePage(user.role, dispatch, navigate);
+      configureHomePage(user, dispatch, navigate);
     } catch (error) {
       alert('Login failed! Try again.');
     }
