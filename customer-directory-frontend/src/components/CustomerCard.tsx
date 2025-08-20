@@ -12,24 +12,20 @@ interface props {
 
 export default function CustomerCard({ customer }: props): ReactElement {
 
-    const isLoggedIn = useSelector((state: RootState) => state.app.isLoggedIn);
+    const userRole = useSelector((state: RootState) => state.app.user.role);
     const navigate = useNavigate();
 
-    const handleViewDetails = () => {
-        if (isLoggedIn) {
-            navigate(`/customers/${customer.id}`);
-        }
-    };
+    const handleViewDetails = () =>  navigate(`/customers/${customer.id}`);
 
     return (
         <div className="card">
             <div className="icon">
-                {!isLoggedIn && <VisibilityOffIcon />}
+                {userRole !== "admin" && <VisibilityOffIcon />}
             </div>
             <div className="cardBody">
                 <img className="customerImg" src={customer?.imageUrl} alt={customer.name} />
                 <p>{customer.name}</p>
-                <button disabled={!isLoggedIn} onClick={handleViewDetails}>View Details</button>
+                <button disabled={ userRole !== "admin" } onClick={handleViewDetails}>View Details</button>
             </div>
         </div>
     )

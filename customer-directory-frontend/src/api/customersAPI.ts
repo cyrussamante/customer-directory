@@ -17,10 +17,3 @@ export const editCustomer = (id: string, customerData: Customer): Promise<any> =
     });
 
 export const removeCustomer = (id: string): Promise<any> => axios.delete(`/api/customers/${id}`);
-
-export const login = (credentials: any): Promise<any> =>
-    
-    axios.post('/api/login',
-        JSON.stringify(credentials), {
-        headers: { 'Content-Type': 'application/json' }
-    })

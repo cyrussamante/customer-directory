@@ -17,4 +17,28 @@ async function login(req, res) {
     }
 }
 
-module.exports = { login }
+async function register(req, res) {
+    try {
+        //mock register api
+        const body = req.body || {}
+        if (body.email && body.password){
+            let user = {
+                id: randomUUID(),
+                name: body.name || "Default User",
+                email: body.email,
+                password: body.password,
+                role: body.role || "admin",
+                token: randomUUID()
+            }
+            return res.status(200).json(user);
+        }else {
+            return res.status(400).json("Invalid request")
+        }
+    }
+    catch (err) {
+        console.error('Error occured while registering ', err);
+        res.status(500).json({errror: 'internal error'});
+    }
+}
+
+module.exports = { login, register }
