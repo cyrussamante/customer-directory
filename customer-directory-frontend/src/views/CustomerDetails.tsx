@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import type { RootState } from '../redux/store';
 import { editCustomer, removeCustomer } from '../api/customersAPI';
 import { deleteCustomer, updateCustomer } from '../redux/actions';
+import RegisteredEvents from './RegisteredEvents';
 
 export default function CustomerDetails() {
     const { id } = useParams();
@@ -55,43 +56,47 @@ export default function CustomerDetails() {
     const handleCloseProfileClick = () => navigate('/customers');
 
     return (
-        <div className="details">
-            {customer ? (
-                <>
-                    <div className="detailsHead">
-                        <h2>{customer.name}</h2>
-                        <div className="detailsButtons">
-                            <button className="edit" onClick={handleEditClick} >Edit Details </button>
-                            {userRole === 'admin' && <button className="delete" onClick={handleDeleteClick} >Delete</button>}
-                            {userRole === 'admin' && <button onClick={handleCloseProfileClick} >Close Profile</button>}
+        <>
+            <div className="details">
+                {customer ? (
+                    <>
+                        <div className="detailsHead">
+                            <h2>{customer.name}</h2>
+                            <div className="detailsButtons">
+                                <button className="edit" onClick={handleEditClick} >Edit Details </button>
+                                {userRole === 'admin' && <button className="delete" onClick={handleDeleteClick} >Delete</button>}
+                                {userRole === 'admin' && <button onClick={handleCloseProfileClick} >Close Profile</button>}
+                            </div>
                         </div>
-                    </div>
-                    <div className="detailsBody">
-                        <div className="imageContainer">
-                            <img src={customer?.imageUrl} alt={customer.name} />
+                        <div className="detailsBody">
+                            <div className="imageContainer">
+                                <img src={customer?.imageUrl} alt={customer.name} />
+                            </div>
+                            <div className="detailsGrid">
+                                <p className="classifier">Age </p> <p>{customer.age}</p>
+                                <p className="classifier">Gender </p> <p>{customer.gender}</p>
+                                <p className="classifier">Email </p> <p>{customer.email}</p>
+                                <p className="classifier">Address </p> <p>{customer.address}</p>
+                                <p className="classifier">Number of Orders </p> <p>{customer.numberOfOrders}</p>
+                            </div>
                         </div>
-                        <div className="detailsGrid">
-                            <p className="classifier">Age </p> <p>{customer.age}</p>
-                            <p className="classifier">Gender </p> <p>{customer.gender}</p>
-                            <p className="classifier">Email </p> <p>{customer.email}</p>
-                            <p className="classifier">Address </p> <p>{customer.address}</p>
-                            <p className="classifier">Number of Orders </p> <p>{customer.numberOfOrders}</p>
-                        </div>
-                    </div>
 
-                    {showEditModal && (<Modal
-                        mode={'edit'}
-                        customer={customer}
-                        onClose={handleCloseEditModal}
-                        onSave={handleEditCustomer} />)}
+                        {showEditModal && (<Modal
+                            mode={'edit'}
+                            customer={customer}
+                            onClose={handleCloseEditModal}
+                            onSave={handleEditCustomer} />)}
 
-                    {showDeleteModal && (<DeleteConfirmationModal
-                        onClose={handleCloseDeleteModal}
-                        onConfirm={handleDeleteCustomer} />)}
-                </>
-            ) : (
-                <p>Customer not found.</p>
-            )}
-        </div>
+                        {showDeleteModal && (<DeleteConfirmationModal
+                            onClose={handleCloseDeleteModal}
+                            onConfirm={handleDeleteCustomer} />)}
+                    </>
+                ) : (
+                    <p>Customer not found.</p>
+                )}
+            </div>
+            <RegisteredEvents />
+        </>
+
     )
 }

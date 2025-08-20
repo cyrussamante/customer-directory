@@ -20,7 +20,7 @@ export default function EventDetails() {
     const userRole = useSelector((state: RootState) => state.app.user.role);
     //const registrations = useSelector((state: RootState) => state.app.registrations);
     //const isRegistered = registrations.some((registration: Registration) => registration.eventId === id);
-    const isRegistered = true;
+    const isRegistered = false;
     const dispatch = useDispatch();
 
     const handleDeleteClick = () => setDeleteModal(true);
