@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import CustomerList from './views/CustomerList';
 import CustomerDetails from './views/CustomerDetails';
 import Login from './views/Login';
@@ -8,15 +8,20 @@ import "./App.css"
 import { useEffect } from "react";
 import { getCustomers } from './api/customersAPI';
 import { getEvents } from './api/eventsAPI';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setCustomers, setLogin, setEvents } from './redux/actions';
 import EventsList from './views/EventsList';
 import EventDetails from './views/EventDetails';
+import Register from './views/Register';
+import CustomerProfile from './views/customerProfile';
+import type { RootState } from './redux/store';
+import CustomerEventList from './views/CustomerEventList';
 //import ChatBot from './components/ChatBot';
 
 function App() {
 
   const dispatch = useDispatch();
+  const isLoggedIn = useSelector((state: RootState) => state.app.isLoggedIn);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,24 +39,26 @@ function App() {
       }
     };
     fetchData();
-  }, [dispatch]);
+  }, []);
 
   return (
     <>
       <header>
-        <Navbar />
+        {isLoggedIn && <Navbar />}
       </header>
       <main>
         <Routes>
-          <Route path="/" element={<Navigate to="/customers" replace />} />
+          <Route path="/" element={<Login />} />
+          <Route path="/register" element= {<Register />} />
           <Route path="customers" element={<CustomerList />} />
           <Route path="/customers/:id" element={<CustomerDetails />} />
-          <Route path="events" element={<EventsList />} />
+          <Route path="/events" element={<EventsList />} />
           <Route path="/events/:id" element={<EventDetails />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/customerProfile" element={<CustomerProfile />} /> 
+          <Route path="/customerEvents" element={<CustomerEventList />} />
         </Routes>
       </main>
-      <Footer />
+      {isLoggedIn && <Footer />}
     </>
   )
 }

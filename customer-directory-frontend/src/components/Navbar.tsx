@@ -5,6 +5,7 @@ import type { RootState } from "../redux/store";
 
 export default function Navbar() {
     const isLoggedIn = useSelector((state: RootState) => state.app.isLoggedIn);
+    const userRole = useSelector((state: RootState) => state.app.user.role);
     const dispatch = useDispatch();
 
     const handleLogout = () => {
@@ -17,15 +18,24 @@ export default function Navbar() {
             <h2>Client Atlas</h2>
             <div className="options">
                 <Link to="/customers">Home</Link>
-                <Link to="/customers">Customers</Link>
-                <Link to="/events">Events</Link>
+                {userRole === 'customer' ? (
+                    <Link to="/customerProfile">Profile</Link>
+                ) : (
+                    <Link to="/customers">Customers</Link>
+                )}
+
+                { userRole === 'customer' ? (
+                    <Link to="/customerEvents">Events</Link>
+                ) : (
+                    <Link to="/events">Events</Link>
+                )}
                 <Link to="/customers">Contact</Link>
             </div>
             <div>
                 {isLoggedIn ? (
-                    <Link to="/customers" onClick={handleLogout}>Logout</Link>
+                    <Link to="/" onClick={handleLogout}>Logout</Link>
                 ) : (
-                    <Link to="/login">Login</Link>
+                    <Link to="/">Login</Link>
                 )}
             </div>
         </nav>

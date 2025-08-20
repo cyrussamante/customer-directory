@@ -19,7 +19,7 @@ app.use(express.json());
 app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use('/api/customers', customerRouter)
 app.use('/api/events', eventRouter)
-app.use('/api/login', loginRouter)
+app.use('/api/account', loginRouter)
 app.use('/api/ai', require('./routes/chatRoutes'))
 
 module.exports = {app}; // Allows app to be discoverable for tests

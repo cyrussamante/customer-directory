@@ -3,7 +3,6 @@ import CustomerCard from '../components/CustomerCard';
 import { useState } from "react";
 import "./CustomerList.css";
 import Modal from '../components/Modal';
-import WarningIcon from '@mui/icons-material/Warning';
 import ListIcon from '@mui/icons-material/List';
 import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied';
 import { useSelector, useDispatch } from 'react-redux';
@@ -15,7 +14,7 @@ export default function CustomerList() {
 
     const [searchTerm, setSearchTerm] = useState("");
     const [showAddModal, setShowAddModal] = useState(false);
-    const isLoggedIn = useSelector((state: RootState) => state.app.isLoggedIn);
+    const userRole = useSelector((state: RootState) => state.app.user.role);
     const customers: Customer[] = useSelector((state: RootState) => state.app.customers);
     const dispatch = useDispatch();
 
@@ -23,9 +22,7 @@ export default function CustomerList() {
         customer.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-    const handleAddClick = () => {
-        if (isLoggedIn) setShowAddModal(true);
-    };
+    const handleAddClick = () => setShowAddModal(true);
 
     const handleCloseModal = () => setShowAddModal(false);
 
@@ -49,16 +46,10 @@ export default function CustomerList() {
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                 />
-                <button disabled={!isLoggedIn} onClick={handleAddClick}>
-                    Add Customer
-                </button>
-            </div>
-            <div className="searchLabels">
-                {!isLoggedIn && (
-                    <div className="hint">
-                        <WarningIcon />
-                        <p>Login to add customers</p>
-                    </div>
+                {userRole === 'admin' && (
+                    <button onClick={handleAddClick}>
+                        Add Customer
+                    </button>
                 )}
             </div>
 
