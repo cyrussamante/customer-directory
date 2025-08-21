@@ -38,7 +38,11 @@
 }
 
 .registeredEventTitle {
-    margin: 0;
+    margin: 0
+}
+
+.registeredEvents {
+    margin-bottom: 10px;
 }
 
 .location-date {

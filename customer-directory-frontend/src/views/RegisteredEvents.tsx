@@ -14,7 +14,7 @@ export default function RegisteredEvents() {
 
     return (
         <div className="registeredEventsDetails">
-            <h2>Registered Events</h2>
+            <h2 className="registeredEvents">Registered Events</h2>
             <div className="registeredEventList">
                 {events
                     .filter(() => true)// TODO: filter based on registered events.
