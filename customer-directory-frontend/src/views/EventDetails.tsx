@@ -20,7 +20,7 @@ export default function EventDetails() {
     const userRole = useSelector((state: RootState) => state.app.user.role);
     //const registrations = useSelector((state: RootState) => state.app.registrations);
     //const isRegistered = registrations.some((registration: Registration) => registration.eventId === id);
-    const isRegistered = true;
+    const isRegistered = false;
     const dispatch = useDispatch();
 
     const handleDeleteClick = () => setDeleteModal(true);
@@ -63,7 +63,7 @@ export default function EventDetails() {
     const handleCloseProfileClick = () => navigate('/events');
 
     return (
-        <div className="details">
+        <div className="eventDetails">
             {event ? (
                 <>
                     <div className="eventDetailsHead">
@@ -90,13 +90,15 @@ export default function EventDetails() {
                             <p className="classifier">Capacity </p> <p>{event.capacity}</p>
                             <p className="classifier">Description </p> <p>{event.description}</p>
                         </div>
-                        <div className="eventDetailsActions">
-                            {!isRegistered && userRole === 'customer' ? (
-                                <button onClick={handleRegisterEventClick} >Register Event</button>
-                            ) : (
-                                <button className="delete" onClick={handleUnRegisterEventClick} >Unregister Event</button>
-                            )}
-                        </div>
+                        {userRole === 'customer' && (
+                            <div className="eventDetailsActions">
+                                {!isRegistered ? (
+                                    <button onClick={handleRegisterEventClick} >Register Event</button>
+                                ) : (
+                                    <button className="delete" onClick={handleUnRegisterEventClick} >Unregister Event</button>
+                                )}
+                            </div>
+                        )}
                     </div>
 
                     {showEditModal && (<EventModal

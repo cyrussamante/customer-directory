@@ -1,7 +1,7 @@
 {
   "customers": [
     {
-      "id": "123",
+      "id": "1",
       "name": "Alice Johnson",
       "age": 28,
       "gender": "female",
@@ -160,57 +160,52 @@
       "capacity": 5
     },
     {
-      "id": "1",
+      "id": "5",
       "title": "Summer Music Festival",
       "startDateTime": "2025-08-25T14:00:00Z",
       "endDateTime": "2025-08-25T22:00:00Z",
       "location": "Central Park, New York, NY",
       "price": 50,
-      "bannerImage": "https://example.com/images/summer-music-festival.jpg",
       "description": "Join us for a day of live music featuring top artists from various genres. Food trucks and local vendors will be present.",
       "capacity": 5000
     },
     {
-      "id": "2",
+      "id": "6",
       "title": "Tech Innovations Conference",
       "startDateTime": "2025-09-10T09:00:00Z",
       "endDateTime": "2025-09-10T17:00:00Z",
       "location": "Convention Center, San Francisco, CA",
       "price": 200,
-      "bannerImage": "https://example.com/images/tech-conference.jpg",
       "description": "Explore the latest in technology and innovation with industry leaders. Networking opportunities and workshops available.",
       "capacity": 1000
     },
     {
-      "id": "3",
+      "id": "7",
       "title": "Art in the Park",
       "startDateTime": "2025-09-15T10:00:00Z",
       "endDateTime": "2025-09-15T18:00:00Z",
       "location": "Riverside Park, Chicago, IL",
       "price": 20,
-      "bannerImage": "https://example.com/images/art-in-the-park.jpg",
       "description": "A day dedicated to local artists showcasing their work. Enjoy live art demonstrations, food stalls, and family activities.",
       "capacity": 3000
     },
     {
-      "id": "4",
+      "id": "8",
       "title": "Culinary Delights Expo",
       "startDateTime": "2025-10-05T11:00:00Z",
       "endDateTime": "2025-10-05T19:00:00Z",
       "location": "Downtown Expo Hall, Los Angeles, CA",
       "price": 75,
-      "bannerImage": "https://example.com/images/culinary-delights-expo.jpg",
       "description": "Taste your way through a variety of cuisines from around the world. Cooking demonstrations and celebrity chefs will be featured.",
       "capacity": 2000
     },
     {
-      "id": "5",
+      "id": "9",
       "title": "Outdoor Yoga Retreat",
       "startDateTime": "2025-10-20T08:00:00Z",
       "endDateTime": "2025-10-20T12:00:00Z",
       "location": "Mountain View, Boulder, CO",
       "price": 40,
-      "bannerImage": "https://example.com/images/yoga-retreat.jpg",
       "description": "Reconnect with nature and yourself in this serene outdoor yoga session. Suitable for all levels.",
       "capacity": 100
     }
