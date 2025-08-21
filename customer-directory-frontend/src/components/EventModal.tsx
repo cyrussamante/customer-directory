@@ -92,7 +92,7 @@ export default function EventModal({ mode, event, onClose, onSave }: Props) {
                 <div className="modalGrid">
                     <label>Title</label>
                     <input className="modalInput"
-                        name="name"
+                        name="title"
                         value={formData.title}
                         onChange={handleChange}
                         placeholder="Title"
@@ -115,8 +115,51 @@ export default function EventModal({ mode, event, onClose, onSave }: Props) {
                         onChange={handleChange}
                         required
                     />
+                    <label>Location</label>
+                    <input className="modalInput"
+                        name="location"
+                        placeholder="Location"
+                        value={formData.location}
+                        type="text"
+                        onChange={handleChange}
+                        required
+                    />
+                    <label>Price</label>
+                    <input className="modalInput"
+                        type="number"
+                        placeholder="Price"
+                        name="price"
+                        value={formData.price}
+                        onChange={handleChange}
+                        required
+                    />
+                    <label>Banner Image </label>
+                    <input className="modalInput"
+                        type="text"
+                        name="bannerImage"
+                        placeholder="Banner Image"
+                        value={formData.bannerImage}
+                        onChange={handleChange}
+                        required
+                    />
+                    <label>Description</label>
+                    <textarea className="modalInput"
+                        name="description"
+                        value={formData.description}
+                        onChange={handleChange}
+                        placeholder="Description"
+                        required
+                    />
+                    <label>Capacity</label>
+                    <input className="modalInput"
+                        type="number"
+                        name="capacity"
+                        value={formData.capacity}
+                        onChange={handleChange}
+                        placeholder="Capacity"
+                        required
+                    />
                 </div>
-
                 <div className="modalButtons">
                     <button className="save" onClick={handleSubmit}>Save</button>
                     <button className="cancel" onClick={handleClose}>Cancel</button>
