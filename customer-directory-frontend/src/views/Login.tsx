@@ -40,7 +40,7 @@ export default function Login() {
         name: 'inreet',
         email: formData.email,
         password: formData.password,
-        role: "customer",
+        role: "admin",
         //to test employee view
         //role: 'employee',
         // to test customer view

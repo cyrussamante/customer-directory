@@ -11,12 +11,6 @@
     min-width: 350px;
 }
 
-.eventCard:hover {
-    background-color: #e6f0fa;
-    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.25);
-    border-color: #a3c2e2;
-}
-
 .event-title {
     font-size: 1.5em;
     font-weight: bold;
