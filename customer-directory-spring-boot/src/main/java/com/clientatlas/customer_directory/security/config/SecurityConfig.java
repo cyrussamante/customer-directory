@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -17,6 +16,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
+import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
 
 import java.security.interfaces.RSAPublicKey;
@@ -32,19 +33,43 @@ public class SecurityConfig {
     private CurrentUserDetailsService currentUserDetailsService;
 
 
+//    @Bean
+//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+//        return http
+//                .sessionManagement(
+//                        session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+//                .csrf(AbstractHttpConfigurer::disable)
+//                .authorizeHttpRequests(auth -> auth
+//                        .requestMatchers("/account","/account/token", "/account/register").permitAll()
+//                        .requestMatchers("/account/users/**").hasRole("ADMIN")
+//                        .requestMatchers("/api/**").permitAll()
+//                        .anyRequest().authenticated())
+//                .userDetailsService(currentUserDetailsService)
+//                .oauth2ResourceServer((resourceServer) ->
+//                        resourceServer.jwt((customizer) -> customizer
+//                                .decoder(jwtDecoder())
+//                                .jwtAuthenticationConverter(jwtAuthenticationConverter())
+//                        ))
+//                .build();
+//    }
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
-                .sessionManagement(
-                        session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/account/**", "/api/**").permitAll() // TODO: remove api, just for testing.
-                        .anyRequest().authenticated())
-                .userDetailsService(currentUserDetailsService)
-                .oauth2ResourceServer((resourceServer) ->
-                        resourceServer.jwt((customizer) -> customizer.decoder(jwtDecoder())))
-                .httpBasic(Customizer.withDefaults())
+                        .requestMatchers("/account", "/account/token", "/account/register").permitAll()
+                        .requestMatchers("/account/users/**").hasRole("ADMIN")
+                        .requestMatchers("/api/**").permitAll()
+                        .anyRequest().authenticated()
+                )
+                .oauth2ResourceServer(resourceServer ->
+                        resourceServer.jwt(jwt -> jwt
+                                .decoder(jwtDecoder())                   // validate the JWT
+                                .jwtAuthenticationConverter(jwtAuthenticationConverter()) // map roles from token
+                        )
+                )
                 .build();
     }
 
@@ -56,5 +81,16 @@ public class SecurityConfig {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public JwtAuthenticationConverter jwtAuthenticationConverter() {
+        JwtGrantedAuthoritiesConverter grantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
+        grantedAuthoritiesConverter.setAuthorityPrefix("");
+        grantedAuthoritiesConverter.setAuthoritiesClaimName("scope");
+
+        JwtAuthenticationConverter jwtConverter = new JwtAuthenticationConverter();
+        jwtConverter.setJwtGrantedAuthoritiesConverter(grantedAuthoritiesConverter);
+        return jwtConverter;
     }
 }

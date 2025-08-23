@@ -2,13 +2,7 @@ package com.clientatlas.customer_directory.domain.customer;
 
 import com.clientatlas.customer_directory.domain.user.User;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import jakarta.persistence.Id;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Column;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.JoinColumn;
+import jakarta.persistence.*;
 
 import java.util.UUID;
 
@@ -21,14 +15,18 @@ public class Customer {
     private UUID id;
 
     private int age;
-    private String gender;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private CustomerGender gender = CustomerGender.NOT_SPECIFIED;
+
     private String address;
 
     @Column(name="image_url")
     private String imageUrl;
 
-    @Column(name="number_of_orders")
-    private int numberOfOrders;
+    @Column(name="number_of_orders", nullable = false)
+    private int numberOfOrders = 0;
     
     @OneToOne
     @JoinColumn(name="user_id", referencedColumnName = "id")
@@ -46,8 +44,8 @@ public class Customer {
     public void setAge(int age) {
         this.age = age;
     }
-    public String getGender() { return gender; }
-    public void setGender(String gender) {
+    public CustomerGender getGender() { return gender; }
+    public void setGender(CustomerGender gender) {
         this.gender = gender;
     }
     public String getAddress() {
@@ -74,8 +72,7 @@ public class Customer {
     public void setUser(User user) {
         this.user = user;
     }
-    
-    
+
 }
 
 // CREATE TABLE events (
