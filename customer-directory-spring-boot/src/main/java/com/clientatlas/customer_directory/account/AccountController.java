@@ -2,25 +2,20 @@ package com.clientatlas.customer_directory.account;
 
 import com.clientatlas.customer_directory.domain.User;
 import com.clientatlas.customer_directory.domain.UserRole;
+import com.clientatlas.customer_directory.repository.UserRepository;
 import com.clientatlas.customer_directory.security.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.Collections;
 import java.util.Map;
-import java.util.UUID;
-
-
-// TODO: REMOVE ONCE DB IS SETUP.
-import java.util.ArrayList;
 import java.util.List;
 
-// TODO: SET UP FOR DB
-//import com.clientatlas.customer_directory.repository.UserRepository;
 
 
 @RestController
@@ -30,19 +25,18 @@ public class AccountController {
     @Autowired
     TokenService tokenService;
 
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder; // <-- add this
+
+    public AccountController(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
+
     @PostMapping("/token")
     public String token(Authentication authentication) {
         return tokenService.generateToken(authentication);
     }
-
-    private final List<User> users = new ArrayList<>(); // TODO: REMOVE ONCE DB IS SETUP.
-
-    // TODO: SET UP FOR DB
-//    private final UserRepository userRepository;
-//
-//    public AccountController(UserRepository userRepository) {
-//        this.userRepository = userRepository;
-//    }
 
     @GetMapping
     public Map<String, String> account() {
@@ -56,13 +50,10 @@ public class AccountController {
             return ResponseEntity.badRequest().build();
         }
 
-        newUser.setId(UUID.randomUUID().toString());
-
-        System.out.println(newUser.getId());
+        newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
         newUser.setRole(newUser.getRole() != null ? newUser.getRole() : UserRole.CUSTOMER);
 
-        users.add(newUser); // TODO: REMOVE ONCE DB IS SETUP.
-//        newUser = userRepository.save(newUser);
+        newUser = userRepository.save(newUser);
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -75,6 +66,6 @@ public class AccountController {
 
     @GetMapping("/users")
     public List<User> getAllUsers() {
-        return users;
+        return userRepository.findAll();
     }
 }

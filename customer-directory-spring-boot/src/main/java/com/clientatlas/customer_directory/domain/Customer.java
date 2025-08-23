@@ -2,32 +2,34 @@ package com.clientatlas.customer_directory.domain;
 
 import jakarta.persistence.*;
 
+import java.util.UUID;
+
 @Entity
 @Table(name="customers")
 public class Customer {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @GeneratedValue
+    private UUID id;
 
     private int age;
     private String gender;
     private String address;
 
-    @Column(name="imageurl")
+    @Column(name="image_url")
     private String imageUrl;
 
-    @Column(name="numberoforders")
+    @Column(name="number_of_orders")
     private int numberOfOrders;
     
     @OneToOne
-    @JoinColumn(name="userid", referencedColumnName = "id")
+    @JoinColumn(name="user_id", referencedColumnName = "id")
     private User user;
 
-    public int getId() {
+    public UUID getId() {
         return id;
     }
-    public void setId(int id) {
+    public void setId(UUID id) {
         this.id = id;
     }
     public int getAge() {
@@ -67,17 +69,6 @@ public class Customer {
     
     
 }
-
-
-// CREATE TABLE customers (
-//     id SERIAL PRIMARY KEY,
-//     age INT NOT NULL,
-//     gender VARCHAR(50) NOT NULL,
-//     address TEXT NOT NULL,
-//     imageUrl VARCHAR(255),
-//     numberOfOrders INT DEFAULT 0,
-//     userId INT REFERENCES users(id) ON DELETE CASCADE
-// );
 
 // CREATE TABLE events (
 //     id SERIAL PRIMARY KEY,

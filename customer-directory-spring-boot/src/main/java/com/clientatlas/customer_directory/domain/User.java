@@ -9,22 +9,26 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.EnumType;
 
+import java.util.UUID;
+
 @Entity
-@Table(name="USERS")
+@Table(name="users")
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    String id;
+    @GeneratedValue
+    private UUID id;
 
-    @Column(name="USER_NAME")
-    String name;
+    @Column(name="user_name")
+    private String name;
 
-    String email;
-    String password;
+    private String email;
 
+    private String password;
+
+    @Column(name="user_role")
     @Enumerated(EnumType.STRING)
-    UserRole role;
+    private UserRole role;
 
     public UserRole getRole() {
         return role;
@@ -34,11 +38,11 @@ public class User {
         this.role = role;
     }
 
-    public String getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
@@ -66,3 +70,21 @@ public class User {
         this.password = password;
     }
 }
+
+//CREATE TABLE users (
+//    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+//    user_name VARCHAR(255) NOT NULL,
+//    email VARCHAR(255) NOT NULL UNIQUE,
+//    password VARCHAR(255) NOT NULL,
+//    user_role VARCHAR(50) NOT NULL
+//);
+//
+//CREATE TABLE customers (
+//    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+//    age INT NOT NULL,
+//    gender VARCHAR(50) NOT NULL,
+//    address TEXT NOT NULL,
+//    image_url VARCHAR(255),
+//    number_of_orders INT DEFAULT 0,
+//    user_id UUID UNIQUE REFERENCES users(id) ON DELETE CASCADE
+//);

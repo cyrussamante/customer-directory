@@ -1,5 +1,6 @@
 package com.clientatlas.customer_directory.data;
 
+import com.clientatlas.customer_directory.domain.Customer;
 import org.springframework.web.bind.annotation.*;
 import com.clientatlas.customer_directory.domain.User;
 import com.clientatlas.customer_directory.repository.UserRepository;
@@ -25,9 +26,9 @@ public class DataController {
         this.customerRepository = customerRepository;
     }
 
-    @GetMapping("/users")
-    public List<User> getUsers() {
-        return userRepository.findAll();
+    @GetMapping("/customers")
+    public List<Customer> getCustomers() {
+        return customerRepository.findAll();
     }
     
 }
