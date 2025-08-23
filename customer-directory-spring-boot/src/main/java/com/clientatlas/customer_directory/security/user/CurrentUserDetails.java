@@ -1,6 +1,6 @@
-package com.clientatlas.customer_directory.security;
+package com.clientatlas.customer_directory.security.user;
 
-import com.clientatlas.customer_directory.domain.User;
+import com.clientatlas.customer_directory.domain.user.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

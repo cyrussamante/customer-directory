@@ -1,4 +1,4 @@
-package com.clientatlas.customer_directory.security;
+package com.clientatlas.customer_directory.security.jwt;
 
 import com.nimbusds.jose.jwk.JWK;
 import com.nimbusds.jose.jwk.JWKSet;

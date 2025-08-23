@@ -1,10 +1,9 @@
-package com.clientatlas.customer_directory.domain;
+package com.clientatlas.customer_directory.domain.user;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.EnumType;
@@ -19,11 +18,13 @@ public class User {
     @GeneratedValue
     private UUID id;
 
-    @Column(name="user_name")
+    @Column(name="user_name", nullable = false)
     private String name;
 
+    @Column(nullable = false, unique = true)
     private String email;
 
+    @Column(nullable = false)
     private String password;
 
     @Column(name="user_role")
