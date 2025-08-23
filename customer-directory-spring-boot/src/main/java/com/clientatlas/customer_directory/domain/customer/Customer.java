@@ -9,7 +9,11 @@ import jakarta.persistence.*;
 public class Customer extends User {
 
     private int age;
-    private String gender;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private CustomerGender gender = CustomerGender.NOT_SPECIFIED;
+
     private String address;
 
     @Column(name="image_url")
