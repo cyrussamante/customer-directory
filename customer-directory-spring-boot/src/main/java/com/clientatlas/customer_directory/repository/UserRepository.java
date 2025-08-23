@@ -1,9 +1,14 @@
-// TODO: RE ADD ONCE DB IS SET UP
+package com.clientatlas.customer_directory.repository;
 
-//package com.clientatlas.customer_directory.repository;
-
-//import org.springframework.data.repository.CrudRepository;
-
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+ 
 import com.clientatlas.customer_directory.domain.User;
 
-//public interface UserRepository extends CrudRepository<User, String>{}
+@Repository
+public interface UserRepository extends JpaRepository<User, Integer> {
+    User findByEmail(String email);
+
+}
+
+
