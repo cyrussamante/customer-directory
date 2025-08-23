@@ -1,14 +1,15 @@
 package com.clientatlas.customer_directory.domain;
-
 import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="customers")
-public class Customer {
+public class Customer extends User {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @OneToOne
+    @JoinColumn(name="id", referencedColumnName = "id")
+    @JsonIgnore
+    private User user;
 
     private int age;
     private String gender;
@@ -19,17 +20,7 @@ public class Customer {
 
     @Column(name="numberoforders")
     private int numberOfOrders;
-    
-    @OneToOne
-    @JoinColumn(name="userid", referencedColumnName = "id")
-    private User user;
 
-    public int getId() {
-        return id;
-    }
-    public void setId(int id) {
-        this.id = id;
-    }
     public int getAge() {
         return age;
     }
@@ -64,36 +55,5 @@ public class Customer {
     public void setUser(User user) {
         this.user = user;
     }
-    
-    
+     
 }
-
-
-// CREATE TABLE customers (
-//     id SERIAL PRIMARY KEY,
-//     age INT NOT NULL,
-//     gender VARCHAR(50) NOT NULL,
-//     address TEXT NOT NULL,
-//     imageUrl VARCHAR(255),
-//     numberOfOrders INT DEFAULT 0,
-//     userId INT REFERENCES users(id) ON DELETE CASCADE
-// );
-
-// CREATE TABLE events (
-//     id SERIAL PRIMARY KEY,
-//     title VARCHAR(255) NOT NULL,
-//     startDateTime TIMESTAMP NOT NULL,
-//     endDateTime TIMESTAMP NOT NULL,
-//     location VARCHAR(255) NOT NULL,
-//     price NUMERIC,
-//     description TEXT NOT NULL,
-//     capacity INT NOT NULL,
-//     bannerImage VARCHAR(255)
-// );
-
-// CREATE TABLE registrations (
-//     id SERIAL PRIMARY KEY,
-//     eventId INT REFERENCES events(id),
-//     customerId INT REFERENCES customers(id),
-//     dateRegistered TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
-// );

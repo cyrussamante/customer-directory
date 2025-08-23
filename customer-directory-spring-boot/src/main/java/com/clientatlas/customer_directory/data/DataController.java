@@ -1,9 +1,7 @@
 package com.clientatlas.customer_directory.data;
-
+import com.clientatlas.customer_directory.service.CustomerService;
 import org.springframework.web.bind.annotation.*;
-import com.clientatlas.customer_directory.domain.User;
-import com.clientatlas.customer_directory.repository.UserRepository;
-import com.clientatlas.customer_directory.repository.CustomerRepository;
+import com.clientatlas.customer_directory.domain.Customer;
 import java.util.List;
 import java.util.Collections;
 import java.util.Map;
@@ -12,22 +10,40 @@ import java.util.Map;
 @RequestMapping("/api")
 public class DataController {
 
-    private final UserRepository userRepository;
-    private final CustomerRepository customerRepository;
+    private final CustomerService customerService;
+
+    public DataController(CustomerService customerService) {
+        this.customerService = customerService;
+    }
 
     @GetMapping
     public Map<String, String> data() {
         return Collections.singletonMap("message", "data service is up and running!");
     }
 
-    public DataController(UserRepository userRepository, CustomerRepository customerRepository) {
-        this.userRepository = userRepository;
-        this.customerRepository = customerRepository;
+    @GetMapping("/customers")
+    public List<Customer> getAllCustomers() {
+        return customerService.getAllCustomers();
     }
 
-    @GetMapping("/users")
-    public List<User> getUsers() {
-        return userRepository.findAll();
+    @GetMapping("/customers/{id}")
+    public Customer getCustomerById(@PathVariable Integer id) {
+        return customerService.getCustomerById(id);
+    }
+
+    @PostMapping("/customers")
+    public Customer createCustomer(@RequestBody Customer customer) {
+        return customerService.createCustomer(customer);
+    }
+    
+    @PutMapping("/customers/{id}") 
+    public Customer updateCustomer(@PathVariable Integer id, @RequestBody Customer customer) {
+        return customerService.updateCustomer(id, customer);
+    }
+
+    @DeleteMapping("/customers/{id}")
+    public void deleteCustomer(@PathVariable Integer id) {
+        customerService.deleteCustomerById(id);
     }
     
 }
