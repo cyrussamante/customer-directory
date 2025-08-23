@@ -13,11 +13,15 @@ public class Customer {
     private int age;
     private String gender;
     private String address;
+
+    @Column(name="imageurl")
     private String imageUrl;
+
+    @Column(name="numberoforders")
     private int numberOfOrders;
     
     @OneToOne
-    @JoinColumn(name="userId", referencedColumnName = "id")
+    @JoinColumn(name="userid", referencedColumnName = "id")
     private User user;
 
     public int getId() {
