@@ -1,26 +1,45 @@
-package com.clientatlas.customer_directory.domain;
-import jakarta.persistence.*;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+package com.clientatlas.customer_directory.domain.customer;
+
+import com.clientatlas.customer_directory.domain.user.User;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Column;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.JoinColumn;
+
+import java.util.UUID;
 
 @Entity
 @Table(name="customers")
 public class Customer extends User {
 
-    @OneToOne
-    @JoinColumn(name="id", referencedColumnName = "id")
-    @JsonIgnore
-    private User user;
+    @Id
+    @GeneratedValue
+    private UUID id;
 
     private int age;
     private String gender;
     private String address;
 
-    @Column(name="imageurl")
+    @Column(name="image_url")
     private String imageUrl;
 
-    @Column(name="numberoforders")
+    @Column(name="number_of_orders")
     private int numberOfOrders;
+    
+    @OneToOne
+    @JoinColumn(name="user_id", referencedColumnName = "id")
+    private User user;
 
+    public UUID getId() {
+        return id;
+    }
+    public void setId(UUID id) {
+        this.id = id;
+    }
     public int getAge() {
         return age;
     }
@@ -57,27 +76,6 @@ public class Customer extends User {
     }
      
 }
-
-
-//mockdata used for db:
-
-// CREATE TABLE users (
-//     id SERIAL PRIMARY KEY,
-//     name VARCHAR(255) NOT NULL,
-//     email VARCHAR(255) UNIQUE NOT NULL,
-//     password VARCHAR(255) NOT NULL,
-//     role VARCHAR(50) CHECK (role IN ('ADMIN', 'CUSTOMER', 'EMPLOYEE')) NOT NULL
-// );
-
-// CREATE TABLE customers (
-//     id INT PRIMARY KEY,
-//     age INT NOT NULL,
-//     gender VARCHAR(50) NOT NULL,
-//     address TEXT NOT NULL,
-//     imageUrl VARCHAR(255),
-//     numberOfOrders INT DEFAULT 0,
-//     CONSTRAINT fk_customer_user FOREIGN KEY (id) REFERENCES users(id) ON DELETE CASCADE
-// );
 
 // CREATE TABLE events (
 //     id SERIAL PRIMARY KEY,
