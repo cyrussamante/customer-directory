@@ -38,7 +38,7 @@ public class CustomerService {
         // Link the user to the customer
         customer.setUser(savedUser);
         customer.setId(savedUser.getId());
-        // return customerRepository.save(customer);
+        return customerRepository.save(customer);
     }
 
     public void deleteCustomerById(int id) {
