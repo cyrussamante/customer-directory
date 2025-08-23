@@ -8,6 +8,4 @@ import com.clientatlas.customer_directory.domain.customer.Customer;
 import java.util.UUID;
 
 @Repository
-public interface CustomerRepository extends JpaRepository<Customer, UUID> {
-    Customer findByUserId(UUID userId);
-}
+public interface CustomerRepository extends JpaRepository<Customer, UUID> {}
