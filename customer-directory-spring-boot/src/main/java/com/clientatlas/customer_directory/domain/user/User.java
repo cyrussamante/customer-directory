@@ -77,8 +77,8 @@ public class User {
 // CREATE TABLE customers (
 //    id UUID PRIMARY KEY,
 //    age INT,
-//    gender VARCHAR(50),
-//    address TEXT,
+//    gender VARCHAR(50) DEFAULT 'NOT_SPECIFIED',
+//    address VARCHAR(255),
 //    image_url VARCHAR(255),
 //    number_of_orders INT DEFAULT 0,
 //    CONSTRAINT fk_customer_user FOREIGN KEY (id) REFERENCES users(id) ON DELETE CASCADE

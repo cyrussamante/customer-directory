@@ -28,10 +28,10 @@ public class Customer extends User {
     public void setAge(int age) {
         this.age = age;
     }
-    public String getGender() { 
+     public CustomerGender getGender() { 
         return gender; 
     }
-    public void setGender(String gender) {
+    public void setGender(CustomerGender gender) {
         this.gender = gender;
     }
     public String getAddress() {
