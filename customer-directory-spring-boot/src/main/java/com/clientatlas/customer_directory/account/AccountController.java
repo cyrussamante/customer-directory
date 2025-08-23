@@ -26,7 +26,7 @@ public class AccountController {
     TokenService tokenService;
 
     private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder; // <-- add this
+    private final PasswordEncoder passwordEncoder;
 
     public AccountController(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
