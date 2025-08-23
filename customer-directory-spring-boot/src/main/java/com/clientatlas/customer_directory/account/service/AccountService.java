@@ -47,7 +47,6 @@ public class AccountService {
 
         if (user.getRole() == UserRole.CUSTOMER) {
             Customer customer = new Customer();
-            customer.setUser(user);
             customerRepository.save(customer);
         }
 
@@ -64,13 +63,11 @@ public class AccountService {
 
     public boolean deleteUser(UUID id) {
         return userRepository.findById(id).map(user -> {
-
+            userRepository.delete(user);
             if (user.getRole() == UserRole.CUSTOMER) {
-                customerRepository.findByUserId(user.getId())
+                customerRepository.findById(user.getId())
                         .ifPresent(customerRepository::delete);
             }
-
-            userRepository.delete(user);
             return true;
         }).orElse(false);
     }

@@ -1,18 +1,12 @@
 package com.clientatlas.customer_directory.domain.customer;
 
 import com.clientatlas.customer_directory.domain.user.User;
-
 import jakarta.persistence.*;
-
-import java.util.UUID;
 
 @Entity
 @Table(name="customers")
-public class Customer {
-
-    @Id
-    @GeneratedValue
-    private UUID id;
+@PrimaryKeyJoinColumn(name = "id")
+public class Customer extends User {
 
     private int age;
 
@@ -25,26 +19,18 @@ public class Customer {
     @Column(name="image_url")
     private String imageUrl;
 
-    @Column(name="number_of_orders", nullable = false)
-    private int numberOfOrders = 0;
+    @Column(name="number_of_orders", columnDefinition = "INT DEFAULT 0")
+    private int numberOfOrders;
     
-    @OneToOne
-    @JoinColumn(name="user_id", referencedColumnName = "id")
-    private User user;
-
-    public UUID getId() {
-        return id;
-    }
-    public void setId(UUID id) {
-        this.id = id;
-    }
     public int getAge() {
         return age;
     }
     public void setAge(int age) {
         this.age = age;
     }
-    public CustomerGender getGender() { return gender; }
+     public CustomerGender getGender() { 
+        return gender; 
+    }
     public void setGender(CustomerGender gender) {
         this.gender = gender;
     }
@@ -66,13 +52,7 @@ public class Customer {
     public void setNumberOfOrders(int numberOfOrders) {
         this.numberOfOrders = numberOfOrders;
     }
-    public User getUser() {
-        return user;
-    }
-    public void setUser(User user) {
-        this.user = user;
-    }
-
+     
 }
 
 // CREATE TABLE events (

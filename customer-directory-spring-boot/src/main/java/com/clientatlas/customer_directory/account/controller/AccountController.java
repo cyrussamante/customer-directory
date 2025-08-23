@@ -35,7 +35,7 @@ public class AccountController {
         response.put("expires_in", "3600");
         return response;
     }
-
+    
     @GetMapping
     public Map<String, String> account() {
         return Collections.singletonMap("message", "account service is up and running!");
