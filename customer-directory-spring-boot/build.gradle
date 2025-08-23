@@ -20,11 +20,15 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-//    implementation 'org.springframework.boot:spring-boot-starter-data-jpa' TODO: RE ADD ONCE DB IS SET UP
-    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    //    implementation 'org.springframework.boot:spring-boot-starter-data-jpa' TODO: RE ADD ONCE DB IS SET UP
     implementation 'jakarta.persistence:jakarta.persistence-api:3.2.0'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
+    implementation 'org.springframework.security:spring-security-oauth2-jose'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
 tasks.named('test') {

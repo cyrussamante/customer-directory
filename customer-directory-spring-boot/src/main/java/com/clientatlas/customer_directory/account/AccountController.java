@@ -2,7 +2,10 @@ package com.clientatlas.customer_directory.account;
 
 import com.clientatlas.customer_directory.domain.User;
 import com.clientatlas.customer_directory.domain.UserRole;
+import com.clientatlas.customer_directory.security.TokenService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -24,6 +27,14 @@ import java.util.List;
 @RequestMapping("/account")
 public class AccountController {
 
+    @Autowired
+    TokenService tokenService;
+
+    @PostMapping("/token")
+    public String token(Authentication authentication) {
+        return tokenService.generateToken(authentication);
+    }
+
     private final List<User> users = new ArrayList<>(); // TODO: REMOVE ONCE DB IS SETUP.
 
     // TODO: SET UP FOR DB
@@ -38,17 +49,6 @@ public class AccountController {
         return Collections.singletonMap("message", "account service is up and running!");
     }
 
-    @GetMapping("/user")
-    public User getUser() {
-        User user = new User();
-        user.setId("abc");
-        user.setName("hello");
-        user.setEmail("hello@gmail.com");
-        user.setPassword("123456");
-        user.setRole(UserRole.ADMIN);
-        return user;
-    }
-
     @PostMapping("/register")
     public ResponseEntity<User> register(@RequestBody User newUser) {
 
@@ -57,6 +57,7 @@ public class AccountController {
         }
 
         newUser.setId(UUID.randomUUID().toString());
+
         System.out.println(newUser.getId());
         newUser.setRole(newUser.getRole() != null ? newUser.getRole() : UserRole.CUSTOMER);
 
