@@ -42,4 +42,13 @@ public class RegistrationService {
         }
         return null;
     }
+
+    public List<Object[]> getRegistrationsGroupedByEvent() {
+        return registrationRepository.countRegistrationsGroupedByEvent();
+    }
+
+    public List<Object[]> getRegistrationsGroupedByCustomer() {
+        return registrationRepository.countRegistrationsGroupedByCustomer();
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.clientatlas.customer_directory.domain.registration;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import jakarta.persistence.*;
@@ -14,7 +15,7 @@ public class Registration {
     
     private UUID eventId;
     private UUID customerId;
-    private String dateRegistered;
+    private LocalDateTime dateRegistered;
 
     public UUID getId() {
         return id;
@@ -40,11 +41,11 @@ public class Registration {
         this.customerId = customerId;
     }
 
-    public String getDateRegistered() {
+    public LocalDateTime getDateRegistered() {
         return dateRegistered;
     }
 
-    public void setDateRegistered(String dateRegistered) {
+    public void setDateRegistered(LocalDateTime dateRegistered) {
         this.dateRegistered = dateRegistered;
     }
     

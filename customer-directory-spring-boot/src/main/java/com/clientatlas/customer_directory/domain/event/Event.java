@@ -2,6 +2,7 @@ package com.clientatlas.customer_directory.domain.event;
 
 import jakarta.persistence.*;
 import java.util.UUID;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name="events")
@@ -13,13 +14,13 @@ public class Event {
     private String title;
 
     @Column(name="start_date_time")
-    private String startDateTime;
+    private LocalDateTime startDateTime;
 
     @Column(name="end_date_time")
-    private String endDateTime;
+    private LocalDateTime endDateTime;
 
     private String location;
-    private Double price;
+    private Float price;
 
     @Column(columnDefinition = "TEXT")
     private String description;
@@ -45,19 +46,19 @@ public class Event {
         this.title = title;
     }
 
-    public String getStartDateTime() {
+    public LocalDateTime getStartDateTime() {
         return startDateTime;
     }
 
-    public void setStartDateTime(String startDateTime) {
+    public void setStartDateTime(LocalDateTime startDateTime) {
         this.startDateTime = startDateTime;
     }
 
-    public String getEndDateTime() {
+    public LocalDateTime getEndDateTime() {
         return endDateTime;
     }
 
-    public void setEndDateTime(String endDateTime) {
+    public void setEndDateTime(LocalDateTime endDateTime) {
         this.endDateTime = endDateTime;
     }
 
@@ -69,11 +70,11 @@ public class Event {
         this.location = location;
     }
 
-    public Double getPrice() {
+    public Float getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(Float price) {
         this.price = price;
     }
 
@@ -109,7 +110,7 @@ public class Event {
 //     start_date_time TIMESTAMP,
 //     end_date_time TIMESTAMP,
 //     location VARCHAR(255),
-//     price NUMERIC,
+//     price FLOAT,
 //     description TEXT,
 //     capacity INT,
 //     banner_image VARCHAR(255)
