@@ -105,7 +105,7 @@ public class Event {
 }
 
 // CREATE TABLE events (
-//     id UUID PRIMARY KEY,
+//     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
 //     title VARCHAR(255),
 //     start_date_time TIMESTAMP,
 //     end_date_time TIMESTAMP,
@@ -117,7 +117,7 @@ public class Event {
 // );
 
 // CREATE TABLE registrations (
-//     id UUID PRIMARY KEY,
+//     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
 //     event_id UUID REFERENCES events(id),
 //     customer_id UUID REFERENCES customers(id),
 //     date_registered TIMESTAMP DEFAULT CURRENT_TIMESTAMP
