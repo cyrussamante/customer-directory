@@ -1,5 +1,5 @@
 package com.clientatlas.customer_directory.data.controller;
-import com.clientatlas.customer_directory.data.service.DataService;
+import com.clientatlas.customer_directory.data.service.CustomerService;
 import org.springframework.web.bind.annotation.*;
 import com.clientatlas.customer_directory.domain.customer.Customer;
 import java.util.List;
@@ -11,9 +11,9 @@ import java.util.UUID;
 @RequestMapping("/api")
 public class DataController {
 
-    private final DataService customerService;
+    private final CustomerService customerService;
 
-    public DataController(DataService customerService) {
+    public DataController(CustomerService customerService) {
         this.customerService = customerService;
     }
 

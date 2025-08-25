@@ -7,11 +7,11 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-public class DataService {
+public class CustomerService {
     
     private final CustomerRepository customerRepository;
 
-    public DataService(CustomerRepository customerRepository) {
+    public CustomerService(CustomerRepository customerRepository) {
         this.customerRepository = customerRepository;
     }
 
