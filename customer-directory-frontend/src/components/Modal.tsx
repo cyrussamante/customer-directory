@@ -44,7 +44,7 @@ export default function Modal({ mode, customer, onClose, onSave }: Props) {
             name: formData.name.trim(),
             email: formData.email.trim(),
             password: formData.password,
-            role: 'customer',
+            role: 'CUSTOMER',
             age: formData.age,
             gender: formData.gender.trim(),
             address: formData.address.trim(),

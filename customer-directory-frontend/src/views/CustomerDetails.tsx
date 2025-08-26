@@ -32,7 +32,7 @@ export default function CustomerDetails() {
             console.log(customer)
             console.log(customer.id)
             const response = await removeCustomer(customer.id, token);
-            if (response.status !== 204) {
+            if (response.status !== 200) {
                 throw new Error('Failed to delete customer');
             }
             dispatch(deleteCustomer(customer.id));
