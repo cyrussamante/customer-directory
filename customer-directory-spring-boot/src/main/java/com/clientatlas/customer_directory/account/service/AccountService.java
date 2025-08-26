@@ -50,14 +50,16 @@ public class AccountService {
         newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
         newUser.setRole(newUser.getRole() != null ? newUser.getRole() : UserRole.CUSTOMER);
 
-        User user = userRepository.save(newUser);
-
-        if (user.getRole() == UserRole.CUSTOMER) {
+        if (newUser.getRole() == UserRole.CUSTOMER) {
             Customer customer = new Customer();
-            customerRepository.save(customer);
+            customer.setName(newUser.getName());
+            customer.setEmail(newUser.getEmail());
+            customer.setRole(UserRole.CUSTOMER);
+            customer.setPassword(newUser.getPassword());
+            return customerRepository.save(customer);
         }
 
-        return user;
+        return userRepository.save(newUser);
     }
 
     public List<User> getAllUsers() {
