@@ -46,7 +46,7 @@ export default function EventsList() {
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                 />
-                {userRole === 'admin' && (
+                {userRole === 'ADMIN' && (
                     <button onClick={handleAddClick}>
                         Add Event
                     </button>

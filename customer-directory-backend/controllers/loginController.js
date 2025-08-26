@@ -27,7 +27,7 @@ async function register(req, res) {
                 name: body.name || "Default User",
                 email: body.email,
                 password: body.password,
-                role: body.role || "admin",
+                role: body.role || "ADMIN",
                 token: randomUUID()
             }
             return res.status(200).json(user);

@@ -46,7 +46,7 @@ export default function CustomerList() {
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                 />
-                {userRole === 'admin' && (
+                {userRole === 'ADMIN' && (
                     <button onClick={handleAddClick}>
                         Add Customer
                     </button>

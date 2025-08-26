@@ -19,9 +19,9 @@ export const ADD_REGISTRATION = "ADD_REGISTRATION";
 export const UPDATE_REGISTRATION = "UPDATE_REGISTRATION";
 export const DELETE_REGISTRATION = "DELETE_REGISTRATION";
 
-export const setLogin = (user: User) => ({
+export const setLogin = (user: User, token: string) => ({
   type: LOGIN,
-  payload: { user },
+  payload: { user, token },
 });
 
 export const setLogout = () => ({

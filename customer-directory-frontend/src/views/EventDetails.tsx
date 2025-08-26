@@ -69,7 +69,7 @@ export default function EventDetails() {
                     <div className="eventDetailsHead">
                         <h2>{event.title}</h2>
                         <div className="eventDetailsButtons">
-                            {userRole === 'admin' && (
+                            {userRole === 'ADMIN' && (
                                 <>
                                     <button className="edit" onClick={handleEditClick} >Edit Details </button>
                                     <button className="delete" onClick={handleDeleteClick} >Delete</button>

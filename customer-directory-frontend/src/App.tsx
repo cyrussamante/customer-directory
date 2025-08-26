@@ -13,7 +13,7 @@ import Register from './views/Register';
 import type { RootState } from './redux/store';
 import configureHomePage from './helpers/function';
 import { setLogin } from './redux/actions';
-import type { User } from './types/appState';
+import { login, getUserInfo } from './api/accountAPI';
 //import ChatBot from './components/ChatBot';
 
 function App() {
@@ -25,24 +25,14 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
 
-      const token = localStorage.getItem('authToken');
-      if (token) {
-        // fix this: how do based on the token i get which user info from bsckend and setlogin
-        //  const userInfo = await getUserInfo(token); 
-
-        //mock data for test only
-        const user: User = {
-          id: '3',
-          name: 'inreet',
-          email: 'wasadmin@test.com',
-          password: '1234',
-          //for test only
-          // role: "admin",
-          // role: 'employee',
-          role: 'customer',
-          token: token
-        }
-        dispatch(setLogin(user)); 
+      const email = localStorage.getItem('email');
+      const password = localStorage.getItem('password');
+      if (email && password) {
+        const response = await login({ email : email, password: password })
+        const token = response.data.access_token
+        const userInfo = await getUserInfo(token);
+        const user = userInfo.data 
+        dispatch(setLogin(user, token)); 
         configureHomePage(user, dispatch, navigate);
       }
 

@@ -64,8 +64,8 @@ export default function CustomerDetails() {
                             <h2>{customer.name}</h2>
                             <div className="detailsButtons">
                                 <button className="edit" onClick={handleEditClick} >Edit Details </button>
-                                {userRole === 'admin' && <button className="delete" onClick={handleDeleteClick} >Delete</button>}
-                                {userRole === 'admin' && <button onClick={handleCloseProfileClick} >Close Profile</button>}
+                                {userRole === 'ADMIN' && <button className="delete" onClick={handleDeleteClick} >Delete</button>}
+                                {userRole === 'ADMIN' && <button onClick={handleCloseProfileClick} >Close Profile</button>}
                             </div>
                         </div>
                         <div className="detailsBody">

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import "./Login.css";
-import { register } from '../api/accountAPI';
+import { getUserInfo, login, register } from '../api/accountAPI';
 import { setLogin } from '../redux/actions';
 import { useDispatch } from 'react-redux'
 import type { User } from '../types/appState';
@@ -14,7 +14,7 @@ export default function Register() {
         name: '',
         email: '',
         password: '',
-        role: 'customer',
+        role: 'CUSTOMER',
         token: ''
     }
     const [formData, setFormData] = useState(initialFormData);
@@ -44,8 +44,11 @@ export default function Register() {
         try {
             const response = await register(payload);
             if (response.status === 200) {
-                const user = response.data;
-                dispatch(setLogin(user));
+                const loginResp = await login({email: formData.email, password: formData.password})
+                const token = loginResp.data.access_token
+                const userInfo = await getUserInfo(token);
+                const user = userInfo.data 
+                dispatch(setLogin(user, token));
                 configureHomePage(user, dispatch, navigate);
             } else {
                 alert('Registration failed. Please try again.');
@@ -94,9 +97,9 @@ export default function Register() {
                         value={formData.role}
                         onChange={handleChange}
                     >
-                        <option value="customer">Customer</option>
-                        <option value="employee">Employee</option>
-                        <option value="admin">Admin</option>
+                        <option value="CUSTOMER">Customer</option>
+                        <option value="EMPLOYEE">Employee</option>
+                        <option value="ADMIN">Admin</option>
                     </select>
                     <button onClick={handleSubmit}>Log In</button>
                 </form>

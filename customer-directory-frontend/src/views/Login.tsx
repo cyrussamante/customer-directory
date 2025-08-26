@@ -1,10 +1,9 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import "./Login.css"
-import { login } from '../api/accountAPI';
+import { getUserInfo, login } from '../api/accountAPI';
 import { setLogin } from '../redux/actions';
 import { useDispatch } from 'react-redux'
-import type { User } from '../types/appState';
 import configureHomePage from '../helpers/function';
 export default function Login() {
 
@@ -28,27 +27,14 @@ export default function Login() {
       if (response.status < 200 || response.status >= 300) {
         throw new Error("Invalid credentials. Please try again");
       }
-      const data = response.data;
-
-      //ideally in data we will get the whole user object
-      // rn only getting token
-      localStorage.setItem('authToken', data);
-
-      //mock data for test only
-      const user: User = {
-        id: '2',
-        name: 'inreet',
-        email: formData.email,
-        password: formData.password,
-        role: "admin",
-        //to test employee view
-        //role: 'employee',
-        // to test customer view
-        //role: 'customer',
-        token: data
-      }
-      dispatch(setLogin(user))
+      const token = response.data.access_token
+      const userInfo = await getUserInfo(token);
+      const user = userInfo.data 
+      localStorage.setItem('email', user.email);
+      localStorage.setItem('password', user.password);
+      dispatch(setLogin(user, token))
       configureHomePage(user, dispatch, navigate);
+             
     } catch (error) {
       alert('Login failed! Try again.');
     }
