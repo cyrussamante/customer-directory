@@ -32,27 +32,6 @@ public class SecurityConfig {
     @Autowired
     private CurrentUserDetailsService currentUserDetailsService;
 
-
-//    @Bean
-//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-//        return http
-//                .sessionManagement(
-//                        session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-//                .csrf(AbstractHttpConfigurer::disable)
-//                .authorizeHttpRequests(auth -> auth
-//                        .requestMatchers("/account","/account/token", "/account/register").permitAll()
-//                        .requestMatchers("/account/users/**").hasRole("ADMIN")
-//                        .requestMatchers("/api/**").permitAll()
-//                        .anyRequest().authenticated())
-//                .userDetailsService(currentUserDetailsService)
-//                .oauth2ResourceServer((resourceServer) ->
-//                        resourceServer.jwt((customizer) -> customizer
-//                                .decoder(jwtDecoder())
-//                                .jwtAuthenticationConverter(jwtAuthenticationConverter())
-//                        ))
-//                .build();
-//    }
-////
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
