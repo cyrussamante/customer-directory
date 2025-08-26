@@ -6,7 +6,14 @@ import com.clientatlas.customer_directory.domain.user.UserRole;
 import com.clientatlas.customer_directory.repository.CustomerRepository;
 import com.clientatlas.customer_directory.repository.UserRepository;
 
+import com.clientatlas.customer_directory.security.user.CurrentUserDetails;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -87,5 +94,15 @@ public class AccountService {
             }
         });
         return userRepository.save(user);
+    }
+
+    public ResponseEntity<User> getCurrentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            String userEmail = authentication.getName();
+            User user = userRepository.findByEmail(userEmail).orElseThrow(() -> new RuntimeException("User not found"));
+            return ResponseEntity.ok(user);
+        }
+        return ResponseEntity.notFound().build();
     }
 }

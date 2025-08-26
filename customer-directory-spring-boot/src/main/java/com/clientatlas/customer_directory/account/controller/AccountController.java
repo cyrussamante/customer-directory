@@ -5,7 +5,13 @@ import com.clientatlas.customer_directory.account.service.AccountService;
 import com.clientatlas.customer_directory.domain.user.User;
 import com.clientatlas.customer_directory.security.jwt.TokenService;
 
+import com.clientatlas.customer_directory.security.user.CurrentUserDetails;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -79,6 +85,12 @@ public class AccountController {
     public ResponseEntity<User> patchUser(@PathVariable UUID id, @RequestBody Map<String, Object> updatedData) {
         User updatedUser = accountService.patchUser(id, updatedData);
         return updatedUser == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(updatedUser);
+    }
+
+
+    @GetMapping("/me")
+    public ResponseEntity<User> getCurrentUser() {
+       return accountService.getCurrentUser();
     }
 
 }

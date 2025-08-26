@@ -52,22 +52,23 @@ public class SecurityConfig {
 //                        ))
 //                .build();
 //    }
-
+////
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/account", "/account/token", "/account/register").permitAll()
+                        .requestMatchers("/account", "/account/token", "/account/register", "/account/me").permitAll()
                         .requestMatchers("/account/users/**").hasRole("ADMIN")
                         .requestMatchers("/api/**").permitAll()
                         .anyRequest().authenticated()
                 )
+                .userDetailsService(currentUserDetailsService)
                 .oauth2ResourceServer(resourceServer ->
                         resourceServer.jwt(jwt -> jwt
-                                .decoder(jwtDecoder())                   // validate the JWT
-                                .jwtAuthenticationConverter(jwtAuthenticationConverter()) // map roles from token
+                                .decoder(jwtDecoder())
+                                .jwtAuthenticationConverter(jwtAuthenticationConverter())
                         )
                 )
                 .build();
