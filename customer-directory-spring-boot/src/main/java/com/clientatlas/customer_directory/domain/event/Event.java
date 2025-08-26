@@ -115,7 +115,7 @@ public class Event {
 //     capacity INT,
 //     banner_image VARCHAR(255)
 // );
-
+//
 // CREATE TABLE registrations (
 //     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
 //     event_id UUID REFERENCES events(id),

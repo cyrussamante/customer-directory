@@ -73,7 +73,7 @@ public class User {
 //    password VARCHAR(255) NOT NULL,
 //    user_role VARCHAR(50) NOT NULL
 // );
-
+//
 // CREATE TABLE customers (
 //    id UUID PRIMARY KEY,
 //    age INT,
