@@ -30,10 +30,9 @@ export default function Login() {
       const token = response.data.access_token
       const userInfo = await getUserInfo(token);
       const user = userInfo.data 
-      localStorage.setItem('email', user.email);
-      localStorage.setItem('password', user.password);
+      localStorage.setItem('token', token);
       dispatch(setLogin(user, token))
-      configureHomePage(user, dispatch, navigate);
+      configureHomePage(user, dispatch, navigate, token);
              
     } catch (error) {
       alert('Login failed! Try again.');

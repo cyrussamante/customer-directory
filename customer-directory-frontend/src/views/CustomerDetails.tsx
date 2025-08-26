@@ -8,7 +8,7 @@ import Modal from '../components/Modal';
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState } from '../redux/store';
 import { editCustomer, removeCustomer } from '../api/customersAPI';
-import { deleteCustomer, updateCustomer } from '../redux/actions';
+import { deleteCustomer, updateCustomer, setUser } from '../redux/actions';
 import RegisteredEvents from './RegisteredEvents';
 
 export default function CustomerDetails() {
@@ -18,7 +18,8 @@ export default function CustomerDetails() {
     const [showEditModal, setEditModal] = useState(false);
     const customers = useSelector((state: RootState) => state.app.customers);
     const customer = customers.find((customer: Customer) => customer.id === id);
-    const userRole = useSelector((state: RootState) => state.app.user.role);
+    const user = useSelector((state: RootState) => state.app.user);
+    const token = useSelector((state: RootState) => state.app.token);
     const dispatch = useDispatch();
 
     const handleDeleteClick = () => setDeleteModal(true);
@@ -30,7 +31,7 @@ export default function CustomerDetails() {
         if (customer) {
             console.log(customer)
             console.log(customer.id)
-            const response = await removeCustomer(customer.id);
+            const response = await removeCustomer(customer.id, token);
             if (response.status !== 204) {
                 throw new Error('Failed to delete customer');
             }
@@ -45,11 +46,16 @@ export default function CustomerDetails() {
     const handleCloseEditModal = () => setEditModal(false);
 
     const handleEditCustomer = async (updatedCustomer: Customer) => {
-        const response = await editCustomer(customer.id, updatedCustomer);
+        const response = await editCustomer(customer.id, updatedCustomer, token);
         if (response.status < 200 || response.status >= 300) {
             throw new Error('Failed to update customer');
         }
-        dispatch(updateCustomer(updatedCustomer));
+        if (user.role === "ADMIN") {
+            dispatch(updateCustomer(updatedCustomer));
+        }
+        else {
+            dispatch(setUser(updatedCustomer))
+        }
         setEditModal(false);
     }
 
@@ -58,14 +64,14 @@ export default function CustomerDetails() {
     return (
         <div className="detailsPage">
             <div className="customerDetails">
-                {customer ? (
+                {customer && user.role !== "CUSTOMER" ? (
                     <>
                         <div className="detailsHead">
                             <h2>{customer.name}</h2>
                             <div className="detailsButtons">
                                 <button className="edit" onClick={handleEditClick} >Edit Details </button>
-                                {userRole === 'ADMIN' && <button className="delete" onClick={handleDeleteClick} >Delete</button>}
-                                {userRole === 'ADMIN' && <button onClick={handleCloseProfileClick} >Close Profile</button>}
+                                {user.role === 'ADMIN' && <button className="delete" onClick={handleDeleteClick} >Delete</button>}
+                                {user.role === 'ADMIN' && <button onClick={handleCloseProfileClick} >Close Profile</button>}
                             </div>
                         </div>
                         <div className="detailsBody">
@@ -92,7 +98,31 @@ export default function CustomerDetails() {
                             onConfirm={handleDeleteCustomer} />)}
                     </>
                 ) : (
-                    <p>Customer not found.</p>
+                    <>
+                        <div className="detailsHead">
+                            <h2>{user.name}</h2>
+                            <div className="detailsButtons">
+                                <button className="edit" onClick={handleEditClick} >Edit Details </button>
+                            </div>
+                        </div>
+                        <div className="detailsBody">
+                            <div className="imageContainer">
+                                <img src={user?.imageUrl} alt={user.name} />
+                            </div>
+                            <div className="detailsGrid">
+                                <p className="classifier">Age </p> <p>{user.age}</p>
+                                <p className="classifier">Gender </p> <p>{user.gender}</p>
+                                <p className="classifier">Email </p> <p>{user.email}</p>
+                                <p className="classifier">Address </p> <p>{user.address}</p>
+                                <p className="classifier">Number of Orders </p> <p>{user.numberOfOrders}</p>
+                            </div>
+                        </div>
+                        {showEditModal && (<Modal
+                            mode={'edit'}
+                            customer={user}
+                            onClose={handleCloseEditModal}
+                            onSave={handleEditCustomer} />)}
+                    </>
                 )}
             </div>
             <RegisteredEvents />

@@ -43,13 +43,14 @@ export default function Register() {
         }
         try {
             const response = await register(payload);
-            if (response.status === 200) {
+            if (response.status === 201) {
                 const loginResp = await login({email: formData.email, password: formData.password})
                 const token = loginResp.data.access_token
                 const userInfo = await getUserInfo(token);
                 const user = userInfo.data 
+                localStorage.setItem('token', token);
                 dispatch(setLogin(user, token));
-                configureHomePage(user, dispatch, navigate);
+                configureHomePage(user, dispatch, navigate, token);
             } else {
                 alert('Registration failed. Please try again.');
             }
@@ -101,7 +102,7 @@ export default function Register() {
                         <option value="EMPLOYEE">Employee</option>
                         <option value="ADMIN">Admin</option>
                     </select>
-                    <button onClick={handleSubmit}>Log In</button>
+                    <button onClick={handleSubmit}>Register</button>
                 </form>
                 <Link to="/register">Donot have an account? Sign Up!</Link>
             </div>

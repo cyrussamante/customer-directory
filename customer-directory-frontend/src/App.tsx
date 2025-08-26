@@ -25,15 +25,12 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
 
-      const email = localStorage.getItem('email');
-      const password = localStorage.getItem('password');
-      if (email && password) {
-        const response = await login({ email : email, password: password })
-        const token = response.data.access_token
+      const token = localStorage.getItem('token');
+      if (token) {
         const userInfo = await getUserInfo(token);
         const user = userInfo.data 
         dispatch(setLogin(user, token)); 
-        configureHomePage(user, dispatch, navigate);
+        configureHomePage(user, dispatch, navigate, token);
       }
 
     };
