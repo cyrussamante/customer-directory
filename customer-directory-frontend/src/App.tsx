@@ -14,6 +14,8 @@ import type { RootState } from './redux/store';
 import configureHomePage from './helpers/function';
 import { setLogin } from './redux/actions';
 import { login, getUserInfo } from './api/accountAPI';
+import { useLocation } from 'react-router-dom';
+
 //import ChatBot from './components/ChatBot';
 
 function App() {
@@ -21,6 +23,7 @@ function App() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isLoggedIn = useSelector((state: RootState) => state.app.isLoggedIn);
+  const location = useLocation();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -28,9 +31,12 @@ function App() {
       const token = localStorage.getItem('token');
       if (token) {
         const userInfo = await getUserInfo(token);
-        const user = userInfo.data 
-        dispatch(setLogin(user, token)); 
-        configureHomePage(user, dispatch, navigate, token);
+        const user = userInfo.data
+        dispatch(setLogin(user, token));
+        if (location.pathname === '/' || location.pathname === '/login') {
+          configureHomePage(user, dispatch, navigate, token);
+        }
+        // configureHomePage(user, dispatch, navigate, token);
       }
 
     };
@@ -45,7 +51,7 @@ function App() {
       <main>
         <Routes>
           <Route path="/" element={<Login />} />
-          <Route path="/register" element= {<Register />} />
+          <Route path="/register" element={<Register />} />
           <Route path="customers" element={<CustomerList />} />
           <Route path="/customers/:id" element={<CustomerDetails />} />
           <Route path="/events" element={<EventsList />} />
