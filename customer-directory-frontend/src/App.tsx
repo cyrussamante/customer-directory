@@ -25,24 +25,6 @@ function App() {
   const isLoggedIn = useSelector((state: RootState) => state.app.isLoggedIn);
   const location = useLocation();
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-
-  //     const token = localStorage.getItem('token');
-  //     if (token) {
-  //       const userInfo = await getUserInfo(token);
-  //       const user = userInfo.data
-  //       dispatch(setLogin(user, token));
-  //       if (location.pathname === '/' || location.pathname === '/login') {
-  //         configureHomePage(user, dispatch, navigate, token);
-  //       }
-  //     }
-
-  //   };
-  //   fetchData();
-  // }, []);
-
-
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
