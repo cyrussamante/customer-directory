@@ -22,6 +22,10 @@ export default function CustomerDetails() {
     const token = useSelector((state: RootState) => state.app.token);
     const dispatch = useDispatch();
 
+    if (!user) {
+        return <div>No customer data available.</div>;
+    }
+
     const handleDeleteClick = () => setDeleteModal(true);
 
     const handleCloseDeleteModal = () => setDeleteModal(false);
@@ -60,7 +64,6 @@ export default function CustomerDetails() {
     }
 
     const handleCloseProfileClick = () => navigate('/customers');
-
     return (
         <div className="detailsPage">
             <div className="customerDetails">

@@ -14,10 +14,16 @@ export default function EventsList() {
 
     const [searchTerm, setSearchTerm] = useState("");
     const [showAddModal, setShowAddModal] = useState(false);
-    const userRole = useSelector((state: RootState) => state.app.user.role);
     const token = useSelector((state: RootState) => state.app.token);
     const events: Event[] = useSelector((state: RootState) => state.app.events);
     const dispatch = useDispatch();
+
+    const user = useSelector((state: RootState) => state.app.user);
+    const userRole = user?.role;
+
+    if (!user) {
+        return <div>No event data available.</div>;
+    }
 
     const filteredEvents = events.filter((event) =>
         event.title.toLowerCase().includes(searchTerm.toLowerCase())

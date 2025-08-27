@@ -51,6 +51,7 @@ export default function Login() {
             placeholder="Enter your email"
             required
             value={formData.email}
+            autoComplete='email'
             onChange={handleChange}
           />
           <label className="label"> Password </label>
@@ -60,6 +61,7 @@ export default function Login() {
             required
             placeholder="Enter your password"
             value={formData.password}
+            autoComplete='current-password'
             onChange={handleChange}
           />
           <button onClick={handleSubmit}>Log In</button>

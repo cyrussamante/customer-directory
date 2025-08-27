@@ -70,6 +70,8 @@
     color: #666;
     gap: 1em;
     flex-wrap: wrap;
+    min-height: 400px;
+    margin-top: 2em;
 }
 
 .eventsGrid {
@@ -77,6 +79,7 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
     gap: 40px;
+    min-height: 500px;
     justify-items: center;
     padding-bottom: 2em;
 }

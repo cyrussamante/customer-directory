@@ -14,10 +14,17 @@ export default function CustomerList() {
 
     const [searchTerm, setSearchTerm] = useState("");
     const [showAddModal, setShowAddModal] = useState(false);
-    const userRole = useSelector((state: RootState) => state.app.user.role);
     const token = useSelector((state: RootState) => state.app.token);
     const customers: Customer[] = useSelector((state: RootState) => state.app.customers);
     const dispatch = useDispatch();
+
+
+    const user = useSelector((state: RootState) => state.app.user);
+    const userRole = user?.role;
+
+    if (!user) {
+        return <div>No event data available.</div>;
+    }
 
     const filteredCustomers = customers.filter((customer) =>
         customer.name.toLowerCase().includes(searchTerm.toLowerCase())
