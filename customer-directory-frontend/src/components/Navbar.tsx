@@ -2,6 +2,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { setLogout } from "../redux/actions";
 import type { RootState } from "../redux/store";
+import { persistor } from '../redux/store';
+
 
 export default function Navbar() {
     const isLoggedIn = useSelector((state: RootState) => state.app.isLoggedIn);
@@ -11,7 +13,9 @@ export default function Navbar() {
     const dispatch = useDispatch();
 
     const handleLogout = () => {
-        localStorage.removeItem('authToken');
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        persistor.purge();
         dispatch(setLogout());
     };
 
