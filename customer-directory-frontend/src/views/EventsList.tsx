@@ -22,7 +22,7 @@ export default function EventsList() {
     const userRole = user?.role;
 
     if (!user) {
-        return <div>No user data available.</div>;
+        return <div>No event data available.</div>;
     }
 
     const filteredEvents = events.filter((event) =>
