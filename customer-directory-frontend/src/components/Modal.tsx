@@ -50,7 +50,7 @@ export default function Modal({ mode, customer, onClose, onSave }: Props) {
             address: formData.address.trim(),
             numberOfOrders: formData.numberOfOrders,
         };
-        const isAnyFieldEmpty = Object.values(payload).some(value => value === '' );
+        const isAnyFieldEmpty = Object.values(payload).some(value => value === '');
         if (isAnyFieldEmpty) {
             alert('Please fill in all fields');
             return;
@@ -108,14 +108,16 @@ export default function Modal({ mode, customer, onClose, onSave }: Props) {
                         required
                     />
                     <label>Gender</label>
-                    <input className="modalInput"
+                    <select className="modalInput"
                         name="gender"
-                        placeholder="Gender"
                         value={formData.gender}
-                        type="text"
                         onChange={handleChange}
-                        required
-                    />
+                    >
+                        <option value="MALE">Male</option>
+                        <option value="FEMALE">Female</option>
+                        <option value="OTHER">Other</option>
+                        <option value="NOT_SPECIFIED">Not Specified</option>
+                    </select>
                     <label>Email</label>
                     <input className="modalInput"
                         type="email"

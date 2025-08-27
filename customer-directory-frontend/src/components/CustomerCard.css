@@ -9,6 +9,7 @@
     background-color: #f9f9f9;
     position: relative;
     overflow: hidden;
+    height: 240px;
 }
 
 .cardBody {
