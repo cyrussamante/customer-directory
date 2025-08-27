@@ -20,7 +20,7 @@ export default function Navbar() {
             <h2>Client Atlas</h2>
             <div className="options">
                 <Link to="/events">Events</Link>
-                {userRole === 'customer' ? (
+                {userRole === 'CUSTOMER' ? (
                     <Link to={`/customers/${id}`}>Profile</Link>
                 ) : (
                     <Link to="/customers">Customers</Link>

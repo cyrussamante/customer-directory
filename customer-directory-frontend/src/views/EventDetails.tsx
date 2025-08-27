@@ -18,6 +18,7 @@ export default function EventDetails() {
     const events = useSelector((state: RootState) => state.app.events);
     const event = events.find((event: Event) => event.id === id);
     const userRole = useSelector((state: RootState) => state.app.user.role);
+    const token = useSelector((state: RootState) => state.app.token);
     //const registrations = useSelector((state: RootState) => state.app.registrations);
     //const isRegistered = registrations.some((registration: Registration) => registration.eventId === id);
     const isRegistered = false;
@@ -32,7 +33,7 @@ export default function EventDetails() {
         if (event) {
             console.log(event)
             console.log(event.id)
-            const response = await removeEvent(event.id);
+            const response = await removeEvent(event.id, token);
             if (response.status !== 204) {
                 throw new Error('Failed to delete event');
             }
@@ -47,7 +48,7 @@ export default function EventDetails() {
     const handleCloseEditModal = () => setEditModal(false);
 
     const handleEditEvent = async (updatedEvent: Event) => {
-        const response = await editEvent(event.id, updatedEvent);
+        const response = await editEvent(event.id, updatedEvent, token);
         if (response.status < 200 || response.status >= 300) {
             throw new Error('Failed to update event');
         }
@@ -69,7 +70,7 @@ export default function EventDetails() {
                     <div className="eventDetailsHead">
                         <h2>{event.title}</h2>
                         <div className="eventDetailsButtons">
-                            {userRole === 'admin' && (
+                            {userRole === 'ADMIN' && (
                                 <>
                                     <button className="edit" onClick={handleEditClick} >Edit Details </button>
                                     <button className="delete" onClick={handleDeleteClick} >Delete</button>
@@ -90,7 +91,7 @@ export default function EventDetails() {
                             <p className="classifier">Capacity </p> <p>{event.capacity}</p>
                             <p className="classifier">Description </p> <p>{event.description}</p>
                         </div>
-                        {userRole === 'customer' && (
+                        {userRole === 'CUSTOMER' && (
                             <div className="eventDetailsActions">
                                 {!isRegistered ? (
                                     <button onClick={handleRegisterEventClick} >Register Event</button>

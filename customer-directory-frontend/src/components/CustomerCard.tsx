@@ -20,12 +20,12 @@ export default function CustomerCard({ customer }: props): ReactElement {
     return (
         <div className="card">
             <div className="icon">
-                {userRole !== "admin" && <VisibilityOffIcon />}
+                {userRole !== "ADMIN" && <VisibilityOffIcon />}
             </div>
             <div className="cardBody">
                 <img className="customerImg" src={customer?.imageUrl} alt={customer.name} />
                 <p>{customer.name}</p>
-                <button disabled={ userRole !== "admin" } onClick={handleViewDetails}>View Details</button>
+                <button disabled={ userRole !== "ADMIN" } onClick={handleViewDetails}>View Details</button>
             </div>
         </div>
     )

@@ -1,6 +1,7 @@
 export interface AppState {
     isLoggedIn: boolean
-    user: User | null,
+    token?: String;
+    user: User | Customer | null,
     customers: Customer[],
     events: Event[],
     registrations?: Registration[]
@@ -11,7 +12,7 @@ export interface User {
     name: string,
     email: string,
     password: string,
-    role: "admin" | "customer" | "employee"
+    role: "ADMIN" | "CUSTOMER" | "EMPLOYEE"
     token: string
 }
 

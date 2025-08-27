@@ -1,5 +1,19 @@
 import type { AppState } from "../types/appState";
-import { ADD_CUSTOMER, ADD_EVENT, ADD_REGISTRATION, DELETE_CUSTOMER, DELETE_EVENT, DELETE_REGISTRATION, LOGOUT, SET_CUSTOMERS, SET_EVENTS, SET_REGISTRATIONS, LOGIN, UPDATE_CUSTOMER, UPDATE_EVENT, UPDATE_REGISTRATION, SET_CUSTOMER } from "./actions";
+import { ADD_CUSTOMER, 
+    ADD_EVENT, 
+    ADD_REGISTRATION, 
+    DELETE_CUSTOMER, 
+    DELETE_EVENT, 
+    DELETE_REGISTRATION, 
+    LOGOUT, 
+    SET_CUSTOMERS, 
+    SET_EVENTS, 
+    SET_REGISTRATIONS, 
+    LOGIN, 
+    UPDATE_CUSTOMER, 
+    UPDATE_EVENT, 
+    UPDATE_REGISTRATION, 
+    SET_USER } from "./actions";
 
 const initialState: AppState = {
     isLoggedIn: false,
@@ -15,15 +29,12 @@ const appReducer = (state = initialState, action: any) => {
             return {
                 ...state,
                 isLoggedIn: true,
+                token: action.payload.token,
                 user: action.payload.user,
             };
 
         case LOGOUT:
-            return {
-                ...state,
-                isLoggedIn: false,
-                user: null,
-            };
+            return state = initialState;
 
         case SET_CUSTOMERS:
             return {
@@ -55,10 +66,10 @@ const appReducer = (state = initialState, action: any) => {
                 ),
             };
 
-        case SET_CUSTOMER:
+        case SET_USER:
             return {
                 ...state,
-                customers: [...state.customers, action.payload.customer]
+                user: action.payload.user
             };
 
         case SET_EVENTS:

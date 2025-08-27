@@ -7,7 +7,7 @@ export const SET_CUSTOMERS = "SET_CUSTOMERS";
 export const ADD_CUSTOMER = "ADD_CUSTOMER";
 export const UPDATE_CUSTOMER = "UPDATE_CUSTOMER";
 export const DELETE_CUSTOMER = "DELETE_CUSTOMER";
-export const SET_CUSTOMER = "SET_CUSTOMER";
+export const SET_USER = "SET_USER";
 
 export const SET_EVENTS = "SET_EVENTS";
 export const ADD_EVENT = "ADD_EVENT";
@@ -19,9 +19,9 @@ export const ADD_REGISTRATION = "ADD_REGISTRATION";
 export const UPDATE_REGISTRATION = "UPDATE_REGISTRATION";
 export const DELETE_REGISTRATION = "DELETE_REGISTRATION";
 
-export const setLogin = (user: User) => ({
+export const setLogin = (user: User, token: string) => ({
   type: LOGIN,
-  payload: { user },
+  payload: { user, token },
 });
 
 export const setLogout = () => ({
@@ -48,9 +48,9 @@ export const deleteCustomer = (customerId: string) => ({
   payload: { customerId },
 });
 
-export const setCustomer = (customer: Customer) => ({
-  type: SET_CUSTOMER,
-  payload: { customer },
+export const setUser = (user: Customer) => ({
+  type: SET_USER,
+  payload: { user },
 });
 
 export const setEvents = (events: Event[]) => ({
