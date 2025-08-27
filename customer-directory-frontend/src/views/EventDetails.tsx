@@ -34,7 +34,7 @@ export default function EventDetails() {
             console.log(event)
             console.log(event.id)
             const response = await removeEvent(event.id, token);
-            if (response.status !== 204) {
+            if (response.status !== 200) {
                 throw new Error('Failed to delete event');
             }
             dispatch(deleteEvent(event.id));

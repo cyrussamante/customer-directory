@@ -10,7 +10,7 @@ export const getEvents = (token: string) =>
 
     
 export const createEvent = (eventData: any, token: string): Promise<any> =>
-    axios.post('/api/events/',
+    axios.post('/api/events',
         JSON.stringify(eventData), {
         headers: { 
             'Content-Type': 'application/json',
