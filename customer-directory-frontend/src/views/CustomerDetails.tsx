@@ -22,33 +22,6 @@ export default function CustomerDetails() {
     const token = useSelector((state: RootState) => state.app.token);
     const dispatch = useDispatch();
 
-    // useEffect(() => {
-    //     const fetchImage = async () => {
-    //         let imgSrc = "default-profile.png";
-    //         const target = customer && user.role !== "CUSTOMER" ? customer : user;
-    //         if (target?.imageUrl) {
-    //             try {
-    //                 const response = await getImage(target.imageUrl, token);
-    //                 imgSrc = URL.createObjectURL(response.data);
-    //                 console.log(imgSrc)
-    //             } catch (error: any) {
-    //                 if (error?.response?.status === 401 || error?.response?.status === 404) {
-    //                     imgSrc = "default-profile.png";
-    //                 } else {
-    //                     imgSrc = "default-profile.png";
-    //                 }
-    //             }
-    //         }
-    //         setProfileImageUrl(imgSrc);
-    //     };
-    //     fetchImage();
-    //     return () => {
-    //         if (profileImageUrl.startsWith("blob:")) {
-    //             URL.revokeObjectURL(profileImageUrl);
-    //         }
-    //     };
-    // }, [customer, user, token]);
-
     if (!user) {
         return <div>No customer data available.</div>;
     }
@@ -93,6 +66,7 @@ export default function CustomerDetails() {
     const handleCloseProfileClick = () => navigate('/customers');
 
     console.log(customer.imageUrl)
+
     return (
         <div className="detailsPage">
             <div className="customerDetails">
@@ -108,7 +82,8 @@ export default function CustomerDetails() {
                         </div>
                         <div className="detailsBody">
                             <div className="imageContainer">
-                                <img className="customerImg" src={customer?.imageUrl ? customer.imageUrl : "images/default-profile.png"} alt={customer?.name} />
+                                <img className="customerImg" src={customer?.imageUrl ? customer.imageUrl : "/images/default-profile.png"} alt={customer?.name} />
+
                             </div>
                             <div className="detailsGrid">
                                 <p className="classifier">Age </p> <p>{customer.age}</p>
@@ -139,7 +114,7 @@ export default function CustomerDetails() {
                         </div>
                         <div className="detailsBody">
                             <div className="imageContainer">
-                                <img src={customer?.imageUrl ? customer.imageUrl : "images/default-profile.png"} alt={customer?.name} />
+                                <img src={customer.imageUrl} alt={customer?.name} />
                             </div>
                             <div className="detailsGrid">
                                 <p className="classifier">Age </p> <p>{user.age}</p>
