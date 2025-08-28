@@ -190,7 +190,7 @@ export default function Modal({ mode, customer, onClose, onSave }: Props) {
                     <label>Image</label>
                     <input className="modalInput" type="file" accept="image/*" onChange={handleImageChange} />
                     {imageFile && imagePreview && (
-                        <img src={imagePreview} alt="Preview" style={{ width: '100px', height: '100px', objectFit: 'cover', borderRadius: '8px', marginBottom: '10px' }} />
+                        <img className="profileImagePreview" src={imagePreview} alt="Preview" />
                     )}
                 </div>
 

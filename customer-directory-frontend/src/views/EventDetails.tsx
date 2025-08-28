@@ -29,35 +29,6 @@ export default function EventDetails() {
 
     const handleCloseDeleteModal = () => setDeleteModal(false);
 
-    const [bannerImageUrl, setBannerImageUrl] = useState<string>("default-event.png");
-
-    useEffect(() => {
-        const fetchImage = async () => {
-            let imgSrc = "default-event.png";
-
-            if (event?.bannerImage) {
-                try {
-                    const response = await getImage(event.bannerImage);
-                    imgSrc = URL.createObjectURL(response.data);
-                } catch (error: any) {
-                    if (error?.response?.status === 401 || error?.response?.status === 404) {
-                        imgSrc = "default-event.png";
-                    } else {
-                        imgSrc = "default-event.png";
-                    }
-                }
-            }
-            setBannerImageUrl(imgSrc);
-        };
-        fetchImage();
-        return () => {
-            if (bannerImageUrl.startsWith("blob:")) {
-                URL.revokeObjectURL(bannerImageUrl);
-            }
-        };
-    }, [event, token]);
-
-
     const handleDeleteEvent = async (e: any) => {
         e.preventDefault()
         if (event) {
@@ -110,6 +81,7 @@ export default function EventDetails() {
     }
 
     const handleCloseProfileClick = () => navigate(-1);
+    console.log(event.bannerImage)
 
     return (
         <div className="eventDetails">
@@ -129,7 +101,7 @@ export default function EventDetails() {
                     </div>
                     <div className="eventDetailsBody">
                         <div className="eventImageContainer">
-                            <img src={bannerImageUrl} alt={event.title} />
+                            <img src={event?.bannerImage ? event.bannerImage : "/images/default-event.png"} alt={event.title} />
                         </div>
                         <div className="eventDetailsGrid">
                             <p className="classifier">Event Title </p> <p>{event.title}</p>

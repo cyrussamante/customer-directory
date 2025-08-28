@@ -53,7 +53,7 @@ export default function EventsCard({ event }: props): ReactElement {
     return (
         <div className="eventCard">
             <div className="eventCardBody">
-                <img src={bannerImageUrl} alt={event.title} />
+                <img className="eventImg" src={bannerImageUrl} alt={event.title} />
                 <div className="event-info">
                     <div className="event-specifics">
                         <div className="title-location">

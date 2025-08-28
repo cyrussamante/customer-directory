@@ -30,7 +30,8 @@ public class ImageController {
     public ResponseEntity<Map<String, String>> uploadImage(@RequestParam("file") MultipartFile file) {
         try {
             String fileName = saveImage(file);
-            return ResponseEntity.ok(Collections.singletonMap("imageUrl", fileName));
+            String pathName = "/images/" + fileName;
+            return ResponseEntity.ok(Collections.singletonMap("imageUrl", pathName));
         } catch (IOException e) {
             return ResponseEntity.status(500)
                     .body(Collections.singletonMap("error", "Error with image upload: " + e.getMessage()));
