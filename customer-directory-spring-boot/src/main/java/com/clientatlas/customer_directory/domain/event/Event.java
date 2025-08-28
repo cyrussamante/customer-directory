@@ -28,7 +28,7 @@ public class Event {
     private int capacity;
 
     @Column(name="banner_image")
-    private String bannerImage;
+    private String bannerImage = "images/default-event.png";
 
     public UUID getId() {
         return id;
