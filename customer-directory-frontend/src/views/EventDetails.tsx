@@ -8,21 +8,21 @@ import EventModal from '../components/EventModal';
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState } from '../redux/store';
 import { editEvent, removeEvent } from '../api/eventsAPI';
-import { deleteEvent, updateEvent } from '../redux/actions';
-import { getImage } from '../api/imagesAPI';
+import { addRegistration, deleteEvent, deleteRegistration, updateEvent } from '../redux/actions';
+import { createRegistration, removeRegistration } from '../api/registrationsAPI';
 
 export default function EventDetails() {
     const { id } = useParams();
     const navigate = useNavigate();
     const [showDeleteModal, setDeleteModal] = useState(false);
     const [showEditModal, setEditModal] = useState(false);
-    const events = useSelector((state: RootState) => state.app.events);
+    const state = useSelector((state: RootState) => state.app);
+    const events = state.events;
     const event = events.find((event: Event) => event.id === id);
-    const userRole = useSelector((state: RootState) => state.app.user.role);
-    const token = useSelector((state: RootState) => state.app.token);
-    //const registrations = useSelector((state: RootState) => state.app.registrations);
-    //const isRegistered = registrations.some((registration: Registration) => registration.eventId === id);
-    const isRegistered = false;
+    const userRole = state.user.role;
+    const token = state.token;
+    const registrations = state.registrations;
+    const isRegistered = registrations.some((registration: Registration) => registration.eventId === id);
     const dispatch = useDispatch();
 
     const handleDeleteClick = () => setDeleteModal(true);
@@ -86,12 +86,30 @@ export default function EventDetails() {
         setEditModal(false);
     }
 
-    //  TODO - work on register event.
-    const handleRegisterEventClick = () => navigate('/events');
+    const handleRegisterEventClick =  async () => {
+        const registration = {
+            eventId: event.id,
+            customerId: state.user.id,
+        };
+        const response = await createRegistration(registration, token);
+        if (response.status !== 200) {
+            throw new Error('Failed to register event');
+        }
+        dispatch(addRegistration(response.data));
+    }
 
-    const handleUnRegisterEventClick = () => navigate('/events');
+    const handleUnRegisterEventClick = async () => {
+        const registration = registrations.find((reg: Registration) => reg.eventId === event.id && reg.customerId === state.user.id);
+        if (registration) {
+            const response = await removeRegistration(registration.id, token);
+            if (response.status !== 200) {
+                throw new Error('Failed to unregister event');
+            }
+            dispatch(deleteRegistration(registration.id));
+        }
+    }
 
-    const handleCloseProfileClick = () => navigate('/events');
+    const handleCloseProfileClick = () => navigate(-1);
 
     return (
         <div className="eventDetails">
