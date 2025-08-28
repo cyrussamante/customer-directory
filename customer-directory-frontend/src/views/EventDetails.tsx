@@ -2,7 +2,7 @@ import type { Event, Registration } from '../types/appState';
 import { useParams } from 'react-router';
 import "./EventDetails.css"
 import DeleteConfirmationModal from '../components/DeleteConfirmationModal';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import EventModal from '../components/EventModal';
 import { useDispatch, useSelector } from 'react-redux';
@@ -81,6 +81,7 @@ export default function EventDetails() {
     }
 
     const handleCloseProfileClick = () => navigate(-1);
+    console.log(event.bannerImage)
 
     return (
         <div className="eventDetails">
@@ -100,7 +101,7 @@ export default function EventDetails() {
                     </div>
                     <div className="eventDetailsBody">
                         <div className="eventImageContainer">
-                            <img src={event?.bannerImage ? event.bannerImage : '/images/default-event.png'} alt={event.title} />
+                            <img src={event?.bannerImage ? event.bannerImage : "/images/default-event.png"} alt={event.title} />
                         </div>
                         <div className="eventDetailsGrid">
                             <p className="classifier">Event Title </p> <p>{event.title}</p>

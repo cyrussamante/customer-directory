@@ -2,7 +2,7 @@ import type { Customer } from '../types/appState';
 import { useParams } from 'react-router';
 import "./CustomerDetails.css"
 import DeleteConfirmationModal from '../components/DeleteConfirmationModal';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import Modal from '../components/Modal';
 import { useDispatch, useSelector } from 'react-redux';
@@ -54,6 +54,9 @@ export default function CustomerDetails() {
     }
 
     const handleCloseProfileClick = () => navigate('/customers');
+
+    console.log(customer.imageUrl)
+
     return (
         <div className="detailsPage">
             <div className="customerDetails">
@@ -69,7 +72,7 @@ export default function CustomerDetails() {
                         </div>
                         <div className="detailsBody">
                             <div className="imageContainer">
-                                <img src={customer?.imageUrl} alt={customer.name} />
+                                <img className="customerImg" src={customer?.imageUrl ? customer.imageUrl : "/images/default-profile.png"} alt={customer?.name} />
                             </div>
                             <div className="detailsGrid">
                                 <p className="classifier">Age </p> <p>{customer.age}</p>

@@ -1,6 +1,9 @@
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Modal.css";
+import { uploadImage } from "../api/imagesAPI";
+import { useSelector } from "react-redux";
+import type { RootState } from "../redux/store";
 
 interface Props {
     mode: 'add' | 'edit';
@@ -17,7 +20,7 @@ export default function EventModal({ mode, event, onClose, onSave }: Props) {
         endDateTime: "",
         location: "",
         price: 0,
-        bannerImage: "",
+        bannerImage: "/images/default-event.png",
         description: "",
         capacity: 0,
     };
@@ -25,6 +28,10 @@ export default function EventModal({ mode, event, onClose, onSave }: Props) {
     const [formData, setFormData] = useState(mode === 'edit' ? event : initialFormData);
     const navigate = useNavigate();
     const dialogRef = useRef<HTMLDialogElement>(null);
+    const [imageFile, setImageFile] = useState<File | null>(null);
+    const token = useSelector((state: RootState) => state.app.token);
+
+
 
     useEffect(() => {
         if (dialogRef.current) {
@@ -38,9 +45,30 @@ export default function EventModal({ mode, event, onClose, onSave }: Props) {
             [e.target.name]: e.target.value
         });
     };
+    const handleImageChange = (e: any) => {
+        const file = e.target.files[0];
+        if (file) {
+            setImageFile(file);
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+        } else {
+            setImageFile(null);
+        }
+    };
 
-    const handleSubmit = (e: any) => {
+    const handleSubmit = async (e: any) => {
         e.preventDefault();
+        let bannerImage = formData.bannerImage;
+        if (imageFile) {
+            try {
+                const response = await uploadImage(imageFile, token);
+                bannerImage = response.data.imageUrl;
+            } catch (err) {
+                console.log(err)
+                alert('Image upload failed');
+                return;
+            }
+        }
         const payload = {
             title: formData.title.trim(),
             startDateTime: formData.startDateTime,
@@ -48,10 +76,10 @@ export default function EventModal({ mode, event, onClose, onSave }: Props) {
             location: formData.location.trim(),
             price: formData.price,
             description: formData.description.trim(),
-            capacity: formData.capacity,  
-            bannerImage: formData.bannerImage.trim(),
+            capacity: formData.capacity,
+            bannerImage: bannerImage,
         };
-        const isAnyFieldEmpty = Object.values(payload).some(value => value === '' );
+        const isAnyFieldEmpty = Object.values(payload).some(value => value === '');
         if (isAnyFieldEmpty) {
             alert('Please fill in all fields');
             return;
@@ -70,8 +98,7 @@ export default function EventModal({ mode, event, onClose, onSave }: Props) {
         if (mode === 'edit') {
             const updatedEvent = {
                 id: event.id,
-                ...payload,
-                bannerImage: event.bannerImage
+                ...payload
             }
             onSave(updatedEvent)
             dialogRef.current?.close();
@@ -133,7 +160,7 @@ export default function EventModal({ mode, event, onClose, onSave }: Props) {
                         onChange={handleChange}
                         required
                     />
-                    <label>Banner Image </label>
+                    {/* <label>Banner Image </label>
                     <input className="modalInput"
                         type="text"
                         name="bannerImage"
@@ -141,7 +168,7 @@ export default function EventModal({ mode, event, onClose, onSave }: Props) {
                         value={formData.bannerImage}
                         onChange={handleChange}
                         required
-                    />
+                    /> */}
                     <label>Description</label>
                     <textarea className="modalInput"
                         name="description"
@@ -159,6 +186,8 @@ export default function EventModal({ mode, event, onClose, onSave }: Props) {
                         placeholder="Capacity"
                         required
                     />
+                    <label>Banner Image</label>
+                    <input className="modalInput" type="file" accept="image/*" onChange={handleImageChange} />
                 </div>
                 <div className="modalButtons">
                     <button className="save" onClick={handleSubmit}>Save</button>

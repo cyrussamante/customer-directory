@@ -1,10 +1,11 @@
-import type { ReactElement } from "react";
+import { useEffect, useState, type ReactElement } from "react";
 import { useNavigate } from "react-router-dom";
 import "./CustomerCard.css";
 import type { Customer } from '../types/appState';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { useSelector } from "react-redux";
 import type { RootState } from "../redux/store";
+
 
 interface props {
     customer: Customer,
@@ -15,17 +16,18 @@ export default function CustomerCard({ customer }: props): ReactElement {
     const userRole = useSelector((state: RootState) => state.app.user.role);
     const navigate = useNavigate();
 
-    const handleViewDetails = () =>  navigate(`/customers/${customer.id}`);
+    const handleViewDetails = () => navigate(`/customers/${customer.id}`);
 
+    console.log(customer.imageUrl)
     return (
         <div className="card">
             <div className="icon">
                 {userRole !== "ADMIN" && <VisibilityOffIcon />}
             </div>
             <div className="cardBody">
-                <img className="customerImg" src={customer?.imageUrl} alt={customer.name} />
+                <img className="customerImg" src={customer?.imageUrl ? customer.imageUrl : "images/default-profile.png"} alt={customer?.name} />
                 <p>{customer.name}</p>
-                <button disabled={ userRole !== "ADMIN" } onClick={handleViewDetails}>View Details</button>
+                <button disabled={userRole !== "ADMIN"} onClick={handleViewDetails}>View Details</button>
             </div>
         </div>
     )

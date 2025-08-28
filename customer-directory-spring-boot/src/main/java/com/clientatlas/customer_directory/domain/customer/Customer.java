@@ -17,7 +17,7 @@ public class Customer extends User {
     private String address;
 
     @Column(name="image_url")
-    private String imageUrl;
+    private String imageUrl = "/images/default-profile.png";
 
     @Column(name="number_of_orders", columnDefinition = "INT DEFAULT 0")
     private int numberOfOrders;

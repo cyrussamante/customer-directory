@@ -1,6 +1,9 @@
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { uploadImage } from '../api/imagesAPI';
 import "./Modal.css";
+import { useSelector } from "react-redux";
+import type { RootState } from "../redux/store";
 
 interface Props {
     mode: 'add' | 'edit';
@@ -22,8 +25,12 @@ export default function Modal({ mode, customer, onClose, onSave }: Props) {
     };
 
     const [formData, setFormData] = useState(mode === 'edit' ? customer : initialFormData);
+    const [imagePreview, setImagePreview] = useState<string>("");
+    const [imageFile, setImageFile] = useState<File | null>(null);
     const navigate = useNavigate();
     const dialogRef = useRef<HTMLDialogElement>(null);
+    const token = useSelector((state: RootState) => state.app.token);
+
 
     useEffect(() => {
         if (dialogRef.current) {
@@ -38,8 +45,34 @@ export default function Modal({ mode, customer, onClose, onSave }: Props) {
         });
     };
 
-    const handleSubmit = (e: any) => {
+    const handleImageChange = (e: any) => {
+        const file = e.target.files[0];
+        if (file) {
+            setImageFile(file);
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setImagePreview(reader.result as string);
+            };
+            reader.readAsDataURL(file);
+        } else {
+            setImageFile(null);
+            setImagePreview("");
+        }
+    };
+
+    const handleSubmit = async (e: any) => {
         e.preventDefault();
+        let imageUrl = formData.imageUrl;
+        if (imageFile) {
+            try {
+                const response = await uploadImage(imageFile, token);
+                imageUrl = response.data.imageUrl;
+            } catch (err) {
+                console.log(err)
+                alert('Image upload failed');
+                return;
+            }
+        }
         const payload = {
             name: formData.name.trim(),
             email: formData.email.trim(),
@@ -49,13 +82,13 @@ export default function Modal({ mode, customer, onClose, onSave }: Props) {
             gender: formData.gender.trim(),
             address: formData.address.trim(),
             numberOfOrders: formData.numberOfOrders,
+            imageUrl: imageUrl
         };
         const isAnyFieldEmpty = Object.values(payload).some(value => value === '');
         if (isAnyFieldEmpty) {
             alert('Please fill in all fields');
             return;
         }
-
         if (mode === 'add') {
             try {
                 onSave(payload);
@@ -65,12 +98,10 @@ export default function Modal({ mode, customer, onClose, onSave }: Props) {
             dialogRef.current?.close();
             navigate("/customers");
         }
-
         if (mode === 'edit') {
             const updatedCustomer = {
                 id: customer.id,
-                ...payload,
-                imageUrl: customer.imageUrl
+                ...payload
             }
             onSave(updatedCustomer)
             dialogRef.current?.close();
@@ -113,6 +144,7 @@ export default function Modal({ mode, customer, onClose, onSave }: Props) {
                         value={formData.gender}
                         onChange={handleChange}
                     >
+                        <option value="" disabled>Select Gender</option>
                         <option value="MALE">Male</option>
                         <option value="FEMALE">Female</option>
                         <option value="OTHER">Other</option>
@@ -155,6 +187,11 @@ export default function Modal({ mode, customer, onClose, onSave }: Props) {
                         placeholder="Orders"
                         required
                     />
+                    <label>Image</label>
+                    <input className="modalInput" type="file" accept="image/*" onChange={handleImageChange} />
+                    {imageFile && imagePreview && (
+                        <img className="profileImagePreview" src={imagePreview} alt="Preview" />
+                    )}
                 </div>
 
                 <div className="modalButtons">
