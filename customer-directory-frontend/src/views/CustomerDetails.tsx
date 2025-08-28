@@ -2,7 +2,7 @@ import type { Customer } from '../types/appState';
 import { useParams } from 'react-router';
 import "./CustomerDetails.css"
 import DeleteConfirmationModal from '../components/DeleteConfirmationModal';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import Modal from '../components/Modal';
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,6 +10,7 @@ import type { RootState } from '../redux/store';
 import { editCustomer, removeCustomer } from '../api/customersAPI';
 import { deleteCustomer, updateCustomer, setUser } from '../redux/actions';
 import RegisteredEvents from './RegisteredEvents';
+import { getImage } from '../api/imagesAPI';
 
 export default function CustomerDetails() {
     const { id } = useParams();
@@ -21,6 +22,35 @@ export default function CustomerDetails() {
     const user = useSelector((state: RootState) => state.app.user);
     const token = useSelector((state: RootState) => state.app.token);
     const dispatch = useDispatch();
+
+    const [profileImageUrl, setProfileImageUrl] = useState<string>("default-profile.png");
+
+    useEffect(() => {
+        const fetchImage = async () => {
+            let imgSrc = "default-profile.png";
+            const target = customer && user.role !== "CUSTOMER" ? customer : user;
+            if (target?.imageUrl) {
+                try {
+                    const response = await getImage(target.imageUrl, token);
+                    imgSrc = URL.createObjectURL(response.data);
+                    console.log(imgSrc)
+                } catch (error: any) {
+                    if (error?.response?.status === 401 || error?.response?.status === 404) {
+                        imgSrc = "default-profile.png";
+                    } else {
+                        imgSrc = "default-profile.png";
+                    }
+                }
+            }
+            setProfileImageUrl(imgSrc);
+        };
+        fetchImage();
+        return () => {
+            if (profileImageUrl.startsWith("blob:")) {
+                URL.revokeObjectURL(profileImageUrl);
+            }
+        };
+    }, [customer, user, token]);
 
     if (!user) {
         return <div>No customer data available.</div>;
@@ -64,6 +94,8 @@ export default function CustomerDetails() {
     }
 
     const handleCloseProfileClick = () => navigate('/customers');
+
+    console.log(customer.imageUrl)
     return (
         <div className="detailsPage">
             <div className="customerDetails">
@@ -79,7 +111,10 @@ export default function CustomerDetails() {
                         </div>
                         <div className="detailsBody">
                             <div className="imageContainer">
-                                <img src={customer?.imageUrl} alt={customer.name} />
+                                <img
+                                    src={profileImageUrl}
+                                    alt={customer ? customer.name : user.name}
+                                />
                             </div>
                             <div className="detailsGrid">
                                 <p className="classifier">Age </p> <p>{customer.age}</p>
@@ -110,7 +145,10 @@ export default function CustomerDetails() {
                         </div>
                         <div className="detailsBody">
                             <div className="imageContainer">
-                                <img src={user?.imageUrl} alt={user.name} />
+                                <img
+                                    src={profileImageUrl}
+                                    alt={user.name}
+                                />
                             </div>
                             <div className="detailsGrid">
                                 <p className="classifier">Age </p> <p>{user.age}</p>

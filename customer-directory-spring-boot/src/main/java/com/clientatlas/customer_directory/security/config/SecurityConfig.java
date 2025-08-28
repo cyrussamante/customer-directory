@@ -40,6 +40,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/account", "/account/token", "/account/register", "/account/me").permitAll()
                         .requestMatchers("/account/users/**").hasRole("ADMIN")
+                        .requestMatchers("/images").permitAll()
                         .anyRequest().authenticated()
                 )
                 .userDetailsService(currentUserDetailsService)

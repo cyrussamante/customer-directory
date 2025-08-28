@@ -11,6 +11,7 @@ export default defineConfig({
     proxy: {
       '/api': 'http://localhost:8080',
       '/account': 'http://localhost:8080',
+      '/images': 'http://localhost:8080'
     }
   }
 })

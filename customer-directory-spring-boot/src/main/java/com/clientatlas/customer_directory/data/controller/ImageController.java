@@ -1,10 +1,8 @@
 package com.clientatlas.customer_directory.data.controller;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.parameters.P;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -12,25 +10,54 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.Collections;
+import java.util.Map;
 import java.util.UUID;
 
+@RestController
+@RequestMapping("/images")
 public class ImageController {
 
-    @PostMapping()
-    public ResponseEntity<String> uploadImage(@PathVariable UUID id, @RequestParam("file") MultipartFile file) {
-        try {
-            Path path = Paths.get("uploads/");
-            if (Files.notExists(path)) {
-                Files.createDirectories(path);
-            }
+    @Value("${file.upload-dir}")
+    private String uploadDir;
 
-            String fileName = file.getOriginalFilename();
-            Path filePath = path.resolve(fileName);
-            Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING)'
-            String imageURL = "/uploads/" + fileName;
-            return ResponseEntity.ok(imageURL);
+    @GetMapping
+    public Map<String, String> data() {
+        return Collections.singletonMap("message", "image service is up and running!");
+    }
+
+    @PostMapping("/upload")
+    public ResponseEntity<Map<String, String>> uploadImage(@RequestParam("file") MultipartFile file) {
+        try {
+            String fileName = saveImage(file);
+            return ResponseEntity.ok(Collections.singletonMap("imageUrl", fileName));
         } catch (IOException e) {
-            return ResponseEntity.status(500).body("Error - " + e.getMessage());
+            return ResponseEntity.status(500)
+                    .body(Collections.singletonMap("error", "Error with image upload: " + e.getMessage()));
         }
     }
+
+    public String saveImage(MultipartFile file) throws IOException{
+        Path uploadPath = Paths.get(uploadDir);
+        if (Files.notExists(uploadPath)) {
+            Files.createDirectories(uploadPath);
+        }
+
+        String fileName = UUID.randomUUID().toString() + "." + file.getOriginalFilename();
+        Path filePath = uploadPath.resolve(fileName);
+        Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+        return fileName;
+    }
+
+    @GetMapping("/{filename}")
+    public ResponseEntity<byte[]> getImage(@PathVariable String filename) {
+        try {
+            Path filePath = Paths.get(uploadDir).resolve(filename);
+            byte[] imageBytes = Files.readAllBytes(filePath);
+            return ResponseEntity.ok().body(imageBytes);
+        } catch (IOException e) {
+            return ResponseEntity.status(404).body(null);
+        }
+    }
+
 }
