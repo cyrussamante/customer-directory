@@ -13,11 +13,8 @@ export const uploadImage = (imageFile: File, token: string): Promise<any> => {
     });
 };
 
-export const getImage = (imageId: string, token: string): Promise<any> => {
-    return axios.get(`/images/${imageId}`, {
+export const getImage = (imageId: string): Promise<any> => {
+    return axios.get(`${imageId}`, {
         responseType: 'blob',
-        headers: {
-            'Authorization': `Bearer ${token}`
-        }
     });
 };

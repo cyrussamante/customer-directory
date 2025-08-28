@@ -17,7 +17,7 @@ export default function EventModal({ mode, event, onClose, onSave }: Props) {
         endDateTime: "",
         location: "",
         price: 0,
-        bannerImage: "",
+        bannerImage: "default-event.png",
         description: "",
         capacity: 0,
     };

@@ -2,13 +2,14 @@ import type { Event, Registration } from '../types/appState';
 import { useParams } from 'react-router';
 import "./EventDetails.css"
 import DeleteConfirmationModal from '../components/DeleteConfirmationModal';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import EventModal from '../components/EventModal';
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState } from '../redux/store';
 import { editEvent, removeEvent } from '../api/eventsAPI';
 import { deleteEvent, updateEvent } from '../redux/actions';
+import { getImage } from '../api/imagesAPI';
 
 export default function EventDetails() {
     const { id } = useParams();
@@ -27,6 +28,35 @@ export default function EventDetails() {
     const handleDeleteClick = () => setDeleteModal(true);
 
     const handleCloseDeleteModal = () => setDeleteModal(false);
+
+    const [bannerImageUrl, setBannerImageUrl] = useState<string>("default-event.png");
+
+    useEffect(() => {
+        const fetchImage = async () => {
+            let imgSrc = "default-event.png";
+
+            if (event?.bannerImage) {
+                try {
+                    const response = await getImage(event.bannerImage);
+                    imgSrc = URL.createObjectURL(response.data);
+                } catch (error: any) {
+                    if (error?.response?.status === 401 || error?.response?.status === 404) {
+                        imgSrc = "default-event.png";
+                    } else {
+                        imgSrc = "default-event.png";
+                    }
+                }
+            }
+            setBannerImageUrl(imgSrc);
+        };
+        fetchImage();
+        return () => {
+            if (bannerImageUrl.startsWith("blob:")) {
+                URL.revokeObjectURL(bannerImageUrl);
+            }
+        };
+    }, [event, token]);
+
 
     const handleDeleteEvent = async (e: any) => {
         e.preventDefault()
@@ -81,7 +111,7 @@ export default function EventDetails() {
                     </div>
                     <div className="eventDetailsBody">
                         <div className="eventImageContainer">
-                            <img src={event?.bannerImage ? event.bannerImage : '/images/default-event.png'} alt={event.title} />
+                            <img src={bannerImageUrl} alt={event.title} />
                         </div>
                         <div className="eventDetailsGrid">
                             <p className="classifier">Event Title </p> <p>{event.title}</p>
