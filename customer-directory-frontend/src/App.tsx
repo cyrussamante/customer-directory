@@ -12,9 +12,10 @@ import EventDetails from './views/EventDetails';
 import Register from './views/Register';
 import type { RootState } from './redux/store';
 import configureHomePage from './helpers/function';
-import { setLogin } from './redux/actions';
-import { login, getUserInfo } from './api/accountAPI';
+import { setLogin, setLogout } from './redux/actions';
+import { getUserInfo } from './api/accountAPI';
 import { useLocation } from 'react-router-dom';
+import CustomerProfile from './views/CustomerProfile';
 
 //import ChatBot from './components/ChatBot';
 
@@ -41,8 +42,8 @@ function App() {
         configureHomePage(user, dispatch, navigate, token);
       }
     } catch {
-      dispatch({ type: 'LOGOUT' });
-      navigate('/');
+      dispatch(setLogout());
+      navigate('/')
     }
   }
 
@@ -59,6 +60,7 @@ function App() {
           <Route path="/customers/:id" element={<CustomerDetails />} />
           <Route path="/events" element={<EventsList />} />
           <Route path="/events/:id" element={<EventDetails />} />
+          <Route path="/profile" element={<CustomerProfile/>} />
         </Routes>
       </main>
       {isLoggedIn && <Footer />}

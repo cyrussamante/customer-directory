@@ -1,6 +1,7 @@
 import { getCustomers } from "../api/customersAPI";
 import { getEvents } from "../api/eventsAPI";
-import { setEvents, setCustomers } from "../redux/actions";
+import { getRegistrations } from "../api/registrationsAPI";
+import { setEvents, setCustomers, setRegistrations } from "../redux/actions";
 import type { User } from "../types/appState";
 
 
@@ -8,9 +9,11 @@ export default async function configureHomePage (user: User, dispatch: any, navi
 
     const responseEvent = await getEvents(token);
     dispatch(setEvents(responseEvent.data));
+
+    const responseRegistrations = await getRegistrations(token);
+    dispatch(setRegistrations(responseRegistrations.data));
   
     if (user.role === 'CUSTOMER') {
-      console.log("I am here")
       navigate('/events');
     } else{
       const response = await getCustomers(token);
