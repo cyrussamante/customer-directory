@@ -40,6 +40,7 @@ public class CustomerService {
               existingCustomer.setPassword(updatedCustomer.getPassword());
               existingCustomer.setRole(updatedCustomer.getRole());
               existingCustomer.setAge(updatedCustomer.getAge());
+              existingCustomer.setImageUrl(updatedCustomer.getImageUrl());
               existingCustomer.setGender(updatedCustomer.getGender());
               existingCustomer.setAddress(updatedCustomer.getAddress());
               existingCustomer.setNumberOfOrders(updatedCustomer.getNumberOfOrders());
