@@ -24,7 +24,9 @@ export default function CustomerProfile() {
     const handleCloseEditModal = () => setEditModal(false);
 
     const handleEditUser = async (updatedCustomer: Customer) => {
+        console.log(updatedCustomer)
         const response = await editCustomer(updatedCustomer.id, updatedCustomer, token);
+        console.log(response)
         if (response.status < 200 || response.status >= 300) {
             throw new Error('Failed to update customer');
         }
@@ -43,7 +45,7 @@ export default function CustomerProfile() {
                 </div>
                 <div className="detailsBody">
                     <div className="imageContainer">
-                        <img src={user?.imageUrl} alt={user.name} />
+                        <img src={user?.imageUrl ? user.imageUrl : "/images/default-profile.png"} alt={user?.name} />
                     </div>
                     <div className="detailsGrid">
                         <p className="classifier">Age </p> <p>{user.age}</p>
@@ -61,7 +63,7 @@ export default function CustomerProfile() {
                     onSave={handleEditUser} />)}
 
             </div>
-            <RegisteredEvents/>
+            <RegisteredEvents />
         </div>
     )
 }

@@ -22,38 +22,10 @@ export default function EventsCard({ event }: props): ReactElement {
 
     const navigateToEventDetails = () => navigate(`/events/${event.id}`);
 
-    const [bannerImageUrl, setBannerImageUrl] = useState<string>("default-event.png");
-
-    useEffect(() => {
-        const fetchImage = async () => {
-            let imgSrc = "default-event.png";
-
-            if (event?.bannerImage) {
-                try {
-                    const response = await getImage(event.bannerImage);
-                    imgSrc = URL.createObjectURL(response.data);
-                } catch (error: any) {
-                    if (error?.response?.status === 401 || error?.response?.status === 404) {
-                        imgSrc = "default-event.png";
-                    } else {
-                        imgSrc = "default-event.png";
-                    }
-                }
-            }
-            setBannerImageUrl(imgSrc);
-        };
-        fetchImage();
-        return () => {
-            if (bannerImageUrl.startsWith("blob:")) {
-                URL.revokeObjectURL(bannerImageUrl);
-            }
-        };
-    }, [event, token]);
-
     return (
         <div className="eventCard">
             <div className="eventCardBody">
-                <img className="eventImg" src={bannerImageUrl} alt={event.title} />
+                <img className="eventImg" src={event?.bannerImage ? event.bannerImage : "/images/default-event.png"} alt={event?.title} />
                 <div className="event-info">
                     <div className="event-specifics">
                         <div className="title-location">

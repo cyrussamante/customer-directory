@@ -25,7 +25,7 @@ export default function CustomerCard({ customer }: props): ReactElement {
                 {userRole !== "ADMIN" && <VisibilityOffIcon />}
             </div>
             <div className="cardBody">
-                <img className="customerImg" src={customer?.imageUrl ? customer.imageUrl : "images/default-profile.png"} alt={customer?.name} />
+                <img className="customerImg" src={customer?.imageUrl ? customer.imageUrl : "/images/default-profile.png"} alt={customer?.name} />
                 <p>{customer.name}</p>
                 <button disabled={userRole !== "ADMIN"} onClick={handleViewDetails}>View Details</button>
             </div>
