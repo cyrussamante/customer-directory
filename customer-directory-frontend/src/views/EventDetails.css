@@ -6,7 +6,7 @@
     width: 70vw;
     max-width: 700px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    margin-bottom: 10px;
+    margin-bottom: 60px;
     height: 100%;
 }
 
@@ -41,7 +41,7 @@
 .eventDetailsBody img {
     width: 30vw;
     max-width: 70vw;
-    height: 200px;
+    height: auto;
     object-fit: cover;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2)
 }
@@ -58,9 +58,6 @@
 .eventDetailsGrid p {
     margin: 0;
     padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .eventDetailsGrid .classifier {

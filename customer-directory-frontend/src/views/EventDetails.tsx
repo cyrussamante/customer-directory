@@ -2,7 +2,7 @@ import type { Event, Registration } from '../types/appState';
 import { useParams } from 'react-router';
 import "./EventDetails.css"
 import DeleteConfirmationModal from '../components/DeleteConfirmationModal';
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import EventModal from '../components/EventModal';
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,12 +10,14 @@ import type { RootState } from '../redux/store';
 import { editEvent, removeEvent } from '../api/eventsAPI';
 import { addRegistration, deleteEvent, deleteRegistration, updateEvent } from '../redux/actions';
 import { createRegistration, removeRegistration } from '../api/registrationsAPI';
+import { RegisterCustomerModal } from '../components/RegisterCustomerModal';
 
 export default function EventDetails() {
     const { id } = useParams();
     const navigate = useNavigate();
     const [showDeleteModal, setDeleteModal] = useState(false);
     const [showEditModal, setEditModal] = useState(false);
+    const [showRegisterCustomerModal, setRegisterCustomerModal] = useState(false);
     const state = useSelector((state: RootState) => state.app);
     const events = state.events;
     const event = events.find((event: Event) => event.id === id);
@@ -80,8 +82,26 @@ export default function EventDetails() {
         }
     }
 
+    const handleRegisterCustomers = async (customerIds: string[]) => {
+        //TODO: add an api to add multiple registrations at a time
+        for (const customerId of customerIds) {
+            const registration = {
+                eventId: event.id,
+                customerId,
+            };
+            const response = await createRegistration(registration, token);
+            if (response.status !== 200) {
+                throw new Error('Failed to register customer');
+            }
+            dispatch(addRegistration(response.data));
+        }
+    }
+
+    const handleRegisterCustomerClick = async () => setRegisterCustomerModal(true);
+
+    const handleCloseRegisterCustomerModal = () => setRegisterCustomerModal(false);
+
     const handleCloseProfileClick = () => navigate(-1);
-    console.log(event.bannerImage)
 
     return (
         <div className="eventDetails">
@@ -101,12 +121,12 @@ export default function EventDetails() {
                     </div>
                     <div className="eventDetailsBody">
                         <div className="eventImageContainer">
-                            <img src={event?.bannerImage ? event.bannerImage : "/images/default-event.png"} alt={event.title} />
+                           <img className="eventImage" src={event?.bannerImage ? event.bannerImage : "/images/default-event.png"} alt={event?.title} />
                         </div>
                         <div className="eventDetailsGrid">
                             <p className="classifier">Event Title </p> <p>{event.title}</p>
                             <p className="classifier">Location </p> <p>{event.location}</p>
-                            <p className="classifier">Date</p> <p>{event.startDateTime}</p>
+                            <p className="classifier">Date </p> <p>{event.startDateTime}</p>
                             <p className="classifier">Price </p> <p>{event.price}</p>
                             <p className="classifier">Capacity </p> <p>{event.capacity}</p>
                             <p className="classifier">Description </p> <p>{event.description}</p>
@@ -120,6 +140,11 @@ export default function EventDetails() {
                                 )}
                             </div>
                         )}
+                        {userRole === 'ADMIN' && (
+                            <div className="eventDetailsActions">
+                                <button onClick={handleRegisterCustomerClick} >Register Customers</button>
+                            </div>
+                        )}
                     </div>
 
                     {showEditModal && (<EventModal
@@ -131,9 +156,14 @@ export default function EventDetails() {
                     {showDeleteModal && (<DeleteConfirmationModal
                         onClose={handleCloseDeleteModal}
                         onConfirm={handleDeleteEvent} />)}
+
+                    {showRegisterCustomerModal && (<RegisterCustomerModal
+                        eventId={event.id}
+                        onClose={handleCloseRegisterCustomerModal}
+                        onSave={handleRegisterCustomers} />)}
                 </>
             ) : (
-                <p>Event not found.</p>
+                <p>No event data available.</p>
             )}
         </div>
     )
