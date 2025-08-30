@@ -35,6 +35,7 @@ export default function RegisteredEvents({ customerId }: Props) {
                             </div>
                         </div>
                     ))}
+                    {filteredRegistrations.length === 0 && <span className="noResults">No active registrations found</span>}
             </div>
         </div>
     )
