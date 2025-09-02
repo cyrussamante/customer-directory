@@ -4,7 +4,7 @@ import "./CustomerDetails.css"
 import DeleteConfirmationModal from '../components/DeleteConfirmationModal';
 import { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
-import Modal from '../components/Modal';
+import Modal from '../components/CustomerModal';
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState } from '../redux/store';
 import { editCustomer, removeCustomer } from '../api/customersAPI';

@@ -126,7 +126,8 @@ export default function EventDetails() {
                         <div className="eventDetailsGrid">
                             <p className="classifier">Event Title </p> <p>{event.title}</p>
                             <p className="classifier">Location </p> <p>{event.location}</p>
-                            <p className="classifier">Date </p> <p>{event.startDateTime}</p>
+                            <p className="classifier">Start Date </p> <p>{new Date(event.startDateTime).toLocaleString()}</p>
+                            <p className="classifier">End Date </p> <p>{new Date(event.endDateTime).toLocaleString()}</p>
                             <p className="classifier">Price </p> <p>{event.price}</p>
                             <p className="classifier">Capacity </p> <p>{event.capacity}</p>
                             <p className="classifier">Description </p> <p>{event.description}</p>

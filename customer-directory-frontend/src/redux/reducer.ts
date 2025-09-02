@@ -1,24 +1,31 @@
 import type { AppState } from "../types/appState";
-import { ADD_CUSTOMER, 
-    ADD_EVENT, 
-    ADD_REGISTRATION, 
-    DELETE_CUSTOMER, 
-    DELETE_EVENT, 
-    DELETE_REGISTRATION, 
-    LOGOUT, 
-    SET_CUSTOMERS, 
-    SET_EVENTS, 
-    SET_REGISTRATIONS, 
-    LOGIN, 
-    UPDATE_CUSTOMER, 
-    UPDATE_EVENT, 
-    UPDATE_REGISTRATION, 
-    SET_USER } from "./actions";
+import {
+    ADD_CUSTOMER,
+    ADD_EVENT,
+    ADD_REGISTRATION,
+    ADD_EMPLOYEE,
+    DELETE_CUSTOMER,
+    DELETE_EVENT,
+    DELETE_REGISTRATION,
+    DELETE_EMPLOYEE,
+    LOGOUT,
+    SET_CUSTOMERS,
+    SET_EVENTS,
+    SET_REGISTRATIONS,
+    SET_EMPLOYEES,
+    LOGIN,
+    UPDATE_CUSTOMER,
+    UPDATE_EVENT,
+    UPDATE_REGISTRATION,
+    UPDATE_EMPLOYEE,
+    SET_USER
+} from "./actions";
 
 const initialState: AppState = {
     isLoggedIn: false,
     user: null,
     customers: [],
+    users: [],
     events: [],
 }
 
@@ -66,6 +73,38 @@ const appReducer = (state = initialState, action: any) => {
                 ),
             };
 
+        case SET_EMPLOYEES:
+            return {
+                ...state,
+                users: action.payload.employees,
+            };
+
+        case ADD_EMPLOYEE:
+            return {
+                ...state,
+                users: [...state.users, action.payload.employee],
+            };
+
+        case UPDATE_EMPLOYEE:
+            console.log(action.payload.employee)
+            console.log(state.users);
+            return {
+                ...state,
+                users: state.users.map(employee =>
+                    employee.id === action.payload.employee.id
+                        ? action.payload.employee
+                        : employee
+                ),
+            };
+
+        case DELETE_EMPLOYEE:
+            return {
+                ...state,
+                users: state.users.filter(
+                    employee => employee.id !== action.payload.employeeId
+                )
+            };
+
         case SET_USER:
             return {
                 ...state,
@@ -91,7 +130,7 @@ const appReducer = (state = initialState, action: any) => {
                     event.id === action.payload.event.id
                         ? action.payload.event
                         : event
-                ),
+                )
             };
 
         case DELETE_EVENT:
@@ -99,7 +138,7 @@ const appReducer = (state = initialState, action: any) => {
                 ...state,
                 events: state.events.filter(
                     event => event.id !== action.payload.eventId
-                ),
+                )
             };
 
         case SET_REGISTRATIONS:

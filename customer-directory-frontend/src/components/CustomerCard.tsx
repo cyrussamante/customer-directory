@@ -1,8 +1,7 @@
-import { useEffect, useState, type ReactElement } from "react";
+import { type ReactElement } from "react";
 import { useNavigate } from "react-router-dom";
-import "./CustomerCard.css";
+import "./Card.css";
 import type { Customer } from '../types/appState';
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { useSelector } from "react-redux";
 import type { RootState } from "../redux/store";
 

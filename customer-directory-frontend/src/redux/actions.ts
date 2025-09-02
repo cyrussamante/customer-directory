@@ -9,6 +9,11 @@ export const UPDATE_CUSTOMER = "UPDATE_CUSTOMER";
 export const DELETE_CUSTOMER = "DELETE_CUSTOMER";
 export const SET_USER = "SET_USER";
 
+export const SET_EMPLOYEES = "SET_EMPLOYEES";
+export const ADD_EMPLOYEE = "ADD_EMPLOYEE";
+export const UPDATE_EMPLOYEE = "UPDATE_EMPLOYEE";
+export const DELETE_EMPLOYEE = "DELETE_EMPLOYEE";
+
 export const SET_EVENTS = "SET_EVENTS";
 export const ADD_EVENT = "ADD_EVENT";
 export const UPDATE_EVENT = "UPDATE_EVENT";
@@ -51,6 +56,28 @@ export const deleteCustomer = (customerId: string) => ({
 export const setUser = (user: Customer) => ({
   type: SET_USER,
   payload: { user },
+});
+
+export const setEmployees = (employees: User[]) => (
+  console.log(employees),
+  {
+  type: SET_EMPLOYEES,
+  payload: { employees },
+});
+
+export const addEmployee = (employee: User) => ({
+  type: ADD_EMPLOYEE,
+  payload: { employee },
+});
+
+export const updateEmployee = (employee: User) => ({
+  type: UPDATE_EMPLOYEE,
+  payload: { employee },
+});
+
+export const deleteEmployee = (employeeId: string) => ({
+  type: DELETE_EMPLOYEE,
+  payload: { employeeId },
 });
 
 export const setEvents = (events: Event[]) => ({
