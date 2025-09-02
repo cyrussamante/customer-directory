@@ -1,8 +1,7 @@
-import { useEffect, useState, type ReactElement } from "react";
+import { type ReactElement } from "react";
 import { useNavigate } from "react-router-dom";
 import "./EventsCard.css";
 import type { Event } from '../types/appState';
-import { getImage } from "../api/imagesAPI";
 import { useSelector } from "react-redux";
 import type { RootState } from "../redux/store";
 
