@@ -1,17 +1,16 @@
-import type { Customer } from '../types/appState';
+import type { User } from '../types/appState';
 import { useParams } from 'react-router';
-import "./CustomerDetails.css"
+import "./EmployeeDetails.css"
 import DeleteConfirmationModal from '../components/DeleteConfirmationModal';
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
-import Modal from '../components/CustomerModal';
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState } from '../redux/store';
-import { editCustomer, removeCustomer } from '../api/customersAPI';
-import { deleteCustomer, updateCustomer } from '../redux/actions';
-import RegisteredEvents from './RegisteredEvents';
+import { editUser, removeUser } from '../api/accountAPI';
+import { deleteEmployee, updateEmployee } from '../redux/actions';
+import EmployeeModal from '../components/EmployeeModal';
 
-export default function CustomerDetails() {
+export default function EmployeeDetails() {
     const { id } = useParams();
     const navigate = useNavigate();
     const [showDeleteModal, setDeleteModal] = useState(false);
@@ -19,24 +18,24 @@ export default function CustomerDetails() {
     const state = useSelector((state: RootState) => state.app);
     const user = state.user;
     const token = state.token;
-    const customers = state.customers;
-    const customer = customers.find((customer: Customer) => customer.id === id);
+    const users =  useSelector((state: RootState) => state.app.users);
+    const employee = users.find((employee: User) => employee.id === id);
     const dispatch = useDispatch();
 
     const handleDeleteClick = () => setDeleteModal(true);
 
     const handleCloseDeleteModal = () => setDeleteModal(false);
 
-    const handleDeleteCustomer = async (e: any) => {
+    const handleDeleteEmployee = async (e: any) => {
         e.preventDefault()
-        if (customer) {
-            const response = await removeCustomer(customer.id, token);
+        if (employee) {
+            const response = await removeUser(employee.id, token);
             if (response.status !== 200) {
-                throw new Error('Failed to delete customer');
+                throw new Error('Failed to delete employee');
             }
-            dispatch(deleteCustomer(customer.id));
+            dispatch(deleteEmployee(employee.id));
             setDeleteModal(false);
-            navigate('/customers');
+            navigate('/employees');
         }
     }
 
@@ -44,26 +43,24 @@ export default function CustomerDetails() {
 
     const handleCloseEditModal = () => setEditModal(false);
 
-    const handleEditCustomer = async (updatedCustomer: Customer) => {
-        const response = await editCustomer(updatedCustomer.id, updatedCustomer, token);
+    const handleEditEmployee = async (updatedEmployee: User) => {
+        const response = await editUser(updatedEmployee.id, updatedEmployee, token);
         if (response.status < 200 || response.status >= 300) {
-            throw new Error('Failed to update customer');
+            throw new Error('Failed to update employee');
         }
-        dispatch(updateCustomer(updatedCustomer));
+        dispatch(updateEmployee(updatedEmployee));
         setEditModal(false);
     }
 
-    const handleCloseProfileClick = () => navigate('/customers');
-
-    console.log(customer.imageUrl)
+    const handleCloseProfileClick = () => navigate('/employees');
 
     return (
         <div className="detailsPage">
-            <div className="customerDetails">
-                {customer ? (
+            <div className="employeeDetails">
+                {employee ? (
                     <>
                         <div className="detailsHead">
-                            <h2>{customer.name}</h2>
+                            <h2>{employee.name}</h2>
                             <div className="detailsButtons">
                                 {user.role === 'ADMIN' && <button className="edit" onClick={handleEditClick} >Edit Details </button>}
                                 {user.role === 'ADMIN' && <button className="delete" onClick={handleDeleteClick} >Delete</button>}
@@ -72,31 +69,28 @@ export default function CustomerDetails() {
                         </div>
                         <div className="detailsBody">
                             <div className="imageContainer">
-                                <img src={customer?.imageUrl ? customer.imageUrl : "/images/default-profile.png"} alt={customer?.name} />
+                                <img src="/images/default-profile.png" alt={employee?.name} />
                             </div>
                             <div className="detailsGrid">
-                                <p className="classifier">Age </p> <p>{customer.age}</p>
-                                <p className="classifier">Gender </p> <p>{customer.gender}</p>
-                                <p className="classifier">Email </p> <p>{customer.email}</p>
-                                <p className="classifier">Address </p> <p>{customer.address}</p>
-                                <p className="classifier">Number of Orders </p> <p>{customer.numberOfOrders}</p>
+                                <p className="classifier">Email </p> <p>{employee.email}</p>
+                                <p className="classifier">Password </p> <p>{employee.password}</p>
+                                <p className="classifier">Role </p> <p>{employee.role}</p>
                             </div>
                         </div>
-                        {showEditModal && (<Modal
+                        {showEditModal && (<EmployeeModal
                            mode={'edit'}
-                            customer={customer}
+                            employee={employee}
                             onClose={handleCloseEditModal}
-                            onSave={handleEditCustomer} />)}
+                            onSave={handleEditEmployee} />)}
 
                         {showDeleteModal && (<DeleteConfirmationModal
                             onClose={handleCloseDeleteModal}
-                            onConfirm={handleDeleteCustomer} />)}
+                            onConfirm={handleDeleteEmployee} />)}
                     </>
                 ) : (
-                    <div>No customer data available.</div>
+                    <div>No employee data available.</div>
                 )}
             </div>
-            <RegisteredEvents customerId={customer.id} />
         </div>
     )
 }

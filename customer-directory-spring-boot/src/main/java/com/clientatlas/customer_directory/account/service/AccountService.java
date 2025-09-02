@@ -6,14 +6,11 @@ import com.clientatlas.customer_directory.domain.user.UserRole;
 import com.clientatlas.customer_directory.repository.CustomerRepository;
 import com.clientatlas.customer_directory.repository.UserRepository;
 
-import com.clientatlas.customer_directory.security.user.CurrentUserDetails;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -96,6 +93,18 @@ public class AccountService {
             }
         });
         return userRepository.save(user);
+    }
+
+    public User putUser(UUID id, User updatedUser) {
+        User existingUser = userRepository.findById(id).orElse(null);
+        if (existingUser != null) {
+            existingUser.setName(updatedUser.getName());
+            existingUser.setEmail(updatedUser.getEmail());
+            existingUser.setPassword(updatedUser.getPassword());
+            existingUser.setRole(updatedUser.getRole());
+            return userRepository.save(updatedUser);
+        }
+        return null;
     }
 
     public ResponseEntity<User> getCurrentUser() {

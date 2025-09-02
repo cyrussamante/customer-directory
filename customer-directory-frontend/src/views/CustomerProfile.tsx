@@ -1,7 +1,7 @@
 import type { Customer } from '../types/appState';
 import "./CustomerDetails.css";
 import { useState } from "react";
-import Modal from '../components/Modal';
+import Modal from '../components/CustomerModal';
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState } from '../redux/store';
 import { editCustomer } from '../api/customersAPI';

@@ -16,8 +16,8 @@ import { setLogin, setLogout } from './redux/actions';
 import { getUserInfo } from './api/accountAPI';
 import { useLocation } from 'react-router-dom';
 import CustomerProfile from './views/CustomerProfile';
-
-//import ChatBot from './components/ChatBot';
+import EmployeeDetails from './views/EmployeeDetails';
+import EmployeeList from './views/EmployeeList';
 
 function App() {
 
@@ -60,7 +60,9 @@ function App() {
           <Route path="/customers/:id" element={<CustomerDetails />} />
           <Route path="/events" element={<EventsList />} />
           <Route path="/events/:id" element={<EventDetails />} />
-          <Route path="/profile" element={<CustomerProfile/>} />
+          <Route path="/profile" element={<CustomerProfile />} />
+          <Route path="/employees" element={<EmployeeList />} />
+          <Route path="/employees/:id" element={<EmployeeDetails />} />
         </Routes>
       </main>
       {isLoggedIn && <Footer />}

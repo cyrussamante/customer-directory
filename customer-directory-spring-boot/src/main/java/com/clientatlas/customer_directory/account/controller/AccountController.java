@@ -2,6 +2,7 @@ package com.clientatlas.customer_directory.account.controller;
 
 import com.clientatlas.customer_directory.account.dto.AuthRequest;
 import com.clientatlas.customer_directory.account.service.AccountService;
+import com.clientatlas.customer_directory.domain.customer.Customer;
 import com.clientatlas.customer_directory.domain.user.User;
 import com.clientatlas.customer_directory.security.jwt.TokenService;
 
@@ -87,6 +88,10 @@ public class AccountController {
         return updatedUser == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(updatedUser);
     }
 
+    @PutMapping("/users/{id}")
+    public User updateUser(@PathVariable UUID id, @RequestBody User user) {
+        return accountService.putUser(id, user);
+    }
 
     @GetMapping("/me")
     public ResponseEntity<User> getCurrentUser() {

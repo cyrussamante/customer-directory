@@ -1,8 +1,8 @@
 import type { Customer } from '../types/appState';
 import CustomerCard from '../components/CustomerCard';
 import { useState } from "react";
-import "./CustomerList.css";
-import Modal from '../components/Modal';
+import "./List.css";
+import Modal from '../components/CustomerModal';
 import ListIcon from '@mui/icons-material/List';
 import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied';
 import { useSelector, useDispatch } from 'react-redux';

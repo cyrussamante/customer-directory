@@ -1,16 +1,16 @@
-.customers {
+.customers, .employees {
     padding: 2vw 5vw;
     box-sizing: border-box;
     width: 100%;
 }
 
 @media (max-width: 768px) {
-    .customers {
+    .customers, .employees {
         width: auto;
     }
 }
 
-.customersHeader {
+.customersHeader, .employeesHeader {
     display: flex;
     align-items: center;
     color: #333;
@@ -60,7 +60,7 @@
     flex-wrap: wrap;
 }
 
-.noCustomers {
+.noCustomers, .noEmployees {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -73,7 +73,7 @@
     flex-wrap: wrap;
 }
 
-.customerGrid {
+.customerGrid, .employeeGrid {
     margin: 2vw 1em;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));

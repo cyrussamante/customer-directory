@@ -4,7 +4,8 @@ export interface AppState {
     user: User | Customer | null,
     customers: Customer[],
     events: Event[],
-    registrations?: Registration[]
+    registrations?: Registration[],
+    users: User[],
 }
 
 export interface User {
