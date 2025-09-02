@@ -33,7 +33,6 @@ export default function Navbar() {
                     <Link to="/customers">Customers</Link>
                 )}
 
-
                 {userRole === 'ADMIN' ? (
                     <Link to="/employees">Employees</Link>
                 ) : (

@@ -18,7 +18,7 @@ export default function EmployeeDetails() {
     const state = useSelector((state: RootState) => state.app);
     const user = state.user;
     const token = state.token;
-    const users =  useSelector((state: RootState) => state.app.users);
+    const users = state.users;
     const employee = users.find((employee: User) => employee.id === id);
     const dispatch = useDispatch();
 
@@ -30,12 +30,12 @@ export default function EmployeeDetails() {
         e.preventDefault()
         if (employee) {
             const response = await removeUser(employee.id, token);
-            if (response.status !== 200) {
+            if (response.status !== 204) {
                 throw new Error('Failed to delete employee');
             }
             dispatch(deleteEmployee(employee.id));
             setDeleteModal(false);
-            navigate('/employees');
+            navigate(-1);
         }
     }
 

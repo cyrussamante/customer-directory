@@ -82,7 +82,7 @@ const appReducer = (state = initialState, action: any) => {
         case ADD_EMPLOYEE:
             return {
                 ...state,
-                users: [...state.users, action.payload.user],
+                users: [...state.users, action.payload.employee],
             };
 
         case UPDATE_EMPLOYEE:
@@ -101,8 +101,8 @@ const appReducer = (state = initialState, action: any) => {
             return {
                 ...state,
                 users: state.users.filter(
-                    user => user.id !== action.payload.userId
-                ),
+                    employee => employee.id !== action.payload.employeeId
+                )
             };
 
         case SET_USER:
@@ -130,7 +130,7 @@ const appReducer = (state = initialState, action: any) => {
                     event.id === action.payload.event.id
                         ? action.payload.event
                         : event
-                ),
+                )
             };
 
         case DELETE_EVENT:
@@ -138,7 +138,7 @@ const appReducer = (state = initialState, action: any) => {
                 ...state,
                 events: state.events.filter(
                     event => event.id !== action.payload.eventId
-                ),
+                )
             };
 
         case SET_REGISTRATIONS:

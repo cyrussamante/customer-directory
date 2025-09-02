@@ -56,7 +56,7 @@ public class AccountController {
                 .path("/{id}")
                 .buildAndExpand(savedUser.getId())
                 .toUri();
-        return ResponseEntity.created(location).build();
+        return ResponseEntity.created(location).body(savedUser);
     }
 
     @GetMapping("/users")
