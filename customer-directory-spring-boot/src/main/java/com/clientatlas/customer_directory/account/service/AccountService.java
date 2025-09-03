@@ -8,6 +8,7 @@ import com.clientatlas.customer_directory.repository.UserRepository;
 
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -124,11 +125,12 @@ public class AccountService {
 
     public ResponseEntity<User> getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
             String userEmail = authentication.getName();
             User user = userRepository.findByEmail(userEmail).orElseThrow(() -> new RuntimeException("User not found"));
             return ResponseEntity.ok(user);
         }
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 }
