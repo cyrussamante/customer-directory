@@ -16,7 +16,7 @@ export interface User {
 }
 
 export interface Customer extends User {
-    age: number,
+    dateOfBirth: Date,
     gender: string,
     address: string,
     imageUrl?: string,
