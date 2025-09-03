@@ -5,10 +5,9 @@ import { getRegistrations } from "../api/registrationsAPI";
 import { setEvents, setCustomers, setRegistrations, setEmployees } from "../redux/actions";
 import type { Registration, User } from "../types/appState";
 
-export default async function configureHomePage(user: User, dispatch: any, navigate: any) {
+export default async function configureHomePage(user: User, dispatch: any) {
   const responseEvent = await getEvents();
   dispatch(setEvents(responseEvent.data));
-
 
   if (user.role === 'CUSTOMER') {
     const responseRegistrations = await getRegistrations();
@@ -24,9 +23,5 @@ export default async function configureHomePage(user: User, dispatch: any, navig
       const employees = responseUsers.data.filter((employee: User) => employee.role !== 'CUSTOMER' && employee.id !== user.id);
       dispatch(setEmployees(employees));
     }
-  }
-
-  if (location.pathname === '/' || location.pathname === '/login' || location.pathname === '/register') {
-    navigate('/events');
   }
 }

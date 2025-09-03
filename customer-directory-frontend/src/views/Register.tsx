@@ -43,11 +43,7 @@ export default function Register() {
         try {
             const response = await register(payload);
             if (response.status === 201) {
-                await login({email: formData.email, password: formData.password});
-                const userInfo = await getUserInfo();
-                const user = userInfo.data;
-                dispatch(setLogin(user));
-                configureHomePage(user, dispatch, navigate);
+                navigate("/login");
             } else {
                 alert('Registration failed. Please try again.');
             }

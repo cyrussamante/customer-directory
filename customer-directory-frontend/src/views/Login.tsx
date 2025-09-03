@@ -30,7 +30,8 @@ export default function Login() {
       const userInfo = await getUserInfo();
       const user = userInfo.data;
       dispatch(setLogin(user));
-      configureHomePage(user, dispatch, navigate);
+      configureHomePage(user, dispatch);
+      navigate("/events")
              
     } catch (error) {
       alert('Login failed! Try again.');
