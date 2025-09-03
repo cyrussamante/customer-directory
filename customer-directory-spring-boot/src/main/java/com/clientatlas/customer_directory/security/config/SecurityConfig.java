@@ -19,7 +19,9 @@ import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.clientatlas.customer_directory.security.jwt.CookieFilter;
 import java.security.interfaces.RSAPublicKey;
 
 @Configuration
@@ -38,7 +40,7 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/account", "/account/token", "/account/register", "/account/me").permitAll()
+                        .requestMatchers("/account", "/account/token", "/account/register", "/account/me", "/account/logout").permitAll()
                         .requestMatchers("/account/users/**").hasRole("ADMIN")
                         .requestMatchers("/images/upload").hasAnyRole("ADMIN", "CUSTOMER")
                         .requestMatchers("/images/**").permitAll()
@@ -50,7 +52,7 @@ public class SecurityConfig {
                                 .decoder(jwtDecoder())
                                 .jwtAuthenticationConverter(jwtAuthenticationConverter())
                         )
-                )
+                ).addFilterBefore(new CookieFilter(), UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 

@@ -18,7 +18,6 @@ export default function CustomerDetails() {
     const [showEditModal, setEditModal] = useState(false);
     const state = useSelector((state: RootState) => state.app);
     const user = state.user;
-    const token = state.token;
     const customers = state.customers;
     const customer = customers.find((customer: Customer) => customer.id === id);
     const dispatch = useDispatch();
@@ -30,7 +29,7 @@ export default function CustomerDetails() {
     const handleDeleteCustomer = async (e: any) => {
         e.preventDefault()
         if (customer) {
-            const response = await removeCustomer(customer.id, token);
+            const response = await removeCustomer(customer.id);
             if (response.status !== 200) {
                 throw new Error('Failed to delete customer');
             }
@@ -45,7 +44,7 @@ export default function CustomerDetails() {
     const handleCloseEditModal = () => setEditModal(false);
 
     const handleEditCustomer = async (updatedCustomer: Customer) => {
-        const response = await editCustomer(updatedCustomer.id, updatedCustomer, token);
+        const response = await editCustomer(updatedCustomer.id, updatedCustomer);
         if (response.status < 200 || response.status >= 300) {
             throw new Error('Failed to update customer');
         }
@@ -54,8 +53,6 @@ export default function CustomerDetails() {
     }
 
     const handleCloseProfileClick = () => navigate('/customers');
-
-    console.log(customer.imageUrl)
 
     return (
         <div className="detailsPage">

@@ -8,7 +8,6 @@ public class AuthRequest {
 
     public AuthRequest() {}
 
-
     public String getEmail() {
         return email;
     }

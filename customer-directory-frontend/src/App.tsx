@@ -1,50 +1,59 @@
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Routes, Route, useNavigate, Navigate, useLocation } from 'react-router-dom';
 import CustomerList from './views/CustomerList';
 import CustomerDetails from './views/CustomerDetails';
 import Login from './views/Login';
 import Footer from './components/Footer';
 import Navbar from './components/Navbar';
 import "./App.css"
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import EventsList from './views/EventsList';
 import EventDetails from './views/EventDetails';
 import Register from './views/Register';
 import type { RootState } from './redux/store';
 import configureHomePage from './helpers/function';
-import { setLogin, setLogout } from './redux/actions';
-import { getUserInfo } from './api/accountAPI';
-import { useLocation } from 'react-router-dom';
+import { setLogin } from './redux/actions';
+import { getUserInfo, logout } from './api/accountAPI';
 import CustomerProfile from './views/CustomerProfile';
 import EmployeeDetails from './views/EmployeeDetails';
 import EmployeeList from './views/EmployeeList';
 
 function App() {
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isLoggedIn = useSelector((state: RootState) => state.app.isLoggedIn);
+  const [isLoading, setIsLoading] = useState(true);
   const location = useLocation();
 
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      fetchData(token);
-    }
-  }, [location.pathname]);
 
-  async function fetchData(token: string) {
-    try {
-      const userInfo = await getUserInfo(token);
-      const user = userInfo.data;
-      dispatch(setLogin(user, token));
-      if (location.pathname === '/' || location.pathname === '/login') {
-        configureHomePage(user, dispatch, navigate, token);
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const userInfo = await getUserInfo();
+        const user = userInfo.data;
+        if (user) {
+          dispatch(setLogin(user));
+          await configureHomePage(user, dispatch);
+
+          if (location.pathname === "/" || location.pathname === "/login" || location.pathname === "/register") {
+            navigate("/events", { replace: true });
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching user info:", error);
+      } finally {
+        setIsLoading(false);
       }
-    } catch {
-      dispatch(setLogout());
-      navigate('/')
     }
+
+    fetchData();
+  }, []);
+
+
+  if (isLoading) {
+    return (
+      <div className="loading">Loading...</div>
+    );
   }
 
   return (
@@ -56,13 +65,19 @@ function App() {
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="customers" element={<CustomerList />} />
-          <Route path="/customers/:id" element={<CustomerDetails />} />
-          <Route path="/events" element={<EventsList />} />
-          <Route path="/events/:id" element={<EventDetails />} />
-          <Route path="/profile" element={<CustomerProfile />} />
-          <Route path="/employees" element={<EmployeeList />} />
-          <Route path="/employees/:id" element={<EmployeeDetails />} />
+          {isLoggedIn ? (
+            <>
+              <Route path="/customers" element={<CustomerList />} />
+              <Route path="/customers/:id" element={<CustomerDetails />} />
+              <Route path="/events" element={<EventsList />} />
+              <Route path="/events/:id" element={<EventDetails />} />
+              <Route path="/profile" element={<CustomerProfile />} />
+              <Route path="/employees" element={<EmployeeList />} />
+              <Route path="/employees/:id" element={<EmployeeDetails />} />
+            </>
+          ) : (
+            <Route path="*" element={<Navigate to="/" replace />} />
+          )}
         </Routes>
       </main>
       {isLoggedIn && <Footer />}

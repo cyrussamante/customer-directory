@@ -14,11 +14,14 @@ export default function EmployeeList() {
 
     const [searchTerm, setSearchTerm] = useState("");
     const [showAddModal, setShowAddModal] = useState(false);
-    const state = useSelector((state: RootState) => state.app);
-    const employees: User[] = state.users;
-    const user = state.user;
-    const userRole = user?.role;
+    const users: User[] = useSelector((state: RootState) => state.app.users);
+    const user = useSelector((state: RootState) => state.app.user);
+
+    const employees = users.filter((employee) => employee.role !== 'CUSTOMER' && employee.id !== user?.id);
     const dispatch = useDispatch();
+
+
+    const userRole = user?.role;
 
     if (!user) {
         return <div>No employee data available.</div>;
