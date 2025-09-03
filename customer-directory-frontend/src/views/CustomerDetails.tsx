@@ -2,7 +2,7 @@ import type { Customer } from '../types/appState';
 import { useParams } from 'react-router';
 import "./CustomerDetails.css"
 import DeleteConfirmationModal from '../components/DeleteConfirmationModal';
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import Modal from '../components/CustomerModal';
 import { useDispatch, useSelector } from 'react-redux';
@@ -72,7 +72,7 @@ export default function CustomerDetails() {
                                 <img src={customer?.imageUrl ? customer.imageUrl : "/images/default-profile.png"} alt={customer?.name} />
                             </div>
                             <div className="detailsGrid">
-                                <p className="classifier">Age </p> <p>{customer.age}</p>
+                                <p className="classifier">Date of Birth </p> <p>{customer.dateOfBirth}</p>
                                 <p className="classifier">Gender </p> <p>{customer.gender}</p>
                                 <p className="classifier">Email </p> <p>{customer.email}</p>
                                 <p className="classifier">Address </p> <p>{customer.address}</p>

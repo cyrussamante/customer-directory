@@ -47,11 +47,11 @@ export default function CustomerProfile() {
                         <img src={user?.imageUrl ? user.imageUrl : "/images/default-profile.png"} alt={user?.name} />
                     </div>
                     <div className="detailsGrid">
-                        <p className="classifier">Age </p> <p>{user.age}</p>
-                        <p className="classifier">Gender </p> <p>{user.gender}</p>
-                        <p className="classifier">Email </p> <p>{user.email}</p>
-                        <p className="classifier">Address </p> <p>{user.address}</p>
-                        <p className="classifier">Number of Orders </p> <p>{user.numberOfOrders}</p>
+                        <p className="classifier">Date of Birth </p> <p>{user.dateOfBirth ? user.dateOfBirth : 'Not specified'}</p>
+                        <p className="classifier">Gender </p> <p>{user.gender ? user.gender : 'Not specified'}</p>
+                        <p className="classifier">Email </p> <p>{user.email ? user.email : 'Not specified'}</p>
+                        <p className="classifier">Address </p> <p>{user.address ? user.address : 'Not specified'}</p>
+                        <p className="classifier">Number of Orders </p> <p>{user.numberOfOrders ? user.numberOfOrders : 'Not specified'}</p>
                     </div>
                 </div>
 

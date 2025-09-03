@@ -2,8 +2,6 @@ import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { uploadImage } from '../api/imagesAPI';
 import "./Modal.css";
-import { useSelector } from "react-redux";
-import type { RootState } from "../redux/store";
 
 interface Props {
     mode: 'add' | 'edit';
@@ -16,12 +14,14 @@ export default function Modal({ mode, customer, onClose, onSave }: Props) {
 
     const initialFormData = {
         name: "",
-        age: 0,
+        dateOfBirth: "",
         gender: "",
         email: "",
         password: "",
         address: "",
-        numberOfOrders: 0,
+        numberOfOrders: "",
+        imageUrl: "",
+        role: "CUSTOMER"
     };
 
     const [formData, setFormData] = useState(mode === 'edit' ? customer : initialFormData);
@@ -76,10 +76,10 @@ export default function Modal({ mode, customer, onClose, onSave }: Props) {
             email: formData.email.trim(),
             password: formData.password,
             role: 'CUSTOMER',
-            age: formData.age,
+            dateOfBirth: formData.dateOfBirth,
             gender: formData.gender.trim(),
             address: formData.address.trim(),
-            numberOfOrders: formData.numberOfOrders,
+            numberOfOrders: Number(formData.numberOfOrders),
             imageUrl: imageUrl
         };
         const isAnyFieldEmpty = Object.values(payload).some(value => value === '');
@@ -127,13 +127,13 @@ export default function Modal({ mode, customer, onClose, onSave }: Props) {
                         type="text"
                         required
                     />
-                    <label>Age</label>
+                    <label>Date of Birth</label>
                     <input className="modalInput"
-                        type="number"
-                        name="age"
-                        value={formData.age}
+                        type="date"
+                        name="dateOfBirth"
+                        value={formData.dateOfBirth}
                         onChange={handleChange}
-                        placeholder="Age"
+                        placeholder="Date of Birth"
                         required
                     />
                     <label>Gender</label>

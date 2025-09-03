@@ -2,13 +2,15 @@ package com.clientatlas.customer_directory.domain.customer;
 
 import com.clientatlas.customer_directory.domain.user.User;
 import jakarta.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 @Table(name="customers")
 @PrimaryKeyJoinColumn(name = "id")
 public class Customer extends User {
 
-    private int age;
+    @Column(name="date_of_birth")
+    private LocalDate dateOfBirth;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
@@ -21,13 +23,13 @@ public class Customer extends User {
 
     @Column(name="number_of_orders", columnDefinition = "INT DEFAULT 0")
     private int numberOfOrders;
-    
-    public int getAge() {
-        return age;
+
+    public LocalDate getDateOfBirth() {
+        return dateOfBirth;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public void setDateOfBirth(LocalDate dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
     }
 
      public CustomerGender getGender() { 
