@@ -12,6 +12,7 @@ export default function CustomerProfile() {
     const [showEditModal, setEditModal] = useState(false);
     const state = useSelector((state: RootState) => state.app);
     const user = state.user;
+    const token = state.token;
     const dispatch = useDispatch();
 
     if (!user) {
@@ -24,7 +25,7 @@ export default function CustomerProfile() {
 
     const handleEditUser = async (updatedCustomer: Customer) => {
         console.log(updatedCustomer)
-        const response = await editCustomer(updatedCustomer.id, updatedCustomer);
+        const response = await editCustomer(updatedCustomer.id, updatedCustomer, token);
         console.log(response)
         if (response.status < 200 || response.status >= 300) {
             throw new Error('Failed to update customer');

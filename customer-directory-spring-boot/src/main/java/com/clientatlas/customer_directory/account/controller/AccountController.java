@@ -2,14 +2,17 @@ package com.clientatlas.customer_directory.account.controller;
 
 import com.clientatlas.customer_directory.account.dto.AuthRequest;
 import com.clientatlas.customer_directory.account.service.AccountService;
+import com.clientatlas.customer_directory.domain.customer.Customer;
 import com.clientatlas.customer_directory.domain.user.User;
 import com.clientatlas.customer_directory.security.jwt.TokenService;
 
-import jakarta.servlet.http.HttpServletResponse;
-import org.apache.tomcat.util.http.SameSiteCookies;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseCookie;
+import com.clientatlas.customer_directory.security.user.CurrentUserDetails;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -30,24 +33,14 @@ public class AccountController {
     }
 
     @PostMapping("/token")
-    public Map<String, String> token(@RequestBody AuthRequest authRequest, HttpServletResponse response) {
+    public Map<String, String> token(@RequestBody AuthRequest authRequest) {
         User user = accountService.authenticate(authRequest.getEmail(), authRequest.getPassword());
         String token = tokenService.generateToken(user);
-
-        ResponseCookie cookie = ResponseCookie.from("token", token)
-                .httpOnly(true)
-                .secure(true)
-                .path("/")
-                .maxAge(3600)
-                .sameSite(SameSiteCookies.STRICT.toString())
-                .build();
-
-        response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
-        Map<String, String> bodyResponse = new HashMap<>();
-        bodyResponse.put("access_token", token);
-        bodyResponse.put("token_type", "Bearer");
-        bodyResponse.put("expires_in", "3600");
-        return bodyResponse;
+        Map<String, String> response = new HashMap<>();
+        response.put("access_token", token);
+        response.put("token_type", "Bearer");
+        response.put("expires_in", "3600");
+        return response;
     }
     
     @GetMapping
@@ -64,11 +57,6 @@ public class AccountController {
                 .buildAndExpand(savedUser.getId())
                 .toUri();
         return ResponseEntity.created(location).body(savedUser);
-    }
-
-    @PostMapping("/logout")
-    public ResponseEntity<Void> logout(HttpServletResponse response) {
-        return accountService.logout(response);
     }
 
     @GetMapping("/users")

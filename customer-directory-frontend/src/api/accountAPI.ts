@@ -12,36 +12,36 @@ export const login = (credentials: any): Promise<any> =>
 
     axios.post('/account/token',
         JSON.stringify(credentials), {
-        headers: { 'Content-Type': 'application/json' },
-        withCredentials: true
+        headers: { 'Content-Type': 'application/json' }
     })
 
-export const logout = (): Promise<any> =>
-    axios.post('/account/logout', {
-        withCredentials: true
-    })
-
-export const getUserInfo = (): Promise<any> =>
+export const getUserInfo = (token: string): Promise<any> =>
     axios.get<any>(`/account/me`, {
-        withCredentials: true
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
     })
 
 
-export const editUser = (id: string, userData: User): Promise<any> =>
+export const editUser = (id: string, userData: User, token: string): Promise<any> =>
     axios.put(`/account/users/${id}`,
         JSON.stringify(userData), {
         headers: {
-            'Content-Type': 'application/json'
-        },
-        withCredentials: true
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        }
     });
 
-export const getUsers = () =>
+export const getUsers = (token: String) =>
     axios.get<User[]>(`/account/users`, {
-        withCredentials: true
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
     });
 
-export const removeUser = (id: string): Promise<any> =>
+export const removeUser = (id: string, token: string): Promise<any> =>
     axios.delete(`/account/users/${id}`, {
-        withCredentials: true
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
     });

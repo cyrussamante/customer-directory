@@ -1,5 +1,6 @@
 export interface AppState {
     isLoggedIn: boolean
+    token?: String;
     user: User | Customer | null,
     customers: Customer[],
     events: Event[],
@@ -13,6 +14,7 @@ export interface User {
     email: string,
     password: string,
     role: "ADMIN" | "CUSTOMER" | "EMPLOYEE"
+    token: string
 }
 
 export interface Customer extends User {

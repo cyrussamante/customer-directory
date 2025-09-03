@@ -17,6 +17,7 @@ export default function EmployeeDetails() {
     const [showEditModal, setEditModal] = useState(false);
     const state = useSelector((state: RootState) => state.app);
     const user = state.user;
+    const token = state.token;
     const users = state.users;
     const employee = users.find((employee: User) => employee.id === id);
     const dispatch = useDispatch();
@@ -28,7 +29,7 @@ export default function EmployeeDetails() {
     const handleDeleteEmployee = async (e: any) => {
         e.preventDefault()
         if (employee) {
-            const response = await removeUser(employee.id);
+            const response = await removeUser(employee.id, token);
             if (response.status !== 204) {
                 throw new Error('Failed to delete employee');
             }
@@ -43,7 +44,7 @@ export default function EmployeeDetails() {
     const handleCloseEditModal = () => setEditModal(false);
 
     const handleEditEmployee = async (updatedEmployee: User) => {
-        const response = await editUser(updatedEmployee.id, updatedEmployee);
+        const response = await editUser(updatedEmployee.id, updatedEmployee, token);
         if (response.status < 200 || response.status >= 300) {
             throw new Error('Failed to update employee');
         }

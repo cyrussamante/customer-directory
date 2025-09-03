@@ -29,6 +29,8 @@ export default function Modal({ mode, customer, onClose, onSave }: Props) {
     const [imageFile, setImageFile] = useState<File | null>(null);
     const navigate = useNavigate();
     const dialogRef = useRef<HTMLDialogElement>(null);
+    const token = useSelector((state: RootState) => state.app.token);
+
 
     useEffect(() => {
         if (dialogRef.current) {
@@ -63,7 +65,7 @@ export default function Modal({ mode, customer, onClose, onSave }: Props) {
         let imageUrl = formData.imageUrl;
         if (imageFile) {
             try {
-                const response = await uploadImage(imageFile);
+                const response = await uploadImage(imageFile, token);
                 imageUrl = response.data.imageUrl;
             } catch (err) {
                 console.log(err)

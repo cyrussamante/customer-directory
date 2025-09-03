@@ -14,6 +14,7 @@ export default function CustomerList() {
 
     const [searchTerm, setSearchTerm] = useState("");
     const [showAddModal, setShowAddModal] = useState(false);
+    const token = useSelector((state: RootState) => state.app.token);
     const customers: Customer[] = useSelector((state: RootState) => state.app.customers);
     const dispatch = useDispatch();
 
@@ -34,7 +35,7 @@ export default function CustomerList() {
     const handleCloseModal = () => setShowAddModal(false);
 
     const handleAddCustomer = async (customer: any) => {
-        const response = await createCustomer(customer)
+        const response = await createCustomer(customer, token)
         dispatch(addCustomer(response.data))
         setShowAddModal(false)
     }

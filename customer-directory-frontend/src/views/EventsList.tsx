@@ -14,6 +14,7 @@ export default function EventsList() {
 
     const [searchTerm, setSearchTerm] = useState("");
     const [showAddModal, setShowAddModal] = useState(false);
+    const token = useSelector((state: RootState) => state.app.token);
     const events: Event[] = useSelector((state: RootState) => state.app.events);
     const dispatch = useDispatch();
 
@@ -33,7 +34,7 @@ export default function EventsList() {
     const handleCloseModal = () => setShowAddModal(false);
 
     const handleAddEvent = async (event: any) => {
-        const response = await createEvent(event)
+        const response = await createEvent(event, token)
         dispatch(addEvent(response.data))
         setShowAddModal(false)
     }

@@ -29,6 +29,9 @@ export default function EventModal({ mode, event, onClose, onSave }: Props) {
     const navigate = useNavigate();
     const dialogRef = useRef<HTMLDialogElement>(null);
     const [imageFile, setImageFile] = useState<File | null>(null);
+    const token = useSelector((state: RootState) => state.app.token);
+
+
 
     useEffect(() => {
         if (dialogRef.current) {
@@ -58,7 +61,7 @@ export default function EventModal({ mode, event, onClose, onSave }: Props) {
         let bannerImage = formData.bannerImage;
         if (imageFile) {
             try {
-                const response = await uploadImage(imageFile);
+                const response = await uploadImage(imageFile, token);
                 bannerImage = response.data.imageUrl;
             } catch (err) {
                 console.log(err)
