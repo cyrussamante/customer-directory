@@ -5,7 +5,6 @@
     border-radius: 12px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     background-color: white;
-    overflow: auto;
     width: 500px;
 }
 
@@ -19,6 +18,31 @@
     gap: 15px;
     margin: 20px;
     text-align: center;
+}
+
+.modalTabs {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    border-radius: 10px;
+    padding: 3px;
+}
+
+.tab {
+    flex: 1;
+    text-align: center;
+    padding: 12px 0;
+}
+
+
+.tab:hover:not(.active) {
+    background-color: rgba(66, 133, 244, 0.08);
+}
+
+.tab.active {
+    background-color: white;
+    color: #4285f4;
+    /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); */
 }
 
 .searchBar { 
@@ -41,17 +65,17 @@
     gap: 8px;
     padding: 4px 0;
     overflow-y: auto;
-    min-height: 32px;
-    max-height: 80px;
+    height: 80px;
 }
 
 .selectedCustomerCard {
     display: flex;
     align-items: center;
     gap: 8px;
-    padding: 4px 8px;
+    padding: 0 4px;
     background-color: #e8f0fe;
     border-radius: 16px;
+    height: 32px;
 }
 
 .removeIcon {
@@ -60,8 +84,7 @@
 }
 
 .customersList {
-    min-height: 150px;
-    max-height: 250px;
+    height: 250px;
     overflow-y: auto;
     border-top: 1px solid #ddd;
 
