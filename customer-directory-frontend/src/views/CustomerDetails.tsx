@@ -54,8 +54,6 @@ export default function CustomerDetails() {
 
     const handleCloseProfileClick = () => navigate('/customers');
 
-    console.log(customer.imageUrl)
-
     return (
         <div className="detailsPage">
             <div className="customerDetails">

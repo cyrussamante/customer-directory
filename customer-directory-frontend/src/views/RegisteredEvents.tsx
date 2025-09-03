@@ -11,7 +11,7 @@ interface Props {
 export default function RegisteredEvents({ customerId }: Props) {
     const state = useSelector((state: RootState) => state.app);
     const events = state.events; 
-    const filteredRegistrations = state.registrations.filter((registration: Registration) => {
+    const filteredRegistrations = (state.registrations ?? []).filter((registration: Registration) => {
         if (state.user.role === 'CUSTOMER') {
             return registration.customerId === state.user.id;
         } else {

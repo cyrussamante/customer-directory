@@ -24,9 +24,9 @@ export default async function configureHomePage(user: User, dispatch: any, navig
       const employees = responseUsers.data.filter((employee: User) => employee.role !== 'CUSTOMER' && employee.id !== user.id);
       dispatch(setEmployees(employees));
     }
+  }
 
-    if (location.pathname === '/' || location.pathname === '/login'  || location.pathname === '/register') {
-        navigate('/events');
-     }
+  if (location.pathname === '/' || location.pathname === '/login' || location.pathname === '/register') {
+    navigate('/events');
   }
 }
