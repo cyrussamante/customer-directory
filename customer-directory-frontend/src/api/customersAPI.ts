@@ -1,34 +1,31 @@
 import type { Customer } from '../types/appState';
 import axios from 'axios';
 
-export const getCustomers = (token: String) => 
-    axios.get<Customer[]>(`/api/customers`,{
-        headers: { 
-            'Authorization': `Bearer ${token}`
-        }
+export const getCustomers = () =>
+    axios.get<Customer[]>(`/api/customers`, {
+        withCredentials: true
     });
 
-export const createCustomer = (customerData: any, token: string): Promise<any> =>
+export const createCustomer = (customerData: any): Promise<any> =>
     axios.post('/api/customers',
         JSON.stringify(customerData), {
-        headers: { 
+        headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-        }
+        },
+        withCredentials: true
+
     })
 
-export const editCustomer = (id: string, customerData: Customer, token: string): Promise<any> =>
+export const editCustomer = (id: string, customerData: Customer): Promise<any> =>
     axios.put(`/api/customers/${id}`,
         JSON.stringify(customerData), {
-        headers: { 
+        headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-        }
+        },
+        withCredentials: true
     });
 
-export const removeCustomer = (id: string, token: string): Promise<any> => 
-    axios.delete(`/api/customers/${id}`,{
-    headers: {
-            'Authorization': `Bearer ${token}`
-        }
+export const removeCustomer = (id: string): Promise<any> =>
+    axios.delete(`/api/customers/${id}`, {
+        withCredentials: true
     });

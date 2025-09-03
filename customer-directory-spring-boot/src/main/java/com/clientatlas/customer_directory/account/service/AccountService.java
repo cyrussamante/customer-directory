@@ -6,6 +6,9 @@ import com.clientatlas.customer_directory.domain.user.UserRole;
 import com.clientatlas.customer_directory.repository.CustomerRepository;
 import com.clientatlas.customer_directory.repository.UserRepository;
 
+import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -57,6 +60,18 @@ public class AccountService {
         }
 
         return userRepository.save(newUser);
+    }
+
+    public ResponseEntity<Void> logout(HttpServletResponse response) {
+        ResponseCookie cookie = ResponseCookie.from("token", "")
+                .httpOnly(true)
+                .secure(true)
+                .path("/")
+                .maxAge(0)
+                .sameSite("Lax")
+                .build();
+        response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
+        return ResponseEntity.ok().build();
     }
 
     public List<User> getAllUsers() {

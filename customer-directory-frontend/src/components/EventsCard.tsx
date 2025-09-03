@@ -2,8 +2,6 @@ import { type ReactElement } from "react";
 import { useNavigate } from "react-router-dom";
 import "./EventsCard.css";
 import type { Event } from '../types/appState';
-import { useSelector } from "react-redux";
-import type { RootState } from "../redux/store";
 
 interface props {
     event: Event
@@ -12,7 +10,6 @@ interface props {
 export default function EventsCard({ event }: props): ReactElement {
 
     const navigate = useNavigate();
-    const token = useSelector((state: RootState) => state.app.token);
 
     const start = new Date(event.startDateTime);
     const formattedStart = start.toLocaleString(undefined, {

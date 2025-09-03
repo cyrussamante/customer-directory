@@ -36,7 +36,6 @@ const appReducer = (state = initialState, action: any) => {
             return {
                 ...state,
                 isLoggedIn: true,
-                token: action.payload.token,
                 user: action.payload.user,
             };
 

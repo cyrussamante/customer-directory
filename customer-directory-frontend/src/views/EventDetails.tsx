@@ -22,7 +22,6 @@ export default function EventDetails() {
     const events = state.events;
     const event = events.find((event: Event) => event.id === id);
     const userRole = state.user.role;
-    const token = state.token;
     const registrations = state.registrations;
     const isRegistered = registrations.some((registration: Registration) => registration.eventId === id);
     const dispatch = useDispatch();
@@ -36,7 +35,7 @@ export default function EventDetails() {
         if (event) {
             console.log(event)
             console.log(event.id)
-            const response = await removeEvent(event.id, token);
+            const response = await removeEvent(event.id);
             if (response.status !== 200) {
                 throw new Error('Failed to delete event');
             }
@@ -51,7 +50,7 @@ export default function EventDetails() {
     const handleCloseEditModal = () => setEditModal(false);
 
     const handleEditEvent = async (updatedEvent: Event) => {
-        const response = await editEvent(event.id, updatedEvent, token);
+        const response = await editEvent(event.id, updatedEvent);
         if (response.status < 200 || response.status >= 300) {
             throw new Error('Failed to update event');
         }
@@ -64,7 +63,7 @@ export default function EventDetails() {
             eventId: event.id,
             customerId: state.user.id,
         };
-        const response = await createRegistration(registration, token);
+        const response = await createRegistration(registration);
         if (response.status !== 200) {
             throw new Error('Failed to register event');
         }
@@ -74,7 +73,7 @@ export default function EventDetails() {
     const handleUnRegisterEventClick = async () => {
         const registration = registrations.find((reg: Registration) => reg.eventId === event.id && reg.customerId === state.user.id);
         if (registration) {
-            const response = await removeRegistration(registration.id, token);
+            const response = await removeRegistration(registration.id);
             if (response.status !== 200) {
                 throw new Error('Failed to unregister event');
             }
@@ -89,7 +88,7 @@ export default function EventDetails() {
                 eventId: event.id,
                 customerId,
             };
-            const response = await createRegistration(registration, token);
+            const response = await createRegistration(registration);
             if (response.status !== 200) {
                 throw new Error('Failed to register customer');
             }

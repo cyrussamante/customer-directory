@@ -27,12 +27,10 @@ export default function Login() {
       if (response.status < 200 || response.status >= 300) {
         throw new Error("Invalid credentials. Please try again");
       }
-      const token = response.data.access_token
-      const userInfo = await getUserInfo(token);
-      const user = userInfo.data 
-      localStorage.setItem('token', token);
-      dispatch(setLogin(user, token))
-      configureHomePage(user, dispatch, navigate, token);
+      const userInfo = await getUserInfo();
+      const user = userInfo.data;
+      dispatch(setLogin(user));
+      configureHomePage(user, dispatch, navigate);
              
     } catch (error) {
       alert('Login failed! Try again.');

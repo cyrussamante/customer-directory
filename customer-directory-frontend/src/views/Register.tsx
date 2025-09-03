@@ -15,7 +15,6 @@ export default function Register() {
         email: '',
         password: '',
         role: 'CUSTOMER',
-        token: ''
     }
     const [formData, setFormData] = useState(initialFormData);
     const navigate = useNavigate();
@@ -44,13 +43,11 @@ export default function Register() {
         try {
             const response = await register(payload);
             if (response.status === 201) {
-                const loginResp = await login({email: formData.email, password: formData.password})
-                const token = loginResp.data.access_token
-                const userInfo = await getUserInfo(token);
-                const user = userInfo.data 
-                localStorage.setItem('token', token);
-                dispatch(setLogin(user, token));
-                configureHomePage(user, dispatch, navigate, token);
+                await login({email: formData.email, password: formData.password});
+                const userInfo = await getUserInfo();
+                const user = userInfo.data;
+                dispatch(setLogin(user));
+                configureHomePage(user, dispatch, navigate);
             } else {
                 alert('Registration failed. Please try again.');
             }

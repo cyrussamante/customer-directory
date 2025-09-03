@@ -17,7 +17,6 @@ export default function CustomerCard({ customer }: props): ReactElement {
 
     const handleViewDetails = () => navigate(`/customers/${customer.id}`);
 
-    console.log(customer.imageUrl)
     return (
         <div className="card">
             <div className="cardBody">

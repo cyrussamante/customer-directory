@@ -5,33 +5,28 @@ import { getRegistrations } from "../api/registrationsAPI";
 import { setEvents, setCustomers, setRegistrations, setEmployees } from "../redux/actions";
 import type { Registration, User } from "../types/appState";
 
-export default async function configureHomePage(user: User, dispatch: any, navigate: any, token: string) {
-
-  const responseEvent = await getEvents(token);
+export default async function configureHomePage(user: User, dispatch: any, navigate: any) {
+  const responseEvent = await getEvents();
   dispatch(setEvents(responseEvent.data));
 
-  if (user.role === 'CUSTOMER') {
 
-    const responseRegistrations = await getRegistrations(token);
+  if (user.role === 'CUSTOMER') {
+    const responseRegistrations = await getRegistrations();
     const userRegistrations = responseRegistrations.data.filter((reg: Registration) => reg.customerId === user.id);
     dispatch(setRegistrations(userRegistrations));
-    navigate('/events');
-
   } else {
-
-    const response = await getCustomers(token);
+    const response = await getCustomers();
     dispatch(setCustomers(response.data));
-
-    const responseRegistrations = await getRegistrations(token);
+    const responseRegistrations = await getRegistrations();
     dispatch(setRegistrations(responseRegistrations.data));
-
     if (user.role === 'ADMIN') {
-      const responseUsers = await getUsers(token);
+      const responseUsers = await getUsers();
       const employees = responseUsers.data.filter((employee: User) => employee.role !== 'CUSTOMER' && employee.id !== user.id);
       dispatch(setEmployees(employees));
     }
 
-    navigate('/customers');
+    if (location.pathname === '/' || location.pathname === '/login'  || location.pathname === '/register') {
+        navigate('/events');
+     }
   }
-
 }

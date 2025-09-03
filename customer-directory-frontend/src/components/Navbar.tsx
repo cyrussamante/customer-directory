@@ -2,23 +2,20 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { setLogout } from "../redux/actions";
 import type { RootState } from "../redux/store";
-import { persistor } from '../redux/store';
+import { logout } from "../api/accountAPI";
 
 
 export default function Navbar() {
     const isLoggedIn = useSelector((state: RootState) => state.app.isLoggedIn);
     const userRole = useSelector((state: RootState) => state.app.user.role);
-    const id = useSelector((state: RootState) => state.app.user.id);
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const handleLogout = () => {
-        localStorage.removeItem('token');
-        localStorage.removeItem('user');
-        persistor.purge();
-        dispatch(setLogout());
-        navigate('/');
-
+        logout().finally(() => {
+            dispatch(setLogout());
+            navigate('/');
+        });
     };
 
     return (

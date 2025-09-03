@@ -24,9 +24,9 @@ export const ADD_REGISTRATION = "ADD_REGISTRATION";
 export const UPDATE_REGISTRATION = "UPDATE_REGISTRATION";
 export const DELETE_REGISTRATION = "DELETE_REGISTRATION";
 
-export const setLogin = (user: User, token: string) => ({
+export const setLogin = (user: User) => ({
   type: LOGIN,
-  payload: { user, token },
+  payload: { user },
 });
 
 export const setLogout = () => ({
@@ -58,9 +58,7 @@ export const setUser = (user: Customer) => ({
   payload: { user },
 });
 
-export const setEmployees = (employees: User[]) => (
-  console.log(employees),
-  {
+export const setEmployees = (employees: User[]) => ({
   type: SET_EMPLOYEES,
   payload: { employees },
 });

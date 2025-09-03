@@ -27,24 +27,20 @@ function App() {
   const location = useLocation();
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      fetchData(token);
-    }
-  }, [location.pathname]);
+    fetchData();
+  }, []);
 
-  async function fetchData(token: string) {
-    try {
-      const userInfo = await getUserInfo(token);
+  async function fetchData() {
+    // try {
+      const userInfo = await getUserInfo();
       const user = userInfo.data;
-      dispatch(setLogin(user, token));
-      if (location.pathname === '/' || location.pathname === '/login') {
-        configureHomePage(user, dispatch, navigate, token);
-      }
-    } catch {
-      dispatch(setLogout());
-      navigate('/')
-    }
+      dispatch(setLogin(user));
+      configureHomePage(user, dispatch, navigate);
+
+    // } catch {
+    //   dispatch(setLogout());
+    //   navigate('/')
+    // }
   }
 
   return (
