@@ -13,7 +13,7 @@ import Register from './views/Register';
 import type { RootState } from './redux/store';
 import configureHomePage from './helpers/function';
 import { setLogin } from './redux/actions';
-import { getUserInfo, logout } from './api/accountAPI';
+import { getUserInfo } from './api/accountAPI';
 import CustomerProfile from './views/CustomerProfile';
 import EmployeeDetails from './views/EmployeeDetails';
 import EmployeeList from './views/EmployeeList';

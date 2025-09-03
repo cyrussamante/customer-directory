@@ -1,11 +1,8 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import "./Login.css";
-import { getUserInfo, login, register } from '../api/accountAPI';
-import { setLogin } from '../redux/actions';
-import { useDispatch } from 'react-redux'
+import { register } from '../api/accountAPI';
 import type { User } from '../types/appState';
-import configureHomePage from '../helpers/function';
 
 export default function Register() {
 
@@ -18,7 +15,6 @@ export default function Register() {
     }
     const [formData, setFormData] = useState(initialFormData);
     const navigate = useNavigate();
-    const dispatch = useDispatch();
 
     const handleChange = (e: any) => {
         setFormData({

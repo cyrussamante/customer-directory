@@ -100,7 +100,7 @@ export default function EventDetails() {
         for (const customerId of customerIds) {
             const registration = registrations.find((reg: Registration) => reg.eventId === event.id && reg.customerId === customerId);
             if (registration) {
-                const response = await removeRegistration(registration.id, token);
+                const response = await removeRegistration(registration.id);
                 if (response.status !== 200) {
                     throw new Error('Failed to unregister customer');
                 }
