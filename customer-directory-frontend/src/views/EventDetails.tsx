@@ -97,6 +97,19 @@ export default function EventDetails() {
         }
     }
 
+    const handleUnregisterCustomers = async (customerIds: string[]) => {
+        for (const customerId of customerIds) {
+            const registration = registrations.find((reg: Registration) => reg.eventId === event.id && reg.customerId === customerId);
+            if (registration) {
+                const response = await removeRegistration(registration.id, token);
+                if (response.status !== 200) {
+                    throw new Error('Failed to unregister customer');
+                }
+                dispatch(deleteRegistration(registration.id));
+            }
+        }
+    }
+
     const handleRegisterCustomerClick = async () => setRegisterCustomerModal(true);
 
     const handleCloseRegisterCustomerModal = () => setRegisterCustomerModal(false);
@@ -161,7 +174,9 @@ export default function EventDetails() {
                     {showRegisterCustomerModal && (<RegisterCustomerModal
                         eventId={event.id}
                         onClose={handleCloseRegisterCustomerModal}
-                        onSave={handleRegisterCustomers} />)}
+                        onSave={handleRegisterCustomers}
+                        onUnregister={handleUnregisterCustomers}
+                    />)}
                 </>
             ) : (
                 <p>No event data available.</p>
