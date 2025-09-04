@@ -31,23 +31,35 @@ public class AccountController {
 
     @PostMapping("/token")
     public Map<String, String> token(@RequestBody AuthRequest authRequest, HttpServletResponse response) {
-        User user = accountService.authenticate(authRequest.getEmail(), authRequest.getPassword());
-        String token = tokenService.generateToken(user);
+        try {
+            User user = accountService.authenticate(authRequest.getEmail(), authRequest.getPassword());
+            String token = tokenService.generateToken(user);
 
-        ResponseCookie cookie = ResponseCookie.from("token", token)
-                .httpOnly(true)
-                .secure(true)
-                .path("/")
-                .maxAge(3600)
-                .sameSite(SameSiteCookies.STRICT.toString())
-                .build();
+            ResponseCookie cookie = ResponseCookie.from("token", token)
+                    .httpOnly(true)
+                    .secure(true)
+                    .path("/")
+                    .maxAge(3600)
+                    .sameSite(SameSiteCookies.STRICT.toString())
+                    .build();
 
-        response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
-        Map<String, String> bodyResponse = new HashMap<>();
-        bodyResponse.put("access_token", token);
-        bodyResponse.put("token_type", "Bearer");
-        bodyResponse.put("expires_in", "3600");
-        return bodyResponse;
+            response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
+            Map<String, String> bodyResponse = new HashMap<>();
+            bodyResponse.put("access_token", token);
+            bodyResponse.put("token_type", "Bearer");
+            bodyResponse.put("expires_in", "3600");
+            return bodyResponse;
+        } catch (Exception e) {
+            ResponseCookie expiredCookie = ResponseCookie.from("token", "")
+                    .httpOnly(true)
+                    .secure(true)
+                    .path("/")
+                    .maxAge(0)
+                    .sameSite("Strict")
+                    .build();
+            response.addHeader(HttpHeaders.SET_COOKIE, expiredCookie.toString());
+        }
+        return Collections.singletonMap("error", "Invalid credentials");
     }
     
     @GetMapping
