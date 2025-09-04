@@ -21,7 +21,6 @@ export interface Customer extends User {
     address: string,
     imageUrl?: string,
     numberOfOrders: number,
-    registrations?: Registration[],
 }
 
 export interface Event {

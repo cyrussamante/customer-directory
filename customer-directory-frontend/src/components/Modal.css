@@ -42,6 +42,10 @@
     border-radius: 8px;
 }
 
+.modalInput.bannerImg {
+   border: none;
+}
+
 .profileImagePreview {
     width: 100px;
     height: 100px;

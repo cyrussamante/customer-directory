@@ -49,7 +49,6 @@ function App() {
     fetchData();
   }, []);
 
-
   if (isLoading) {
     return (
       <div className="loading">Loading...</div>

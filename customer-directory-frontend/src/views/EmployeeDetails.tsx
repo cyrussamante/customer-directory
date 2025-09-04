@@ -72,7 +72,7 @@ export default function EmployeeDetails() {
                             </div>
                             <div className="detailsGrid">
                                 <p className="classifier">Email </p> <p>{employee.email}</p>
-                                <p className="classifier">Password </p> <p>{employee.password}</p>
+                                <p className="classifier">Password </p> <p>********</p>
                                 <p className="classifier">Role </p> <p>{employee.role}</p>
                             </div>
                         </div>

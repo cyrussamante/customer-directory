@@ -22,15 +22,15 @@ export default function EventsCard({ event }: props): ReactElement {
         <div className="eventCard">
             <div className="eventCardBody">
                 <img className="eventImg" src={event?.bannerImage ? event.bannerImage : "/images/default-event.png"} alt={event?.title} />
-                <div className="event-info">
-                    <div className="event-specifics">
-                        <div className="title-location">
-                            <p className="event-title">{event.title}</p>
-                            <p className="event-location">{event.location}</p>
-                        </div>
-                        <p className="event-dates">{formattedStart}</p>
+                <div className="eventInfo">
+                    <p className="eventTitle">{event.title}</p>
+                    <div className="eventFields">
+                        <p className="eventDates">{formattedStart}</p>
+                        <p className="eventLocation">{event.location}</p>
                     </div>
-                    <button className="event-button" onClick={navigateToEventDetails}>View Details</button>
+                    <div className="eventSpecifics">
+                        <button onClick={navigateToEventDetails}>View Details</button>
+                    </div>
                 </div>
             </div>
         </div>

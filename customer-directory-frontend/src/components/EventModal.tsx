@@ -2,8 +2,6 @@ import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Modal.css";
 import { uploadImage } from "../api/imagesAPI";
-import { useSelector } from "react-redux";
-import type { RootState } from "../redux/store";
 
 interface Props {
     mode: 'add' | 'edit';
@@ -19,16 +17,17 @@ export default function EventModal({ mode, event, onClose, onSave }: Props) {
         startDateTime: "",
         endDateTime: "",
         location: "",
-        price: 0,
+        price: "",
         bannerImage: "/images/default-event.png",
         description: "",
-        capacity: 0,
+        capacity: "",
     };
 
     const [formData, setFormData] = useState(mode === 'edit' ? event : initialFormData);
     const navigate = useNavigate();
     const dialogRef = useRef<HTMLDialogElement>(null);
     const [imageFile, setImageFile] = useState<File | null>(null);
+    const [imagePreview, setImagePreview] = useState<string>("");
 
     useEffect(() => {
         if (dialogRef.current) {
@@ -47,9 +46,13 @@ export default function EventModal({ mode, event, onClose, onSave }: Props) {
         if (file) {
             setImageFile(file);
             const reader = new FileReader();
+            reader.onloadend = () => {
+                setImagePreview(reader.result as string);
+            };
             reader.readAsDataURL(file);
         } else {
             setImageFile(null);
+            setImagePreview("");
         }
     };
 
@@ -71,9 +74,9 @@ export default function EventModal({ mode, event, onClose, onSave }: Props) {
             startDateTime: formData.startDateTime,
             endDateTime: formData.endDateTime,
             location: formData.location.trim(),
-            price: formData.price,
+            price: Number(formData.price),
             description: formData.description.trim(),
-            capacity: formData.capacity,
+            capacity: Number(formData.capacity),
             bannerImage: bannerImage,
         };
         const isAnyFieldEmpty = Object.values(payload).some(value => value === '');
@@ -110,7 +113,7 @@ export default function EventModal({ mode, event, onClose, onSave }: Props) {
     return (
         <dialog className="modal" ref={dialogRef} onClose={onClose}>
             <h2 className="modalHeading">
-                {mode === 'add' ? 'Add a new event' : 'Edit event details'}
+                {mode === 'add' ? 'Add a new event' : 'Edit details'}
             </h2>
             <form className="modalForm">
                 <div className="modalGrid">
@@ -157,15 +160,6 @@ export default function EventModal({ mode, event, onClose, onSave }: Props) {
                         onChange={handleChange}
                         required
                     />
-                    {/* <label>Banner Image </label>
-                    <input className="modalInput"
-                        type="text"
-                        name="bannerImage"
-                        placeholder="Banner Image"
-                        value={formData.bannerImage}
-                        onChange={handleChange}
-                        required
-                    /> */}
                     <label>Description</label>
                     <textarea className="modalInput"
                         name="description"
@@ -184,8 +178,15 @@ export default function EventModal({ mode, event, onClose, onSave }: Props) {
                         required
                     />
                     <label>Banner Image</label>
-                    <input className="modalInput" type="file" accept="image/*" onChange={handleImageChange} />
+                    <input className="modalInput bannerImg"
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageChange} />
+                     {imageFile && imagePreview && (
+                        <img className="profileImagePreview" src={imagePreview} alt="Preview" />
+                    )}
                 </div>
+                
                 <div className="modalButtons">
                     <button className="save" onClick={handleSubmit}>Save</button>
                     <button className="cancel" onClick={handleClose}>Cancel</button>
