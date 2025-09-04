@@ -48,10 +48,8 @@ public class AccountController {
             bodyResponse.put("access_token", token);
             bodyResponse.put("token_type", "Bearer");
             bodyResponse.put("expires_in", "3600");
-            System.out.println("worked");
             return bodyResponse;
         } catch (Exception e) {
-            System.out.println("test!!");
             ResponseCookie expiredCookie = ResponseCookie.from("token", "")
                     .httpOnly(true)
                     .secure(true)
