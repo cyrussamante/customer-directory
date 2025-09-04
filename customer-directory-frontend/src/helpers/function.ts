@@ -1,5 +1,5 @@
 import { getCustomers } from "../api/customersAPI";
-import { getUsers } from "../api/accountAPI";
+import { getUsers } from "../api/usersAPI";
 import { getEvents } from "../api/eventsAPI";
 import { getRegistrations } from "../api/registrationsAPI";
 import { setEvents, setCustomers, setRegistrations, setEmployees } from "../redux/actions";
