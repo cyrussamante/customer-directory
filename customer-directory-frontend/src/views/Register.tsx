@@ -93,7 +93,7 @@ export default function Register() {
                     </select>
                     <button onClick={handleSubmit}>Register</button>
                 </form>
-                <Link to="/register">Donot have an account? Sign Up!</Link>
+                <Link to="/login">Already have an account? Log In!</Link>
             </div>
         </div>
     );
