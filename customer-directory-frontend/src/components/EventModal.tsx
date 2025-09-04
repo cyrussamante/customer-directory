@@ -2,6 +2,8 @@ import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Modal.css";
 import { uploadImage } from "../api/imagesAPI";
+import { VITE_API_URL } from '../helpers/api';
+
 
 interface Props {
     mode: 'add' | 'edit';
@@ -18,7 +20,7 @@ export default function EventModal({ mode, event, onClose, onSave }: Props) {
         endDateTime: "",
         location: "",
         price: "",
-        bannerImage: "/images/default-event.png",
+        bannerImage: "",
         description: "",
         capacity: "",
     };

@@ -10,6 +10,8 @@ import type { RootState } from '../redux/store';
 import { editCustomer, removeCustomer } from '../api/customersAPI';
 import { deleteCustomer, updateCustomer } from '../redux/actions';
 import RegisteredEvents from './RegisteredEvents';
+import { VITE_API_URL } from '../helpers/api';
+
 
 export default function CustomerDetails() {
     const { id } = useParams();
@@ -69,7 +71,7 @@ export default function CustomerDetails() {
                         </div>
                         <div className="detailsBody">
                             <div className="imageContainer">
-                                <img src={customer?.imageUrl ? customer.imageUrl : "/images/default-profile.png"} alt={customer?.name} />
+                                <img src={customer?.imageUrl ? `${VITE_API_URL}${customer.imageUrl}` : `${VITE_API_URL}/images/default-profile.png`} alt={customer?.name} />
                             </div>
                             <div className="customerDetailsGrid">
                                 <p className="classifier">Date of Birth </p> <p>{customer.dateOfBirth}</p>

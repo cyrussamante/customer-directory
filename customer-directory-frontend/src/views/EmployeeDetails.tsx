@@ -9,6 +9,8 @@ import type { RootState } from '../redux/store';
 import { editUser, removeUser } from '../api/usersAPI';
 import { deleteEmployee, updateEmployee } from '../redux/actions';
 import EmployeeModal from '../components/EmployeeModal';
+import { VITE_API_URL } from '../helpers/api';
+
 
 export default function EmployeeDetails() {
     const { id } = useParams();
@@ -68,7 +70,7 @@ export default function EmployeeDetails() {
                         </div>
                         <div className="detailsBody">
                             <div className="imageContainer">
-                                <img src="/images/default-profile.png" alt={employee?.name} />
+                                <img src={`${VITE_API_URL}/images/default-profile.png`} alt={employee?.name} />
                             </div>
                             <div className="detailsGrid">
                                 <p className="classifier">Email </p> <p>{employee.email}</p>

@@ -20,7 +20,7 @@ export default function Modal({ mode, customer, onClose, onSave }: Props) {
         password: "",
         address: "",
         numberOfOrders: "",
-        imageUrl: "/images/default-profile.png",
+        imageUrl: "",
         role: "CUSTOMER"
     };
 
