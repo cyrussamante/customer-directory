@@ -31,7 +31,6 @@ public class DataController {
         return Collections.singletonMap("message", "data service is up and running!");
     }
 
-
     //customer endpoints
 
     @GetMapping("/customers")
@@ -87,14 +86,10 @@ public class DataController {
     } 
 
     //registrations endpoints
+
     @GetMapping("/registrations")
     public List<Registration> getAllRegistrations() {
         return registrationService.getAllRegistrations();
-    }
-
-    @GetMapping("/registrations/{id}")
-    public Registration getRegistrationById(@PathVariable UUID id) {
-        return registrationService.getRegistrationById(id);
     }
 
     @PostMapping("/registrations")
@@ -102,25 +97,26 @@ public class DataController {
         return registrationService.createRegistration(registration);
     }
 
-    @PutMapping("/registrations/{id}")
-    public Registration updateRegistration(@PathVariable UUID id, @RequestBody Registration registration) {
-        return registrationService.updateRegistration(id, registration);
-    }
-
     @DeleteMapping("/registrations/{id}")
     public void deleteRegistration(@PathVariable UUID id) {
         registrationService.deleteRegistrationById(id);
     }
 
-    //aaditional registration endpoints
-    @GetMapping("/registrations/grouped-by-event")
-    public List<Object[]> getRegistrationsGroupedByEvent() {
-        return registrationService.getRegistrationsGroupedByEvent();
+    //additional registration endpoints 
+
+    @GetMapping("/registrations/{id}")
+    public Registration getRegistrationById(@PathVariable UUID id) {
+        return registrationService.getRegistrationById(id);
     }
 
-    @GetMapping("/registrations/grouped-by-customer")
-    public List<Object[]> getRegistrationsGroupedByCustomer() {
-        return registrationService.getRegistrationsGroupedByCustomer();
+    @GetMapping("/registrations/{eventId}")
+    public List<Registration> getRegistrationsByEventId(@PathVariable UUID eventId) {
+        return registrationService.getAllRegistrationsForEvent(eventId);
     }
-    
+
+    @GetMapping("/registrations/{customerId}")
+    public List<Registration> getRegistrationsByCustomerId(@PathVariable UUID customerId) {
+        return registrationService.getAllRegistrationsByCustomer(customerId);
+    }
+
 }

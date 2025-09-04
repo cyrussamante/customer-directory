@@ -82,11 +82,10 @@ export default function EventDetails() {
     }
 
     const handleRegisterCustomers = async (customerIds: string[]) => {
-        //TODO: add an api to add multiple registrations at a time
         for (const customerId of customerIds) {
             const registration = {
                 eventId: event.id,
-                customerId,
+                customerId,     
             };
             const response = await createRegistration(registration);
             if (response.status !== 200) {
