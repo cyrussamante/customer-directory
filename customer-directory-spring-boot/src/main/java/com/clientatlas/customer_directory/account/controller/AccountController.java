@@ -71,40 +71,6 @@ public class AccountController {
         return accountService.logout(response);
     }
 
-    @GetMapping("/users")
-    public List<User> getAllUsers() {
-        return accountService.getAllUsers();
-    }
-
-    @GetMapping("/users/{id}")
-    public ResponseEntity<User> getUser(@PathVariable UUID id) {
-        return accountService.getUser(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound()
-                        .build());
-    }
-
-    @DeleteMapping("/users/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable UUID id) {
-        boolean deleted = accountService.deleteUser(id);
-        if (deleted) {
-            return ResponseEntity.noContent().build();
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
-
-    @PatchMapping("/users/{id}")
-    public ResponseEntity<User> patchUser(@PathVariable UUID id, @RequestBody Map<String, Object> updatedData) {
-        User updatedUser = accountService.patchUser(id, updatedData);
-        return updatedUser == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(updatedUser);
-    }
-
-    @PutMapping("/users/{id}")
-    public User updateUser(@PathVariable UUID id, @RequestBody User user) {
-        return accountService.putUser(id, user);
-    }
-
     @GetMapping("/me")
     public ResponseEntity<User> getCurrentUser() {
        return accountService.getCurrentUser();

@@ -74,54 +74,6 @@ public class AccountService {
         return ResponseEntity.ok().build();
     }
 
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
-    }
-
-    public Optional<User> getUser(UUID id) {
-        return userRepository.findById(id);
-    }
-
-    public boolean deleteUser(UUID id) {
-        return userRepository.findById(id).map(user -> {
-            userRepository.delete(user);
-            if (user.getRole() == UserRole.CUSTOMER) {
-                customerRepository.findById(user.getId())
-                        .ifPresent(customerRepository::delete);
-            }
-            return true;
-        }).orElse(false);
-    }
-
-    public User patchUser(UUID id, Map<String, Object> updatedData) {
-        Optional<User> optionalUser = userRepository.findById(id);
-        if (optionalUser.isEmpty()) return null;
-
-        User user = optionalUser.get();
-
-        updatedData.forEach((key, value) -> {
-            switch (key) {
-                case "name" -> user.setName((String) value);
-                case "email" -> user.setEmail((String) value);
-                case "password" -> user.setPassword(passwordEncoder.encode((String) value));
-                case "role" -> user.setRole(UserRole.valueOf((String) value));
-            }
-        });
-        return userRepository.save(user);
-    }
-
-    public User putUser(UUID id, User updatedUser) {
-        User existingUser = userRepository.findById(id).orElse(null);
-        if (existingUser != null) {
-            existingUser.setName(updatedUser.getName());
-            existingUser.setEmail(updatedUser.getEmail());
-            existingUser.setPassword(updatedUser.getPassword());
-            existingUser.setRole(updatedUser.getRole());
-            return userRepository.save(updatedUser);
-        }
-        return null;
-    }
-
     public ResponseEntity<User> getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
