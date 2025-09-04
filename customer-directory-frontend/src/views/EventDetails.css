@@ -68,4 +68,10 @@
 .registeredActions {
     display: flex;
     gap: 10px;
+    justify-content: center;
+}
+
+.registrationStatus {
+    color: green;
+    font-weight: bold;
 }

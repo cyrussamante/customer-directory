@@ -71,7 +71,7 @@ export default function CustomerDetails() {
                             <div className="imageContainer">
                                 <img src={customer?.imageUrl ? customer.imageUrl : "/images/default-profile.png"} alt={customer?.name} />
                             </div>
-                            <div className="detailsGrid">
+                            <div className="customerDetailsGrid">
                                 <p className="classifier">Date of Birth </p> <p>{customer.dateOfBirth}</p>
                                 <p className="classifier">Gender </p> <p>{customer.gender}</p>
                                 <p className="classifier">Email </p> <p>{customer.email}</p>

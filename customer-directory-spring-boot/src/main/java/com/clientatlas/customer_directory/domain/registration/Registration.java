@@ -12,9 +12,14 @@ public class Registration {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-    
+
+    @Column(name="event_id")
     private UUID eventId;
+
+    @Column(name="customer_id")
     private UUID customerId;
+
+    @Column(name="date_registered")
     private LocalDateTime dateRegistered;
 
     public UUID getId() {

@@ -101,24 +101,4 @@ public class Event {
     public void setBannerImage(String bannerImage) {
         this.bannerImage = bannerImage;
     }
-
 }
-
-// CREATE TABLE events (
-//     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-//     title VARCHAR(255),
-//     start_date_time TIMESTAMP,
-//     end_date_time TIMESTAMP,
-//     location VARCHAR(255),
-//     price FLOAT,
-//     description TEXT,
-//     capacity INT,
-//     banner_image VARCHAR(255)
-// );
-//
-// CREATE TABLE registrations (
-//     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-//     event_id UUID REFERENCES events(id),
-//     customer_id UUID REFERENCES customers(id),
-//     date_registered TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-// );
