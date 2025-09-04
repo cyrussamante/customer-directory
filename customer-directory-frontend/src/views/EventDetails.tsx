@@ -12,6 +12,8 @@ import { addRegistration, deleteEvent, deleteRegistration, updateEvent } from '.
 import { createRegistration, removeRegistration } from '../api/registrationsAPI';
 import { RegisterCustomerModal } from '../components/RegisterCustomerModal';
 import { handleExportToICS } from '../helpers/function';
+import { VITE_API_URL } from '../helpers/api';
+
 
 export default function EventDetails() {
     const { id } = useParams();
@@ -135,7 +137,7 @@ export default function EventDetails() {
                     </div>
                     <div className="eventDetailsBody">
                         <div className="eventImageContainer">
-                            <img className="eventImage" src={event?.bannerImage ? event.bannerImage : "/images/default-event.png"} alt={event?.title} />
+                            <img className="eventImage" src={event?.bannerImage ? `${VITE_API_URL}${event.bannerImage}` : `${VITE_API_URL}/images/default-event.png`} alt={event?.title} />
                         </div>
                         <div className="eventDetailsGrid">
                             <p className="classifier">Event Title </p> <p>{event.title}</p>

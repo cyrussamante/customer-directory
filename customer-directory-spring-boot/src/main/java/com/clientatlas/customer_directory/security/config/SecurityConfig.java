@@ -23,6 +23,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import com.clientatlas.customer_directory.security.jwt.CookieFilter;
 import java.security.interfaces.RSAPublicKey;
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -34,27 +35,44 @@ public class SecurityConfig {
     @Autowired
     private CurrentUserDetailsService currentUserDetailsService;
 
+    @Value("${app.cors.allowed-origins}")
+    private String allowedOrigins;
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/account/me").authenticated()
-                        .requestMatchers("/account", "/account/**").permitAll()
-                        .requestMatchers("/api/users/**").hasRole("ADMIN")
-                        .requestMatchers("/images/upload").hasAnyRole("ADMIN", "CUSTOMER")
-                        .requestMatchers("/images/**").permitAll()
-                        .anyRequest().authenticated()
-                )
-                .userDetailsService(currentUserDetailsService)
-                .oauth2ResourceServer(resourceServer ->
-                        resourceServer.jwt(jwt -> jwt
-                                .decoder(jwtDecoder())
-                                .jwtAuthenticationConverter(jwtAuthenticationConverter())
-                        )
-                ).addFilterBefore(new CookieFilter(), UsernamePasswordAuthenticationFilter.class)
-                .build();
+    return http
+        .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+        .csrf(AbstractHttpConfigurer::disable)
+            .cors(c -> c.configurationSource(corsConfigurationSource()))
+            .authorizeHttpRequests(auth -> auth
+            .requestMatchers("/account/me").authenticated()
+            .requestMatchers("/account", "/account/**").permitAll()
+            .requestMatchers("/api/users/**").hasRole("ADMIN")
+            .requestMatchers("/images/upload").hasAnyRole("ADMIN", "CUSTOMER")
+            .requestMatchers("/images/**").permitAll()
+            .anyRequest().authenticated()
+        )
+        .userDetailsService(currentUserDetailsService)
+        .oauth2ResourceServer(resourceServer ->
+            resourceServer.jwt(jwt -> jwt
+                .decoder(jwtDecoder())
+                .jwtAuthenticationConverter(jwtAuthenticationConverter())
+            )
+        ).addFilterBefore(new CookieFilter(), UsernamePasswordAuthenticationFilter.class)
+        .build();
+    }
+
+
+    @Bean
+    public org.springframework.web.cors.CorsConfigurationSource corsConfigurationSource() {
+        org.springframework.web.cors.CorsConfiguration configuration = new org.springframework.web.cors.CorsConfiguration();
+        configuration.setAllowedOrigins(List.of(allowedOrigins));
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuration.setAllowedHeaders(List.of("*"));
+        configuration.setAllowCredentials(true);
+        org.springframework.web.cors.UrlBasedCorsConfigurationSource source = new org.springframework.web.cors.UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
     }
 
     @Bean

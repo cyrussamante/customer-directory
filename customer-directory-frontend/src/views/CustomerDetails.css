@@ -63,7 +63,7 @@
 }
 
 .detailsPage {
-    margin: 210vw 1em;
+    margin: 2vw 1em;
     display: flex;
     grid-template-columns: 1fr 1fr;
     flex-wrap: wrap;

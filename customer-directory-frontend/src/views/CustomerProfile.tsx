@@ -7,6 +7,8 @@ import type { RootState } from '../redux/store';
 import { editCustomer } from '../api/customersAPI';
 import { setUser } from '../redux/actions';
 import RegisteredEvents from './RegisteredEvents';
+import { VITE_API_URL } from '../helpers/api';
+
 
 export default function CustomerProfile() {
     const [showEditModal, setEditModal] = useState(false);
@@ -44,7 +46,7 @@ export default function CustomerProfile() {
                 </div>
                 <div className="detailsBody">
                     <div className="imageContainer">
-                        <img src={user?.imageUrl ? user.imageUrl : "/images/default-profile.png"} alt={user?.name} />
+                        <img src={user?.imageUrl ? `${VITE_API_URL}${user.imageUrl}` : `${VITE_API_URL}/images/default-profile.png`} alt={user?.name} />
                     </div>
                     <div className="customerDetailsGrid">
                         <p className="classifier">Date of Birth </p> <p>{user.dateOfBirth ? user.dateOfBirth : 'Not specified'}</p>

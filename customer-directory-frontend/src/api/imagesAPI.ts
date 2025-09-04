@@ -1,12 +1,11 @@
 import axios from 'axios';
-
-
+import { VITE_API_URL } from '../helpers/api';
 
 export const uploadImage = (imageFile: File): Promise<any> => {
     const formData = new FormData();
     formData.append('file', imageFile);
 
-    return axios.post('/images/upload', formData, {
+    return axios.post(`${VITE_API_URL}/images/upload`, formData, {
         headers: {
             'Content-Type': 'multipart/form-data'
         },
@@ -15,7 +14,7 @@ export const uploadImage = (imageFile: File): Promise<any> => {
 };
 
 export const getImage = (imageId: string): Promise<any> => {
-    return axios.get(`${imageId}`, {
+    return axios.get(`${VITE_API_URL}/images/${imageId}`, {
         responseType: 'blob',
     });
 };

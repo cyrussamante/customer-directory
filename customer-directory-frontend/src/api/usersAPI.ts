@@ -1,8 +1,9 @@
 import axios from 'axios';
 import type { User } from '../types/appState';
+import { VITE_API_URL } from '../helpers/api';
 
 export const editUser = (id: string, userData: User): Promise<any> =>
-    axios.put(`/api/users/${id}`,
+    axios.put(`${VITE_API_URL}/api/users/${id}`,
         JSON.stringify(userData), {
         headers: {
             'Content-Type': 'application/json'
@@ -11,11 +12,11 @@ export const editUser = (id: string, userData: User): Promise<any> =>
     });
 
 export const getUsers = () =>
-    axios.get<User[]>(`/api/users`, {
+    axios.get<User[]>(`${VITE_API_URL}/api/users`, {
         withCredentials: true
     });
 
 export const removeUser = (id: string): Promise<any> =>
-    axios.delete(`/api/users/${id}`, {
+    axios.delete(`${VITE_API_URL}/api/users/${id}`, {
         withCredentials: true
     });

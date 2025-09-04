@@ -5,6 +5,8 @@ import type { RootState } from '../redux/store'
 import type { Customer, Registration } from '../types/appState';
 import CloseIcon from '@mui/icons-material/Close';
 import './RegisterCustomerModal.css';
+import { VITE_API_URL } from '../helpers/api';
+
 
 interface Props {
     eventId: string;
@@ -115,7 +117,7 @@ export function RegisterCustomerModal({ eventId, onClose, onSave, onUnregister }
                         <div className="customersList">
                             {filteredCustomers.map((customer: Customer) => (
                                 <div key={customer.id} className="customerCard" onClick={() => handleCustomerSelect(customer.id)}>
-                                    <img className="customerImage" src={customer.imageUrl || "/images/default-profile.png"} alt={customer.name} />
+                                    <img className="customerImage" src={`${VITE_API_URL}${customer.imageUrl || `/images/default-profile.png`}`} alt={customer.name} />
                                     <div className="customerInfo">
                                         <span className="customerName">{customer.name}</span>
                                         <span className="customerEmail">{customer.email}</span>
@@ -141,7 +143,7 @@ export function RegisterCustomerModal({ eventId, onClose, onSave, onUnregister }
                         <div className="customersList">
                             {filteredCurrentCustomers.map((customer: Customer) => (
                                 <div key={customer.id} className="customerCard" onClick={() => handleUnregisterSelect(customer.id)}>
-                                    <img className="customerImage" src={customer.imageUrl || "/images/default-profile.png"} alt={customer.name} />
+                                    <img className="customerImage" src={`${VITE_API_URL}${customer.imageUrl || "/images/default-profile.png"}`} alt={customer.name} />
                                     <div className="customerInfo">
                                         <span className="customerName">{customer.name}</span>
                                         <span className="customerEmail">{customer.email}</span>

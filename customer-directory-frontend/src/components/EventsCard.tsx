@@ -2,6 +2,8 @@ import { type ReactElement } from "react";
 import { useNavigate } from "react-router-dom";
 import "./EventsCard.css";
 import type { Event } from '../types/appState';
+import { VITE_API_URL } from '../helpers/api';
+
 
 interface props {
     event: Event
@@ -21,7 +23,7 @@ export default function EventsCard({ event }: props): ReactElement {
     return (
         <div className="eventCard">
             <div className="eventCardBody">
-                <img className="eventImg" src={event?.bannerImage ? event.bannerImage : "/images/default-event.png"} alt={event?.title} />
+                <img className="eventImg" src={event?.bannerImage ? `${VITE_API_URL}${event.bannerImage}` : `${VITE_API_URL}/images/default-event.png`} alt={event?.title} />
                 <div className="eventInfo">
                     <p className="eventTitle">{event.title}</p>
                     <div className="eventFields">
