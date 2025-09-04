@@ -38,6 +38,6 @@ export interface Event {
 export interface Registration {
     id: string,
     eventId: string,
-    dateRegistered: Date,
-    customerId?: string,
+    customerId: string,
+    dateRegistered?: Date,
 }

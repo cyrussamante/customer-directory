@@ -64,3 +64,8 @@
     font-weight: bold;
     color: #333;
 }
+
+.registrationStatus {
+    color: green;
+    font-weight: bold;
+}
