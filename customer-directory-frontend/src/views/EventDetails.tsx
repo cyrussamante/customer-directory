@@ -11,6 +11,7 @@ import { editEvent, removeEvent } from '../api/eventsAPI';
 import { addRegistration, deleteEvent, deleteRegistration, updateEvent } from '../redux/actions';
 import { createRegistration, removeRegistration } from '../api/registrationsAPI';
 import { RegisterCustomerModal } from '../components/RegisterCustomerModal';
+import { handleExportToICS } from '../helpers/function';
 
 export default function EventDetails() {
     const { id } = useParams();
@@ -58,7 +59,7 @@ export default function EventDetails() {
         setEditModal(false);
     }
 
-    const handleRegisterEventClick =  async () => {
+    const handleRegisterEventClick = async () => {
         const registration = {
             eventId: event.id,
             customerId: state.user.id,
@@ -133,7 +134,7 @@ export default function EventDetails() {
                     </div>
                     <div className="eventDetailsBody">
                         <div className="eventImageContainer">
-                           <img className="eventImage" src={event?.bannerImage ? event.bannerImage : "/images/default-event.png"} alt={event?.title} />
+                            <img className="eventImage" src={event?.bannerImage ? event.bannerImage : "/images/default-event.png"} alt={event?.title} />
                         </div>
                         <div className="eventDetailsGrid">
                             <p className="classifier">Event Title </p> <p>{event.title}</p>
@@ -149,7 +150,10 @@ export default function EventDetails() {
                                 {!isRegistered ? (
                                     <button onClick={handleRegisterEventClick} >Register Event</button>
                                 ) : (
-                                    <button className="delete" onClick={handleUnRegisterEventClick} >Unregister Event</button>
+                                    <div className="registeredActions">
+                                        <button className="delete" onClick={handleUnRegisterEventClick} >Unregister Event</button>
+                                        <button onClick={() => handleExportToICS(event)} >Export to ICS</button>
+                                    </div>
                                 )}
                             </div>
                         )}
