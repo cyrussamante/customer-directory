@@ -20,7 +20,7 @@ export default function Navbar() {
 
     return (
         <nav className="navbar">
-            <h2>Client Atlas</h2>
+            <h2 className="logo">managR</h2>
             <div className="options">
                 <Link to="/events">Events</Link>
 

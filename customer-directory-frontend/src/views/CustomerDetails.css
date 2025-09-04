@@ -1,5 +1,4 @@
 .customerDetails {
-    margin-top: 3em;
     padding: 40px;
     border: 1px solid #ddd;
     border-radius: 8px;
@@ -64,9 +63,10 @@
 }
 
 .detailsPage {
-    margin: 2vw 1em;
-    display: grid;
+    margin: 210vw 1em;
+    display: flex;
     grid-template-columns: 1fr 1fr;
+    flex-wrap: wrap;
     gap: 10px;
     justify-items: center;
     padding-bottom: 2em;
