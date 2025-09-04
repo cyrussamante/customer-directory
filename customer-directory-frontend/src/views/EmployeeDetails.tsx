@@ -6,7 +6,7 @@ import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState } from '../redux/store';
-import { editUser, removeUser } from '../api/accountAPI';
+import { editUser, removeUser } from '../api/usersAPI';
 import { deleteEmployee, updateEmployee } from '../redux/actions';
 import EmployeeModal from '../components/EmployeeModal';
 

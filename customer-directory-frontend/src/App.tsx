@@ -25,28 +25,27 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
   const location = useLocation();
 
-
   useEffect(() => {
-    async function fetchData() {
-      try {
-        const userInfo = await getUserInfo();
-        const user = userInfo.data;
+    if (location.pathname !== "/login" && location.pathname !== "/register" && location.pathname !== "/") {
+      getUserInfo().then(async (response) => {
+        const user = response.data;
         if (user) {
           dispatch(setLogin(user));
           await configureHomePage(user, dispatch);
-
           if (location.pathname === "/" || location.pathname === "/login" || location.pathname === "/register") {
             navigate("/events", { replace: true });
           }
+          setIsLoading(false);
         }
-      } catch (error) {
-        console.error("Error fetching user info:", error);
-      } finally {
+      }).catch((error) => {
+        if (error.response && error.response.status === 401) {
+          navigate("/login", { replace: true });
+        }
         setIsLoading(false);
-      }
+      });
+    } else {
+      setIsLoading(false);
     }
-
-    fetchData();
   }, []);
 
   if (isLoading) {
