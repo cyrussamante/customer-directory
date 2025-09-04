@@ -62,6 +62,7 @@ export default function EventDetails() {
         const registration = {
             eventId: event.id,
             customerId: state.user.id,
+            dateRegistered: new Date().toISOString()
         };
         const response = await createRegistration(registration);
         if (response.status !== 200) {
@@ -85,7 +86,8 @@ export default function EventDetails() {
         for (const customerId of customerIds) {
             const registration = {
                 eventId: event.id,
-                customerId,     
+                customerId,
+                dateRegistered: new Date().toISOString()
             };
             const response = await createRegistration(registration);
             if (response.status !== 200) {
