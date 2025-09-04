@@ -10,7 +10,7 @@ interface Props {
 
 export default function RegisteredEvents({ customerId }: Props) {
     const state = useSelector((state: RootState) => state.app);
-    const events = state.events; 
+    const events = state.events;
     const filteredRegistrations = state.registrations.filter((registration: Registration) => {
         if (state.user.role === 'CUSTOMER') {
             return registration.customerId === state.user.id;
@@ -35,7 +35,7 @@ export default function RegisteredEvents({ customerId }: Props) {
                             </div>
                         </div>
                     ))}
-                    {filteredRegistrations.length === 0 && <span className="noResults">No active registrations found</span>}
+                {filteredRegistrations.length === 0 && <span className="noResults">No active registrations found</span>}
             </div>
         </div>
     )

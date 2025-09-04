@@ -23,7 +23,7 @@ export default function EventDetails() {
     const event = events.find((event: Event) => event.id === id);
     const userRole = state.user.role;
     const registrations = state.registrations;
-    const isRegistered = registrations.some((registration: Registration) => registration.eventId === id);
+    const currentRegistration = registrations.find((registration: Registration) => registration.eventId === id);
     const dispatch = useDispatch();
 
     const handleDeleteClick = () => setDeleteModal(true);
@@ -62,6 +62,7 @@ export default function EventDetails() {
         const registration = {
             eventId: event.id,
             customerId: state.user.id,
+            dateRegistered: new Date().toISOString()
         };
         const response = await createRegistration(registration);
         if (response.status !== 200) {
@@ -82,11 +83,11 @@ export default function EventDetails() {
     }
 
     const handleRegisterCustomers = async (customerIds: string[]) => {
-        //TODO: add an api to add multiple registrations at a time
         for (const customerId of customerIds) {
             const registration = {
                 eventId: event.id,
                 customerId,
+                dateRegistered: new Date().toISOString()
             };
             const response = await createRegistration(registration);
             if (response.status !== 200) {
@@ -146,10 +147,14 @@ export default function EventDetails() {
                         </div>
                         {userRole === 'CUSTOMER' && (
                             <div className="eventDetailsActions">
-                                {!isRegistered ? (
+                                {!currentRegistration ? (
                                     <button onClick={handleRegisterEventClick} >Register Event</button>
+
                                 ) : (
-                                    <button className="delete" onClick={handleUnRegisterEventClick} >Unregister Event</button>
+                                    <div>
+                                        <p className="registrationStatus"> ✔ You registered for this event on {new Date(currentRegistration.dateRegistered).toLocaleString()}</p>
+                                        <button className="delete" onClick={handleUnRegisterEventClick} >Unregister Event</button>
+                                    </div>
                                 )}
                             </div>
                         )}

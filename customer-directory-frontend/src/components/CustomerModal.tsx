@@ -20,7 +20,7 @@ export default function Modal({ mode, customer, onClose, onSave }: Props) {
         password: "",
         address: "",
         numberOfOrders: "",
-        imageUrl: "",
+        imageUrl: "/images/default-profile.png",
         role: "CUSTOMER"
     };
 
@@ -114,7 +114,7 @@ export default function Modal({ mode, customer, onClose, onSave }: Props) {
     return (
         <dialog className="modal" ref={dialogRef} onClose={onClose}>
             <h2 className="modalHeading">
-                {mode === 'add' ? 'Add a new customer' : 'Edit customer details'}
+                {mode === 'add' ? 'Add a new customer' : 'Edit details'}
             </h2>
             <form className="modalForm">
                 <div className="modalGrid">
@@ -186,7 +186,10 @@ export default function Modal({ mode, customer, onClose, onSave }: Props) {
                         required
                     />
                     <label>Image</label>
-                    <input className="modalInput" type="file" accept="image/*" onChange={handleImageChange} />
+                    <input className="modalInput bannerImg" 
+                    type="file" 
+                    accept="image/*" 
+                    onChange={handleImageChange} />
                     {imageFile && imagePreview && (
                         <img className="profileImagePreview" src={imagePreview} alt="Preview" />
                     )}

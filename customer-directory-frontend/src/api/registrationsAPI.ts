@@ -15,17 +15,17 @@ export const createRegistration = (data: any): Promise<any> =>
         withCredentials: true
     });
 
-export const editRegistration = (id: string, data: Registration): Promise<any> =>
-    axios.put(`/api/registrations/${id}`,
-        JSON.stringify(data), {
-        headers: { 
-            'Content-Type': 'application/json',
-        },
-        withCredentials: true
-        
-    });
-
 export const removeRegistration = (id: string): Promise<any> => 
     axios.delete(`/api/registrations/${id}`, {
+        withCredentials: true
+    });
+
+export const getRegistrationsByEventId = (eventId: string) =>
+    axios.get<Registration[]>(`/api/registrations/${eventId}`, {
+        withCredentials: true
+    });
+
+export const getRegistrationsByCustomerId = (customerId: string) =>
+    axios.get<Registration[]>(`/api/registrations/${customerId}`, {
         withCredentials: true
     });

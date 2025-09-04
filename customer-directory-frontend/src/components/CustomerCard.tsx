@@ -2,9 +2,6 @@ import { type ReactElement } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Card.css";
 import type { Customer } from '../types/appState';
-import { useSelector } from "react-redux";
-import type { RootState } from "../redux/store";
-
 
 interface props {
     customer: Customer,

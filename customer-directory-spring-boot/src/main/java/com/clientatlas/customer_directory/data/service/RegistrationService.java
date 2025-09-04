@@ -19,11 +19,6 @@ public class RegistrationService {
         return registrationRepository.findAll();
     }
 
-    public Registration getRegistrationById(UUID id) {
-        return registrationRepository.findById(id)
-        .orElse(null);
-    }
-
     public Registration createRegistration(Registration registration) {
          return registrationRepository.save(registration);
     }
@@ -32,23 +27,18 @@ public class RegistrationService {
         registrationRepository.deleteById(id);
     }
 
-    public Registration updateRegistration(UUID id, Registration updatedRegistration) {
-        Registration existingRegistration = registrationRepository.findById(id).orElse(null);
-        if (existingRegistration != null) {
-                existingRegistration.setEventId(updatedRegistration.getEventId());
-                existingRegistration.setCustomerId(updatedRegistration.getCustomerId());
-                existingRegistration.setDateRegistered(updatedRegistration.getDateRegistered());
-                return registrationRepository.save(existingRegistration);
-        }
-        return null;
+    //might not need
+    public Registration getRegistrationById(UUID id) {
+        return registrationRepository.findById(id)
+        .orElse(null);
     }
 
-    public List<Object[]> getRegistrationsGroupedByEvent() {
-        return registrationRepository.countRegistrationsGroupedByEvent();
+    public List<Registration> getAllRegistrationsForEvent(UUID eventId) {
+        return registrationRepository.findAllByEventId(eventId);
     }
 
-    public List<Object[]> getRegistrationsGroupedByCustomer() {
-        return registrationRepository.countRegistrationsGroupedByCustomer();
+    public List<Registration> getAllRegistrationsByCustomer(UUID customerId) {
+        return registrationRepository.findAllByCustomerId(customerId);
     }
 
 }
