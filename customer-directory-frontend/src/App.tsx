@@ -26,22 +26,26 @@ function App() {
   const location = useLocation();
 
   useEffect(() => {
-    getUserInfo().then(async (response) => {
-      const user = response.data;
-      if (user) {
-        dispatch(setLogin(user));
-        await configureHomePage(user, dispatch);
-        if (location.pathname === "/" || location.pathname === "/login" || location.pathname === "/register") {
-          navigate("/events", { replace: true });
+    if (location.pathname !== "/login" && location.pathname !== "/register" && location.pathname !== "/") {
+      getUserInfo().then(async (response) => {
+        const user = response.data;
+        if (user) {
+          dispatch(setLogin(user));
+          await configureHomePage(user, dispatch);
+          if (location.pathname === "/" || location.pathname === "/login" || location.pathname === "/register") {
+            navigate("/events", { replace: true });
+          }
+          setIsLoading(false);
+        }
+      }).catch((error) => {
+        if (error.response && error.response.status === 401) {
+          navigate("/login", { replace: true });
         }
         setIsLoading(false);
-      }
-    }).catch((error) => {
-      if (error.response && error.response.status === 401) {
-        navigate("/login", { replace: true });
-      }
+      });
+    } else {
       setIsLoading(false);
-    });
+    }
   }, []);
 
   if (isLoading) {
