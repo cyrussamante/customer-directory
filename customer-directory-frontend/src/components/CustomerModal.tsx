@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { uploadImage } from '../api/imagesAPI';
 import "./Modal.css";
+import { VITE_API_URL } from "../helpers/api";
 
 interface Props {
     mode: 'add' | 'edit';
@@ -20,11 +21,12 @@ export default function Modal({ mode, customer, onClose, onSave }: Props) {
         password: "",
         address: "",
         numberOfOrders: "",
-        imageUrl: "",
+        imageUrl: "/images/default-profile.png",
         role: "CUSTOMER"
     };
 
-    const [formData, setFormData] = useState(mode === 'edit' ? customer : initialFormData);
+    const [formData, setFormData] = useState(mode === 'edit' ? { ...customer, password: '' } : initialFormData);
+
     const [imagePreview, setImagePreview] = useState<string>("");
     const [imageFile, setImageFile] = useState<File | null>(null);
     const navigate = useNavigate();
@@ -71,10 +73,20 @@ export default function Modal({ mode, customer, onClose, onSave }: Props) {
                 return;
             }
         }
-        const payload = {
+
+        const payload: {
+            name: string;
+            email: string;
+            role: string;
+            dateOfBirth: string;
+            password?: string;
+            gender: string;
+            address: string;
+            numberOfOrders: number;
+            imageUrl: string;
+        } = {
             name: formData.name.trim(),
             email: formData.email.trim(),
-            password: formData.password,
             role: 'CUSTOMER',
             dateOfBirth: formData.dateOfBirth,
             gender: formData.gender.trim(),
@@ -82,12 +94,21 @@ export default function Modal({ mode, customer, onClose, onSave }: Props) {
             numberOfOrders: Number(formData.numberOfOrders),
             imageUrl: imageUrl
         };
+
+        if (formData.password && formData.password.trim() !== "") {
+            payload.password = formData.password;
+        }
+
         const isAnyFieldEmpty = Object.values(payload).some(value => value === '');
         if (isAnyFieldEmpty) {
             alert('Please fill in all fields');
             return;
         }
         if (mode === 'add') {
+            if (!formData.password || formData.password.trim() === "") {
+                alert('Password is required for new customers');
+                return;
+            }
             try {
                 onSave(payload);
             } catch (err: any) {
@@ -186,10 +207,10 @@ export default function Modal({ mode, customer, onClose, onSave }: Props) {
                         required
                     />
                     <label>Image</label>
-                    <input className="modalInput bannerImg" 
-                    type="file" 
-                    accept="image/*" 
-                    onChange={handleImageChange} />
+                    <input className="modalInput bannerImg"
+                        type="file"
+                        accept="image/*"
+                        onChange={handleImageChange} />
                     {imageFile && imagePreview && (
                         <img className="profileImagePreview" src={imagePreview} alt="Preview" />
                     )}
