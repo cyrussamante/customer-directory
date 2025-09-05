@@ -1,7 +1,7 @@
 import type { Event } from '../types/appState';
 import EventsCard from '../components/EventsCard';
 import { useState } from "react";
-import "./EventsList.css";
+import "./List.css";
 import EventModal from '../components/EventModal';
 import ListIcon from '@mui/icons-material/List';
 import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied';

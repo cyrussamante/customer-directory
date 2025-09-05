@@ -1,16 +1,16 @@
-.customers, .employees {
+.customers, .employees, .events{
     padding: 2vw 5vw;
     box-sizing: border-box;
     width: 100%;
 }
 
 @media (max-width: 768px) {
-    .customers, .employees {
+    .customers, .employees, .events{
         width: auto;
     }
 }
 
-.customersHeader, .employeesHeader {
+.customersHeader, .employeesHeader, .eventsHeader {
     display: flex;
     align-items: center;
     color: #333;
@@ -60,7 +60,7 @@
     flex-wrap: wrap;
 }
 
-.noCustomers, .noEmployees {
+.noCustomers, .noEmployees, .noEvents {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -73,7 +73,7 @@
     flex-wrap: wrap;
 }
 
-.customerGrid, .employeeGrid {
+.customerGrid, .employeeGrid, .eventsGrid {
     margin: 2vw 1em;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
