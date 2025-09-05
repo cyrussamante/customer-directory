@@ -19,9 +19,15 @@ jobs:
           java-version: "21"
           distribution: "temurin"
 
-      - name: Build Spring Boot JAR
+      - name: Create RSA key files
         run: |
           cd customer-directory-spring-boot
+          mkdir -p src/main/resources/keys
+          echo -e "${{ secrets.RSA_PRIVATE_KEY }}" > src/main/resources/keys/private.pem
+          echo -e "${{ secrets.RSA_PUBLIC_KEY }}" > src/main/resources/keys/public.pem
+
+      - name: Build Spring Boot JAR
+        run: |
           ./gradlew clean build -x test
           mkdir -p deploy
           cp build/libs/customer-directory-0.0.1-SNAPSHOT.jar deploy/application.jar
