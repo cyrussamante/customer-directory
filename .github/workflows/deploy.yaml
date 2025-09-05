@@ -16,13 +16,14 @@ jobs:
       - name: Set up JDK 21
         uses: actions/setup-java@v3
         with:
-          java-version: '21'
-          distribution: 'temurin'
+          java-version: "21"
+          distribution: "temurin"
 
       - name: Build Spring Boot JAR
         run: |
           cd customer-directory-spring-boot
           ./gradlew clean build -x test
+          ls -lh build/libs/
           mkdir -p deploy
           cp build/libs/*.jar deploy/application.jar
           cd deploy
@@ -45,7 +46,7 @@ jobs:
             --application-name ${{ secrets.EB_APP_NAME }} \
             --version-label github-${{ github.sha }} \
             --source-bundle S3Bucket=${{ secrets.S3_BUCKET }},S3Key=app-${{ github.sha }}.zip || echo "Version exists"
-          
+
           aws elasticbeanstalk update-environment \
             --environment-name ${{ secrets.EB_ENV_NAME }} \
             --version-label github-${{ github.sha }}
