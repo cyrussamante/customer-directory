@@ -73,12 +73,22 @@
     flex-wrap: wrap;
 }
 
+
+
 .customerGrid, .employeeGrid, .eventsGrid {
     margin: 2vw 1em;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 50px;
     min-height: 500px;
     justify-items: center;
     padding-bottom: 2em;
+}
+
+.customerGrid, .employeeGrid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 50px;
+}
+
+.eventsGrid {
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 40px;
 }
