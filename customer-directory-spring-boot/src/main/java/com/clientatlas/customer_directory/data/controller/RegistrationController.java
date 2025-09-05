@@ -2,7 +2,6 @@ package com.clientatlas.customer_directory.data.controller;
 
 import com.clientatlas.customer_directory.data.service.RegistrationService;
 import com.clientatlas.customer_directory.domain.registration.Registration;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
