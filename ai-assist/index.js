@@ -5,7 +5,17 @@ import { generateEvent } from './controllers/eventController.js';
 
 dotenv.config();
 const app = express();
-app.use(cors());
+
+const corsOptions = {
+    origin: [
+        process.env.FRONTEND_URL,
+        process.env.LOCAL_URL,
+        process.env.RENDER_URL
+    ],
+    methods: ['GET', 'POST'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+};
+app.use(cors(corsOptions));
 app.use(express.json());
 
 app.get('/', (req, res) => {res.send('Welcome to the AI Event Generator!');});
