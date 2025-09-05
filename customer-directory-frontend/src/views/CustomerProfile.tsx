@@ -25,9 +25,7 @@ export default function CustomerProfile() {
     const handleCloseEditModal = () => setEditModal(false);
 
     const handleEditUser = async (updatedCustomer: Customer) => {
-        console.log(updatedCustomer)
         const response = await editCustomer(updatedCustomer.id, updatedCustomer);
-        console.log(response)
         if (response.status < 200 || response.status >= 300) {
             throw new Error('Failed to update customer');
         }

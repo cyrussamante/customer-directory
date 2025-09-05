@@ -18,7 +18,7 @@ export default function Modal({ mode, employee, onClose, onSave }: Props) {
         role: "EMPLOYEE",
     };
 
-    const [formData, setFormData] = useState(mode === 'edit' ? employee : initialFormData);
+    const [formData, setFormData] = useState(mode === 'edit' ? { ...employee, password: '' } : initialFormData);
     const navigate = useNavigate();
     const dialogRef = useRef<HTMLDialogElement>(null);
 
@@ -39,18 +39,28 @@ export default function Modal({ mode, employee, onClose, onSave }: Props) {
     const handleSubmit = async (e: any) => {
         e.preventDefault();
 
-        const payload = {
+
+        const payload: { name: string; email: string; role: string; password?: string } = {
             name: formData.name.trim(),
             email: formData.email.trim(),
-            password: formData.password,
             role: formData.role,
         };
+
+        if (formData.password && formData.password.trim() !== "") {
+            payload.password = formData.password;
+        }
+
         const isAnyFieldEmpty = Object.values(payload).some(value => value === '');
         if (isAnyFieldEmpty) {
             alert('Please fill in all fields');
             return;
         }
+
         if (mode === 'add') {
+            if (!formData.password || formData.password.trim() === "") {
+                alert('Password is required for new employees');
+                return;
+            }
             try {
                 onSave(payload);
             } catch (err: any) {
@@ -108,7 +118,7 @@ export default function Modal({ mode, employee, onClose, onSave }: Props) {
                         onChange={handleChange}
                         required
                     />
-                                        <label>Role</label>
+                    <label>Role</label>
                     <select className="modalInput"
                         name="role"
                         value={formData.role}
