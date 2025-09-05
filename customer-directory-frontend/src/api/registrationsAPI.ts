@@ -22,11 +22,11 @@ export const removeRegistration = (id: string): Promise<any> =>
     });
 
 export const getRegistrationsByEventId = (eventId: string) =>
-    axios.get<Registration[]>(`${VITE_API_URL}/api/registrations/${eventId}`, {
+    axios.get<Registration[]>(`${VITE_API_URL}/api/registrations/event/${eventId}`, {
         withCredentials: true
     });
 
 export const getRegistrationsByCustomerId = (customerId: string) =>
-    axios.get<Registration[]>(`${VITE_API_URL}/api/registrations/${customerId}`, {
+    axios.get<Registration[]>(`${VITE_API_URL}/api/registrations/customer/${customerId}`, {
         withCredentials: true
     });
