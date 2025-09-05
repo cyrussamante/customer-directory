@@ -23,9 +23,8 @@ jobs:
         run: |
           cd customer-directory-spring-boot
           ./gradlew clean build -x test
-          ls -lh build/libs/
           mkdir -p deploy
-          cp build/libs/*.jar deploy/application.jar
+          cp build/libs/*.jar deploy/
           cd deploy
           zip app.zip application.jar
 
