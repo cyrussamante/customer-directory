@@ -3,6 +3,7 @@ package com.clientatlas.customer_directory.data.service;
 import com.clientatlas.customer_directory.domain.registration.Registration;
 import com.clientatlas.customer_directory.repository.RegistrationRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import java.util.UUID;
 import java.util.List;
 
@@ -27,18 +28,13 @@ public class RegistrationService {
         registrationRepository.deleteById(id);
     }
 
-    //might not need
-    public Registration getRegistrationById(UUID id) {
-        return registrationRepository.findById(id)
-        .orElse(null);
+    public List<Registration> createBulkRegistrations(List<Registration> registrations) {
+        return registrationRepository.saveAll(registrations);
     }
 
-    public List<Registration> getAllRegistrationsForEvent(UUID eventId) {
-        return registrationRepository.findAllByEventId(eventId);
-    }
-
-    public List<Registration> getAllRegistrationsByCustomer(UUID customerId) {
-        return registrationRepository.findAllByCustomerId(customerId);
+    @Transactional
+    public void removeBulkRegistrations(List<UUID> registrationIds) {
+        registrationRepository.deleteAllByIdIn(registrationIds);
     }
 
 }

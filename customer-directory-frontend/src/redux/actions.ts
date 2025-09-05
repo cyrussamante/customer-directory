@@ -23,6 +23,8 @@ export const SET_REGISTRATIONS = "SET_REGISTRATIONS";
 export const ADD_REGISTRATION = "ADD_REGISTRATION";
 export const UPDATE_REGISTRATION = "UPDATE_REGISTRATION";
 export const DELETE_REGISTRATION = "DELETE_REGISTRATION";
+export const ADD_BULK_REGISTRATION = "ADD_BULK_REGISTRATION";
+export const REMOVE_BULK_REGISTRATION = "REMOVE_BULK_REGISTRATION";
 
 export const setLogin = (user: User) => ({
   type: LOGIN,
@@ -116,4 +118,14 @@ export const updateRegistration = (registration: Registration) => ({
 export const deleteRegistration = (registrationId: string) => ({
   type: DELETE_REGISTRATION,
   payload: { registrationId },
+});
+
+export const addBulkRegistration = (registrations: Registration[]) => ({
+  type: ADD_BULK_REGISTRATION,
+  payload: { registrations },
+});
+
+export const removeBulkRegistration = (registrationIds: string[]) => ({
+  type: REMOVE_BULK_REGISTRATION,
+  payload: { registrationIds },
 });

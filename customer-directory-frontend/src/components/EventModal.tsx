@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Modal.css";
 import { uploadImage } from "../api/imagesAPI";
+import { generateEventDetails } from "../api/aiAPI";
 
 interface Props {
     mode: 'add' | 'edit';
@@ -28,6 +29,8 @@ export default function EventModal({ mode, event, onClose, onSave }: Props) {
     const dialogRef = useRef<HTMLDialogElement>(null);
     const [imageFile, setImageFile] = useState<File | null>(null);
     const [imagePreview, setImagePreview] = useState<string>("");
+    const [prompt, setPrompt] = useState("");
+    const [isGenerating, setIsGenerating] = useState(false);
 
     useEffect(() => {
         if (dialogRef.current) {
@@ -110,11 +113,39 @@ export default function EventModal({ mode, event, onClose, onSave }: Props) {
         onClose();
     };
 
+    const handleGenerateWithAI = async () => {
+        if (!prompt.trim()) return;
+        setIsGenerating(true);
+        try {
+            const response = await generateEventDetails(prompt);
+            const eventData = response.data;
+            setFormData({
+                ...eventData,
+                startDateTime: new Date(eventData.startDateTime).toISOString().slice(0, 16),
+                endDateTime: new Date(eventData.endDateTime).toISOString().slice(0, 16),
+                price: eventData.price.toString(),
+                capacity: eventData.capacity.toString()
+            });
+            setPrompt("");
+        } catch (error) {
+            console.error('Failed to generate event:', error);
+            alert('Failed to generate event details. Please try again.');
+        } finally {
+            setIsGenerating(false);
+        }
+    };
+
     return (
         <dialog className="modal" ref={dialogRef} onClose={onClose}>
-            <h2 className="modalHeading">
-                {mode === 'add' ? 'Add a new event' : 'Edit details'}
-            </h2>
+            <h2 className="modalHeading">{mode === 'add' ? 'Add a new event' : 'Edit details'}</h2>
+            {mode === 'add' && (
+                <div className="aiAssist">
+                    <textarea value={prompt} onChange={(e) => setPrompt(e.target.value)} placeholder="Describe the event you want to create..." />
+                    <button onClick={handleGenerateWithAI} disabled={isGenerating || !prompt}>
+                        {isGenerating ? 'Generating...' : 'Generate with AI'}
+                    </button>
+                </div>
+            )}
             <form className="modalForm">
                 <div className="modalGrid">
                     <label>Title</label>
@@ -179,14 +210,13 @@ export default function EventModal({ mode, event, onClose, onSave }: Props) {
                     />
                     <label>Banner Image</label>
                     <input className="modalInput bannerImg"
-                    type="file"
-                    accept="image/*"
-                    onChange={handleImageChange} />
-                     {imageFile && imagePreview && (
+                        type="file"
+                        accept="image/*"
+                        onChange={handleImageChange} />
+                    {imageFile && imagePreview && (
                         <img className="profileImagePreview" src={imagePreview} alt="Preview" />
                     )}
                 </div>
-                
                 <div className="modalButtons">
                     <button className="save" onClick={handleSubmit}>Save</button>
                     <button className="cancel" onClick={handleClose}>Cancel</button>

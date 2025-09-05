@@ -48,6 +48,7 @@ public class SecurityConfig {
             .requestMatchers("/api/users/**").hasRole("ADMIN")
             .requestMatchers("/images/upload").hasAnyRole("ADMIN", "CUSTOMER")
             .requestMatchers("/images/**").permitAll()
+            .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
             .anyRequest().authenticated()
         )
         .userDetailsService(currentUserDetailsService)

@@ -11,5 +11,5 @@ public interface RegistrationRepository extends JpaRepository<Registration, UUID
 
     List<Registration> findAllByEventId(UUID eventId);
     List<Registration> findAllByCustomerId(UUID customerId);
-    
+    void deleteAllByIdIn(List<UUID> registrationIds);
 }

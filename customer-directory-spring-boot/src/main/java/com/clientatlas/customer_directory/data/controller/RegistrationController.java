@@ -4,6 +4,7 @@ import com.clientatlas.customer_directory.data.service.RegistrationService;
 import com.clientatlas.customer_directory.domain.registration.Registration;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @RestController
@@ -31,21 +32,15 @@ public class RegistrationController {
         registrationService.deleteRegistrationById(id);
     }
 
-    //additional registration endpoints
-    
-    @GetMapping("/{id}")
-    public Registration getRegistrationById(@PathVariable UUID id) {
-        return registrationService.getRegistrationById(id);
+    @PostMapping("/bulkAdd")
+    public List<Registration> createBulkRegistrations(@RequestBody List<Registration> registrations) {
+        return registrationService.createBulkRegistrations(registrations);
     }
 
-    @GetMapping("/event/{eventId}")
-    public List<Registration> getRegistrationsByEventId(@PathVariable UUID eventId) {
-        return registrationService.getAllRegistrationsForEvent(eventId);
-    }
-
-    @GetMapping("/customer/{customerId}")
-    public List<Registration> getRegistrationsByCustomerId(@PathVariable UUID customerId) {
-        return registrationService.getAllRegistrationsByCustomer(customerId);
+    @DeleteMapping("/bulkRemove")
+    public void removeBulkRegistrations(@RequestBody Map<String, List<UUID>> body) {
+        List<UUID> ids = body.get("registrationIds");
+        registrationService.removeBulkRegistrations(ids);
     }
 
 }
