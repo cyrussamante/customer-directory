@@ -52,6 +52,7 @@ export default function Register() {
     return (
         <div className="login">
             <div className="loginCard">
+                <h2 className="logo">managR</h2>
                 <h2>Register</h2>
                 <form className="form">
                     <label className="label"> Name</label>
