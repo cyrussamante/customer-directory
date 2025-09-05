@@ -8,8 +8,8 @@ import EventModal from '../components/EventModal';
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState } from '../redux/store';
 import { editEvent, removeEvent } from '../api/eventsAPI';
-import { addRegistration, deleteEvent, deleteRegistration, updateEvent } from '../redux/actions';
-import { createRegistration, removeRegistration } from '../api/registrationsAPI';
+import { addBulkRegistration, addRegistration, deleteEvent, deleteRegistration, removeBulkRegistration, updateEvent } from '../redux/actions';
+import { createRegistration, removeRegistration, createBulkRegistrations, removeBulkRegistrations } from '../api/registrationsAPI';
 import { RegisterCustomerModal } from '../components/RegisterCustomerModal';
 import { handleExportToICS } from '../helpers/function';
 import { VITE_API_URL } from '../helpers/api';
@@ -83,32 +83,29 @@ export default function EventDetails() {
         }
     }
 
-    const handleRegisterCustomers = async (customerIds: string[]) => {
-        for (const customerId of customerIds) {
-            const registration = {
-                eventId: event.id,
-                customerId,
-                dateRegistered: new Date().toISOString()
-            };
-            const response = await createRegistration(registration);
-            if (response.status !== 200) {
-                throw new Error('Failed to register customer');
-            }
-            dispatch(addRegistration(response.data));
+    const handleBulkRegisterCustomers = async (customerIds: string[]) => {
+        const registrations = customerIds.map(customerId => ({
+            eventId: event.id,
+            customerId,
+            dateRegistered: new Date().toISOString()
+        }));
+        const response = await createBulkRegistrations(registrations);
+        if (response.status !== 200) {
+            throw new Error('Failed to register customers');
         }
+        dispatch(addBulkRegistration(response.data));
     }
 
-    const handleUnregisterCustomers = async (customerIds: string[]) => {
-        for (const customerId of customerIds) {
-            const registration = registrations.find((reg: Registration) => reg.eventId === event.id && reg.customerId === customerId);
-            if (registration) {
-                const response = await removeRegistration(registration.id);
-                if (response.status !== 200) {
-                    throw new Error('Failed to unregister customer');
-                }
-                dispatch(deleteRegistration(registration.id));
-            }
+    const handleBulkUnregisterCustomers = async (customerIds: string[]) => {
+        const registrationsToDelete = registrations.filter((registration: Registration) =>
+            registration.eventId === event.id && customerIds.includes(registration.customerId)
+        );
+        const registrationIds = registrationsToDelete.map((reg: Registration) => reg.id);
+        const response = await removeBulkRegistrations(registrationIds);
+        if (response.status !== 200) {
+            throw new Error('Failed to unregister customers');
         }
+        dispatch(removeBulkRegistration(registrationIds));
     }
 
     const handleRegisterCustomerClick = async () => setRegisterCustomerModal(true);
@@ -183,8 +180,8 @@ export default function EventDetails() {
                     {showRegisterCustomerModal && (<RegisterCustomerModal
                         eventId={event.id}
                         onClose={handleCloseRegisterCustomerModal}
-                        onSave={handleRegisterCustomers}
-                        onUnregister={handleUnregisterCustomers}
+                        onSave={handleBulkRegisterCustomers}
+                        onUnregister={handleBulkUnregisterCustomers}
                     />)}
                 </>
             ) : (

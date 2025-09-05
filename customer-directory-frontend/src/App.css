@@ -28,10 +28,6 @@ body {
     flex-direction: column;
 }
 
-main {
-    flex: 1;
-}
-
 .navbar a {
     color: white;
     padding: 8px 20px;
@@ -64,7 +60,6 @@ main {
     }
 }
 
-
 .navbar a:hover {
     background-color: rgba(255, 255, 255, 0.2);
 }
@@ -95,8 +90,6 @@ main {
 footer {
     text-align: center;
     padding: 10px 0;
-    /* bottom: 0; */
-    /* position: fixed; */
     z-index: 100;
     width: 100%;
     margin-top: 10px;
