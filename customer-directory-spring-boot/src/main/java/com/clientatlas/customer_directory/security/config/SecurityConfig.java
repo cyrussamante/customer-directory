@@ -19,9 +19,7 @@ import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.clientatlas.customer_directory.security.jwt.CookieFilter;
 import java.security.interfaces.RSAPublicKey;
 import java.util.List;
 
@@ -57,8 +55,7 @@ public class SecurityConfig {
             resourceServer.jwt(jwt -> jwt
                 .decoder(jwtDecoder())
                 .jwtAuthenticationConverter(jwtAuthenticationConverter())
-            )
-        ).addFilterBefore(new CookieFilter(), UsernamePasswordAuthenticationFilter.class)
+            ))
         .build();
     }
 
