@@ -25,8 +25,6 @@ jobs:
           ./gradlew clean build -x test
           mkdir -p deploy
           cp build/libs/customer-directory-0.0.1-SNAPSHOT.jar deploy/application.jar
-          cd deploy
-          zip app.zip application.jar
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v2
@@ -35,17 +33,18 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
-      - name: Upload to S3
+      - name: Upload JAR to S3
         run: |
-          aws s3 cp customer-directory-spring-boot/deploy/app.zip s3://${{ secrets.S3_BUCKET }}/app-${{ github.sha }}.zip
+          aws s3 cp customer-directory-spring-boot/deploy/application.jar s3://${{ secrets.S3_BUCKET }}/application-${{ github.sha }}.jar
 
       - name: Deploy to Elastic Beanstalk
         run: |
           aws elasticbeanstalk create-application-version \
             --application-name ${{ secrets.EB_APP_NAME }} \
             --version-label github-${{ github.sha }} \
-            --source-bundle S3Bucket=${{ secrets.S3_BUCKET }},S3Key=app-${{ github.sha }}.zip || echo "Version exists"
+            --source-bundle S3Bucket=${{ secrets.S3_BUCKET }},S3Key=application-${{ github.sha }}.jar || echo "Version exists"
 
           aws elasticbeanstalk update-environment \
             --environment-name ${{ secrets.EB_ENV_NAME }} \
             --version-label github-${{ github.sha }}
+
