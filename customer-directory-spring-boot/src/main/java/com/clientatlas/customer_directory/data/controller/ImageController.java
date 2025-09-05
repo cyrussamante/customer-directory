@@ -1,6 +1,7 @@
 package com.clientatlas.customer_directory.data.controller;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,6 +21,9 @@ public class ImageController {
 
     @Value("${file.upload-dir}")
     private String uploadDir;
+
+    @Value("${file.default-dir}")
+    private String defaultDir;
 
     @GetMapping
     public Map<String, String> data() {
@@ -53,12 +57,24 @@ public class ImageController {
     @GetMapping("/{filename}")
     public ResponseEntity<byte[]> getImage(@PathVariable String filename) {
         try {
-            Path filePath = Paths.get(uploadDir).resolve(filename);
-            byte[] imageBytes = Files.readAllBytes(filePath);
-            return ResponseEntity.ok().body(imageBytes);
-        } catch (IOException e) {
+            Path uploadedPath = Paths.get(uploadDir).resolve(filename); // check uploaded paths
+            if (Files.exists(uploadedPath)) {
+                byte[] imageBytes = Files.readAllBytes(uploadedPath);
+                return ResponseEntity.ok().body(imageBytes);
+            }
+
+            ClassPathResource defaultImage = new ClassPathResource("static/images/" + filename);
+            if (defaultImage.exists()) { // check default paths
+                byte[] imageBytes = defaultImage.getInputStream().readAllBytes();
+                return ResponseEntity.ok().body(imageBytes);
+            }
+
             return ResponseEntity.status(404).body(null);
+
+        } catch (IOException e) {
+            return ResponseEntity.status(500).body(null);
         }
     }
+
 
 }
