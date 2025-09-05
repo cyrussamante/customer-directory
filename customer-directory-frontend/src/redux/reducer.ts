@@ -85,8 +85,6 @@ const appReducer = (state = initialState, action: any) => {
             };
 
         case UPDATE_EMPLOYEE:
-            console.log(action.payload.employee)
-            console.log(state.users);
             return {
                 ...state,
                 users: state.users.map(employee =>

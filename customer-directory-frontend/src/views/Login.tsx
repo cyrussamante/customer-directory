@@ -41,6 +41,7 @@ export default function Login() {
   return (
     <div className="login">
       <div className="loginCard">
+        <h2 className="logo">managR</h2>
         <h2>Login</h2>
         <form className="form">
           <label className="label"> Email Address</label>

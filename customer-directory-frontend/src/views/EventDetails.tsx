@@ -36,8 +36,6 @@ export default function EventDetails() {
     const handleDeleteEvent = async (e: any) => {
         e.preventDefault()
         if (event) {
-            console.log(event)
-            console.log(event.id)
             const response = await removeEvent(event.id);
             if (response.status !== 200) {
                 throw new Error('Failed to delete event');

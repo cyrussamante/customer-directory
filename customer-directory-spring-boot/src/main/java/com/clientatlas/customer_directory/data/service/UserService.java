@@ -68,9 +68,14 @@ public class UserService {
         if (existingUser != null) {
             existingUser.setName(updatedUser.getName());
             existingUser.setEmail(updatedUser.getEmail());
-            existingUser.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
+
+            String newPassword = updatedUser.getPassword();
+            if (newPassword != null && !newPassword.isBlank() && !passwordEncoder.matches(newPassword, existingUser.getPassword())) {
+                existingUser.setPassword(passwordEncoder.encode(newPassword));
+            }
+
             existingUser.setRole(updatedUser.getRole());
-            return userRepository.save(updatedUser);
+            return userRepository.save(existingUser);
         }
         return null;
     }

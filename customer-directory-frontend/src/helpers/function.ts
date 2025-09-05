@@ -52,3 +52,9 @@ export const handleExportToICS = (event : Event) => {
             URL.revokeObjectURL(url);
         });
     }
+
+export function authHeader() {
+    const token = localStorage.getItem('token');
+    console.log(token);
+    return token ? { Authorization: `Bearer ${token}` } : {};
+}

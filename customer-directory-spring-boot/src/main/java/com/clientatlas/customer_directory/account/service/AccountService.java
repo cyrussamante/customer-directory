@@ -63,18 +63,6 @@ public class AccountService {
         return userRepository.save(newUser);
     }
 
-    public ResponseEntity<Void> logout(HttpServletResponse response) {
-        ResponseCookie cookie = ResponseCookie.from("token", "")
-                .httpOnly(true)
-                .secure(true)
-                .path("/")
-                .maxAge(0)
-                .sameSite("Lax")
-                .build();
-        response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
-        return ResponseEntity.ok().build();
-    }
-
     public ResponseEntity<User> getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 

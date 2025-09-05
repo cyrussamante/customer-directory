@@ -11,11 +11,13 @@ export default function Navbar() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const handleLogout = () => {
-        logout().finally(() => {
+    const handleLogout = async () => {
+        try {
+            await logout();
+        } finally {
             dispatch(setLogout());
             navigate('/');
-        });
+        }
     };
 
     return (
