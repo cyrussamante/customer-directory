@@ -1,0 +1,57 @@
+name: Deploy Backend to AWS
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v3
+        with:
+          java-version: "21"
+          distribution: "temurin"
+
+      - name: Create RSA key files
+        run: |
+          cd customer-directory-spring-boot
+          mkdir -p src/main/resources/keys
+          echo -e "${{ secrets.RSA_PRIVATE_KEY }}" > src/main/resources/keys/private.pem
+          echo -e "${{ secrets.RSA_PUBLIC_KEY }}" > src/main/resources/keys/public.pem
+
+      - name: Build Spring Boot JAR
+        run: |
+          cd customer-directory-spring-boot
+          ./gradlew clean build -x test
+          mkdir -p deploy
+          cp build/libs/customer-directory-0.0.1-SNAPSHOT.jar deploy/application.jar
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Upload JAR to S3
+        run: |
+          aws s3 cp customer-directory-spring-boot/deploy/application.jar s3://${{ secrets.S3_BUCKET }}/application-${{ github.sha }}.jar
+
+      - name: Deploy to Elastic Beanstalk
+        run: |
+          aws elasticbeanstalk create-application-version \
+            --application-name ${{ secrets.EB_APP_NAME }} \
+            --version-label github-${{ github.sha }} \
+            --source-bundle S3Bucket=${{ secrets.S3_BUCKET }},S3Key=application-${{ github.sha }}.jar || echo "Version exists"
+
+          aws elasticbeanstalk update-environment \
+            --environment-name ${{ secrets.EB_ENV_NAME }} \
+            --version-label github-${{ github.sha }}
+
