@@ -18,7 +18,9 @@ import {
     UPDATE_EVENT,
     UPDATE_REGISTRATION,
     UPDATE_EMPLOYEE,
-    SET_USER
+    SET_USER,
+    ADD_BULK_REGISTRATION,
+    REMOVE_BULK_REGISTRATION
 } from "./actions";
 
 const initialState: AppState = {
@@ -165,6 +167,20 @@ const appReducer = (state = initialState, action: any) => {
                 ...state,
                 registrations: (state.registrations || []).filter(
                     registration => registration.id !== action.payload.registrationId
+                ),
+            };
+
+        case ADD_BULK_REGISTRATION:
+            return {
+                ...state,
+                registrations: [...(state.registrations || []), ...action.payload.registrations],
+            };
+
+        case REMOVE_BULK_REGISTRATION:
+            return {
+                ...state,
+                registrations: (state.registrations || []).filter(
+                    registration => !action.payload.registrationIds.includes(registration.id)
                 ),
             };
 
