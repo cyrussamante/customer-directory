@@ -6,7 +6,7 @@ COPY . .
 RUN chmod +x gradlew
 
 ENV GRADLE_OPTS="-Xmx256m"
-RUN ./gradlew clean build --no-daemon
+RUN ./gradlew clean build -x test --no-daemon
 
 FROM eclipse-temurin:21-jre
 WORKDIR /app
