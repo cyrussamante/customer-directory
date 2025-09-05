@@ -2,7 +2,6 @@ import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { uploadImage } from '../api/imagesAPI';
 import "./Modal.css";
-import { VITE_API_URL } from "../helpers/api";
 
 interface Props {
     mode: 'add' | 'edit';
