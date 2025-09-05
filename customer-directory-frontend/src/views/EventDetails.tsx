@@ -167,7 +167,7 @@ export default function EventDetails() {
                         )}
                         {userRole === 'ADMIN' && (
                             <div className="eventDetailsActions">
-                                <button onClick={handleRegisterCustomerClick} >Register Customers</button>
+                                <button onClick={handleRegisterCustomerClick} >Manage Registrations</button>
                             </div>
                         )}
                     </div>

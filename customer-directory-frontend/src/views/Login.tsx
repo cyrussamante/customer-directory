@@ -65,7 +65,7 @@ export default function Login() {
           />
           <button onClick={handleSubmit}>Log In</button>
         </form>
-        <Link to="/register">Donot have an account? Sign Up!</Link>
+        <Link to="/register">Don't have an account? Sign Up!</Link>
       </div>
     </div>
   );
