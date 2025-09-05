@@ -1,5 +1,7 @@
+
 import axios from 'axios';
 import { VITE_API_URL } from '../helpers/api';
+import { authHeader } from '../helpers/function';
 
 export const uploadImage = (imageFile: File): Promise<any> => {
     const formData = new FormData();
@@ -7,9 +9,9 @@ export const uploadImage = (imageFile: File): Promise<any> => {
 
     return axios.post(`${VITE_API_URL}/images/upload`, formData, {
         headers: {
-            'Content-Type': 'multipart/form-data'
-        },
-        withCredentials: true
+            'Content-Type': 'multipart/form-data',
+            ...authHeader()
+        }
     });
 };
 
