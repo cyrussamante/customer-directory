@@ -25,6 +25,7 @@ jobs:
           ./gradlew clean build -x test
           mkdir -p deploy
           cp build/libs/*.jar deploy/application.jar
+          cd deploy
           zip app.zip application.jar
 
       - name: Configure AWS credentials
