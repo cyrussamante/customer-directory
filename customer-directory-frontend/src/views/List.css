@@ -4,12 +4,6 @@
     width: 100%;
 }
 
-@media (max-width: 768px) {
-    .customers, .employees, .events{
-        width: auto;
-    }
-}
-
 .customersHeader, .employeesHeader, .eventsHeader {
     display: flex;
     align-items: center;
@@ -25,14 +19,6 @@
     gap: 2vw;
     padding-top: 2vw;
     justify-content: space-between;
-}
-
-.searchLabels {
-    display: flex;
-    justify-content: flex-end;
-    color: grey;
-    flex: 1 1 100px;
-    flex-wrap: wrap;
 }
 
 .searchInput {
@@ -71,9 +57,8 @@
     gap: 1em;
     min-height: 400px;
     flex-wrap: wrap;
+    margin-top: 2em;
 }
-
-
 
 .customerGrid, .employeeGrid, .eventsGrid {
     margin: 2vw 1em;
@@ -84,11 +69,34 @@
 }
 
 .customerGrid, .employeeGrid {
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 50px;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 40px;
 }
 
 .eventsGrid {
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 50px;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 40px;
+}
+
+@media (max-width: 768px) {
+    .customers, .employees, .events{
+        width: auto;
+    }
+
+    .customersHeader, .employeesHeader, .eventsHeader {
+        gap: 0.5em;
+    }
+
+    .noCustomers, .noEmployees, .noEvents{
+        display: block;   
+    }
+
+    .search {
+        justify-content: center;
+    }
+
+    .eventsGrid {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 40px;
+    }
 }

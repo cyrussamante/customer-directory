@@ -42,7 +42,7 @@ export default function EventsList() {
         <div className="events">
             <div className="eventsHeader">
                 <ListIcon />
-                <h2>Events</h2>
+                <h2>Events List</h2>
             </div>
             <div className="search">
                 <input

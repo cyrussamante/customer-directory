@@ -57,3 +57,9 @@
     display: flex;
     justify-content: center;
 }
+
+@media (max-width: 768px) {
+    .eventCard {
+        min-width: 300px;
+    }
+}
