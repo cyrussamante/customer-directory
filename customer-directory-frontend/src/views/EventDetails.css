@@ -76,7 +76,6 @@
 }
 
 @media (max-width: 768px) {
-
     .eventDetails {
         padding: 5px;
     }
@@ -85,4 +84,18 @@
         grid-template-columns: 1fr;
         gap: 2px;
     }
+}
+
+.eventDescription {
+    text-align: justify;
+}
+
+.eventParagraph {
+    margin-bottom: 1.2rem;
+    color: #333;
+    font-size: 1rem;
+}
+
+.eventParagraph:last-child {
+    margin-bottom: 0;
 }

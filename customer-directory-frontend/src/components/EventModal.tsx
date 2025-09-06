@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Modal.css";
 import { uploadImage } from "../api/imagesAPI";
-import { generateEventDetails } from "../api/aiAPI";
+import { generateEventDescription, generateEventDetails } from "../api/aiAPI";
 
 interface Props {
     mode: 'add' | 'edit';
@@ -113,39 +113,60 @@ export default function EventModal({ mode, event, onClose, onSave }: Props) {
         onClose();
     };
 
-    const handleGenerateWithAI = async () => {
-        if (!prompt.trim()) return;
+    // const handleGenerateWithAI = async () => {
+    //     if (!prompt.trim()) return;
+    //     setIsGenerating(true);
+    //     try {
+    //         const response = await generateEventDetails(prompt);
+    //         const eventData = response.data;
+    //         setFormData({
+    //             ...eventData,
+    //             startDateTime: new Date(eventData.startDateTime).toISOString().slice(0, 16),
+    //             endDateTime: new Date(eventData.endDateTime).toISOString().slice(0, 16),
+    //             price: eventData.price.toString(),
+    //             capacity: eventData.capacity.toString()
+    //         });
+    //         setPrompt("");
+    //     } catch (error) {
+    //         console.error('Failed to generate event:', error);
+    //         alert('Failed to generate event details. Please try again.');
+    //     } finally {
+    //         setIsGenerating(false);
+    //     }
+    // };
+
+    const handleGenerateEventDescription = async () => {
+        if (!formData.title || !formData.startDateTime || !formData.endDateTime) {
+            alert('Please fill in all required fields');
+            return;
+        }
         setIsGenerating(true);
         try {
-            const response = await generateEventDetails(prompt);
-            const eventData = response.data;
-            setFormData({
-                ...eventData,
-                startDateTime: new Date(eventData.startDateTime).toISOString().slice(0, 16),
-                endDateTime: new Date(eventData.endDateTime).toISOString().slice(0, 16),
-                price: eventData.price.toString(),
-                capacity: eventData.capacity.toString()
-            });
-            setPrompt("");
+            const response = await generateEventDescription(formData);
+            const eventDescription = response.data.description;
+            setFormData((prevData: any) => ({
+                ...prevData,
+                description: eventDescription
+            }));
         } catch (error) {
-            console.error('Failed to generate event:', error);
-            alert('Failed to generate event details. Please try again.');
+            console.error('Failed to generate event description:', error);
+            alert('Failed to generate event description. Please try again.');
         } finally {
             setIsGenerating(false);
         }
     };
 
     return (
-        <dialog className="modal" ref={dialogRef} onClose={onClose}>
+        <dialog className="modal eventModal" ref={dialogRef} onClose={onClose}>
             <h2 className="modalHeading">{mode === 'add' ? 'Add a new event' : 'Edit details'}</h2>
-            {mode === 'add' && (
+            {/* {mode === 'add' && (
                 <div className="aiAssist">
                     <textarea value={prompt} onChange={(e) => setPrompt(e.target.value)} placeholder="Describe the event you want to create..." />
                     <button onClick={handleGenerateWithAI} disabled={isGenerating || !prompt}>
                         {isGenerating ? 'Generating...' : 'Generate with AI'}
                     </button>
                 </div>
-            )}
+            )} */}
             <form className="modalForm">
                 <div className="modalGrid">
                     <label>Title</label>
@@ -191,14 +212,6 @@ export default function EventModal({ mode, event, onClose, onSave }: Props) {
                         onChange={handleChange}
                         required
                     />
-                    <label>Description</label>
-                    <textarea className="modalInput"
-                        name="description"
-                        value={formData.description}
-                        onChange={handleChange}
-                        placeholder="Description"
-                        required
-                    />
                     <label>Capacity</label>
                     <input className="modalInput"
                         type="number"
@@ -206,6 +219,21 @@ export default function EventModal({ mode, event, onClose, onSave }: Props) {
                         value={formData.capacity}
                         onChange={handleChange}
                         placeholder="Capacity"
+                        required
+                    />
+                    <div className="descriptionLabel">
+                        <label>Description</label>
+                        {mode === 'add' && (
+                        <button type="button" className="generateDescriptionBtn" onClick={handleGenerateEventDescription} disabled={isGenerating}>
+                            {isGenerating ? 'Generating...' : 'Generate with AI'}
+                        </button>
+                        )}
+                    </div>
+                    <textarea className="modalInput description"
+                        name="description"
+                        value={formData.description}
+                        onChange={handleChange}
+                        placeholder="Description"
                         required
                     />
                     <label>Banner Image</label>

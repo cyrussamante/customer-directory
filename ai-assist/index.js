@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 import express from 'express';
 import cors from "cors";
-import { generateEvent } from './controllers/eventController.js';
+import { generateEvent, generateEventDescription } from './controllers/eventController.js';
 
 dotenv.config();
 const app = express();
@@ -21,6 +21,8 @@ app.use(express.json());
 app.get('/', (req, res) => {res.send('Welcome to the AI Event Generator!');});
 
 app.post('/api/generate-event', generateEvent);
+
+app.post('/api/generate-event-description', generateEventDescription);
 
 const PORT = process.env.PORT || 3000;
 
