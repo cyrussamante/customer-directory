@@ -47,7 +47,6 @@
 }
 
 .eventDetailsGrid {
-    /* width: 100%; */
     max-width: 500px;
     text-align: left;
     display: grid;
@@ -74,4 +73,16 @@
 .registrationStatus {
     color: green;
     font-weight: bold;
+}
+
+@media (max-width: 768px) {
+
+    .eventDetails {
+        padding: 5px;
+    }
+
+    .eventDetailsGrid {
+        grid-template-columns: 1fr;
+        gap: 2px;
+    }
 }

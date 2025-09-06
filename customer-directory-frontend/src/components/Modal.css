@@ -73,3 +73,16 @@
     border-radius: 12px;
     border: 1px solid #ccc;
 }
+
+@media (max-width: 768px) {
+    .modal {
+        max-width: 80vw;
+        max-height: 70vh;
+        overflow: auto;
+    }
+
+    .modalGrid {
+        grid-template-columns: 1fr;
+        gap: 2px;
+    }
+}
