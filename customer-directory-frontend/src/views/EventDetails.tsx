@@ -157,7 +157,7 @@ export default function EventDetails() {
 
                                 ) : (
                                     <>
-                                        <p className="registrationStatus"> ✔ You registered for this event on {new Date(currentRegistration.dateRegistered).toLocaleString()}</p>
+                                        <p className="registrationStatus"> ✔ You registered for this event on {new Date(currentRegistration.dateRegistered).toLocaleString()} UTC.</p>
                                         <div className="registeredActions">
                                             <button className="delete" onClick={handleUnRegisterEventClick} >Unregister Event</button>
                                             <button onClick={() => handleExportToICS(event)} >Export to ICS</button>
