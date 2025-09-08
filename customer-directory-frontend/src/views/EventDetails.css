@@ -47,7 +47,7 @@
 }
 
 .eventDetailsGrid {
-    max-width: 500px;
+    max-width: 650px;
     text-align: left;
     display: grid;
     grid-template-columns: 1fr 4fr;
@@ -83,6 +83,7 @@
     .eventDetailsGrid {
         grid-template-columns: 1fr;
         gap: 2px;
+        max-width: auto;
     }
 }
 

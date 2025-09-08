@@ -203,10 +203,10 @@ export default function EventModal({ mode, event, onClose, onSave }: Props) {
                         onChange={handleChange}
                         required
                     />
-                    <label>Price</label>
+                    <label>Registration Fee</label>
                     <input className="modalInput"
                         type="number"
-                        placeholder="Price"
+                        placeholder="Registration Fee"
                         name="price"
                         value={formData.price}
                         onChange={handleChange}
@@ -221,21 +221,21 @@ export default function EventModal({ mode, event, onClose, onSave }: Props) {
                         placeholder="Capacity"
                         required
                     />
+                    <label>Description</label>
                     <div className="descriptionLabel">
-                        <label>Description</label>
                         {mode === 'add' && (
-                        <button type="button" className="generateDescriptionBtn" onClick={handleGenerateEventDescription} disabled={isGenerating}>
+                        <button type="button" onClick={handleGenerateEventDescription} disabled={isGenerating}>
                             {isGenerating ? 'Generating...' : 'Generate with AI'}
                         </button>
                         )}
+                        <textarea className="modalInput description"
+                            name="description"
+                            value={formData.description}
+                            onChange={handleChange}
+                            placeholder="Description"
+                            required
+                        />
                     </div>
-                    <textarea className="modalInput description"
-                        name="description"
-                        value={formData.description}
-                        onChange={handleChange}
-                        placeholder="Description"
-                        required
-                    />
                     <label>Banner Image</label>
                     <input className="modalInput bannerImg"
                         type="file"
