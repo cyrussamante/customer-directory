@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Modal.css";
 import { uploadImage } from "../api/imagesAPI";
-import { generateEventDescription, generateEventDetails } from "../api/aiAPI";
+import { generateEventDescription } from "../api/aiAPI";
 
 interface Props {
     mode: 'add' | 'edit';
@@ -29,7 +29,7 @@ export default function EventModal({ mode, event, onClose, onSave }: Props) {
     const dialogRef = useRef<HTMLDialogElement>(null);
     const [imageFile, setImageFile] = useState<File | null>(null);
     const [imagePreview, setImagePreview] = useState<string>("");
-    const [prompt, setPrompt] = useState("");
+    // const [prompt, setPrompt] = useState("");
     const [isGenerating, setIsGenerating] = useState(false);
 
     useEffect(() => {
