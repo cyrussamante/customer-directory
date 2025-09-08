@@ -12,14 +12,14 @@ export interface User {
     name: string,
     email: string,
     password: string,
-    role: "ADMIN" | "CUSTOMER" | "EMPLOYEE"
+    role: "ADMIN" | "CUSTOMER" | "EMPLOYEE",
+    imageUrl?: string,
 }
 
 export interface Customer extends User {
     dateOfBirth: Date,
     gender: string,
     address: string,
-    imageUrl?: string,
     numberOfOrders: number,
 }
 

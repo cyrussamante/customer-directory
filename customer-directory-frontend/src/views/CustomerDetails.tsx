@@ -78,7 +78,7 @@ export default function CustomerDetails() {
                                 <p className="classifier">Gender </p> <p>{customer.gender}</p>
                                 <p className="classifier">Email </p> <p>{customer.email}</p>
                                 <p className="classifier">Address </p> <p>{customer.address}</p>
-                                <p className="classifier">Number of Orders </p> <p>{customer.numberOfOrders}</p>
+                                {/* <p className="classifier">Number of Orders </p> <p>{customer.numberOfOrders}</p> */}
                             </div>
                         </div>
                         {showEditModal && (<Modal

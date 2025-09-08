@@ -17,7 +17,7 @@ export default function EmployeeCard({ employee }: props): ReactElement {
     return (
         <div className="card">
             <div className="cardBody">
-                <img className="employeeImg" src={`${VITE_API_URL}/images/default-profile.png`} alt={employee?.name} />
+                <img className="employeeImg" src={employee?.imageUrl ? `${VITE_API_URL}${employee.imageUrl}` : `${VITE_API_URL}/images/default-profile.png`} alt={employee?.name} />
                 <p>{employee.name}</p>
                 <button onClick={handleViewDetails}>View Details</button>
             </div>

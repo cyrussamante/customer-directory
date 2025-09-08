@@ -70,7 +70,7 @@ export default function EmployeeDetails() {
                         </div>
                         <div className="detailsBody">
                             <div className="imageContainer">
-                                <img src={`${VITE_API_URL}/images/default-profile.png`} alt={employee?.name} />
+                                <img src={employee?.imageUrl ? `${VITE_API_URL}${employee.imageUrl}` : `${VITE_API_URL}/images/default-profile.png`} alt={employee?.name} />
                             </div>
                             <div className="detailsGrid">
                                 <p className="classifier">Email </p> <p>{employee.email}</p>

@@ -52,7 +52,7 @@ export default function CustomerProfile() {
                         <p className="classifier">Email </p> <p>{user.email}</p>
                         <p className="classifier">Password </p> <p>********</p>
                         <p className="classifier">Address </p> <p>{user.address ? user.address : 'Not specified'}</p>
-                        <p className="classifier">Number of Orders </p> <p>{user.numberOfOrders ? user.numberOfOrders : 'Not specified'}</p>
+                        {/* <p className="classifier">Number of Orders </p> <p>{user.numberOfOrders ? user.numberOfOrders : 'Not specified'}</p> */}
                     </div>
                 </div>
 

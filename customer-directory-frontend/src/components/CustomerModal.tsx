@@ -19,7 +19,7 @@ export default function Modal({ mode, customer, onClose, onSave }: Props) {
         email: "",
         password: "",
         address: "",
-        numberOfOrders: "",
+        numberOfOrders: 0,
         imageUrl: "/images/default-profile.png",
         role: "CUSTOMER"
     };
@@ -196,7 +196,7 @@ export default function Modal({ mode, customer, onClose, onSave }: Props) {
                         placeholder="Address"
                         required
                     />
-                    <label>Number of Orders</label>
+                    {/* <label>Number of Orders</label>
                     <input className="modalInput"
                         name="numberOfOrders"
                         value={formData.numberOfOrders}
@@ -204,7 +204,7 @@ export default function Modal({ mode, customer, onClose, onSave }: Props) {
                         type="number"
                         placeholder="Orders"
                         required
-                    />
+                    /> */}
                     <label>Image</label>
                     <input className="modalInput bannerImg"
                         type="file"
