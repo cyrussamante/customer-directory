@@ -25,6 +25,9 @@ public class User {
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
+    @Column(name="image_url")
+    private String imageUrl = "/images/default-profile.png";
+
     public UserRole getRole() {
         return role;
     }
@@ -64,4 +67,13 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
 }

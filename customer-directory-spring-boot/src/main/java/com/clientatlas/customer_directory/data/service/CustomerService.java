@@ -9,7 +9,7 @@ import java.util.UUID;
 
 @Service
 public class CustomerService {
-    
+
     private final CustomerRepository customerRepository;
     private final PasswordEncoder passwordEncoder;
 
@@ -24,40 +24,39 @@ public class CustomerService {
 
     public Customer getCustomerById(UUID id) {
         return customerRepository.findById(id)
-        .orElse(null);
+                .orElse(null);
     }
 
-   public Customer createCustomer(Customer customer) {
-       customer.setPassword(passwordEncoder.encode(customer.getPassword()));
-       return customerRepository.save(customer);
-   }
+    public Customer createCustomer(Customer customer) {
+        customer.setPassword(passwordEncoder.encode(customer.getPassword()));
+        return customerRepository.save(customer);
+    }
 
     public void deleteCustomerById(UUID id) {
         customerRepository.deleteById(id);
     }
 
-   public Customer updateCustomer(UUID id, Customer updatedCustomer) {
-       Customer existingCustomer = customerRepository.findById(id).orElse(null);
+    public Customer updateCustomer(UUID id, Customer updatedCustomer) {
+        Customer existingCustomer = customerRepository.findById(id).orElse(null);
 
+        if (existingCustomer != null) {
+            existingCustomer.setName(updatedCustomer.getName());
+            existingCustomer.setEmail(updatedCustomer.getEmail());
 
-       if (existingCustomer != null) {
-              existingCustomer.setName(updatedCustomer.getName());
-              existingCustomer.setEmail(updatedCustomer.getEmail());
-              
-              String newPassword = updatedCustomer.getPassword();
+            String newPassword = updatedCustomer.getPassword();
 
-              if (newPassword != null && !newPassword.isBlank() && !passwordEncoder.matches(newPassword, existingCustomer.getPassword())) {
-                  existingCustomer.setPassword(passwordEncoder.encode(newPassword));
-              }
-
-              existingCustomer.setRole(updatedCustomer.getRole());
-              existingCustomer.setDateOfBirth(updatedCustomer.getDateOfBirth());
-              existingCustomer.setImageUrl(updatedCustomer.getImageUrl());
-              existingCustomer.setGender(updatedCustomer.getGender());
-              existingCustomer.setAddress(updatedCustomer.getAddress());
-              existingCustomer.setNumberOfOrders(updatedCustomer.getNumberOfOrders());
-              return customerRepository.save(existingCustomer);
-       }
-       return null;
-   }
+            if (newPassword != null && !newPassword.isBlank()
+                    && !passwordEncoder.matches(newPassword, existingCustomer.getPassword())) {
+                existingCustomer.setPassword(passwordEncoder.encode(newPassword));
+            }
+            existingCustomer.setRole(updatedCustomer.getRole());
+            existingCustomer.setDateOfBirth(updatedCustomer.getDateOfBirth());
+            existingCustomer.setImageUrl(updatedCustomer.getImageUrl());
+            existingCustomer.setGender(updatedCustomer.getGender());
+            existingCustomer.setAddress(updatedCustomer.getAddress());
+            existingCustomer.setNumberOfOrders(updatedCustomer.getNumberOfOrders());
+            return customerRepository.save(existingCustomer);
+        }
+        return null;
+    }
 }
