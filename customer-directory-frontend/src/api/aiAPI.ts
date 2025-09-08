@@ -10,3 +10,13 @@ export const generateEventDetails = (prompt: string): Promise<any> =>
             },
         }
     );
+
+export const generateEventDescription = (eventDetails: any): Promise<any> =>
+
+    axios.post(`${VITE_AI_API_URL}/api/generate-event-description`, 
+        JSON.stringify(eventDetails),{
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        }
+    );

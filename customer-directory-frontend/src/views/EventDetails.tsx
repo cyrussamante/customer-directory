@@ -139,9 +139,16 @@ export default function EventDetails() {
                             <p className="classifier">Location </p> <p>{event.location}</p>
                             <p className="classifier">Start Date </p> <p>{new Date(event.startDateTime).toLocaleString()}</p>
                             <p className="classifier">End Date </p> <p>{new Date(event.endDateTime).toLocaleString()}</p>
-                            <p className="classifier">Price </p> <p>{event.price}</p>
+                            <p className="classifier">Registration Fee </p> <p>{event.price}</p>
                             <p className="classifier">Capacity </p> <p>{event.capacity}</p>
-                            <p className="classifier">Description </p> <p>{event.description}</p>
+                            <p className="classifier">Description </p>
+                            <div className="eventDescription">
+                            {event.description.split('\n\n').map((paragraph: any, index: number) => (
+                                <p key={index} className="eventParagraph">
+                                    {paragraph.trim()}
+                                </p>
+                            ))}
+                        </div>
                         </div>
                         {userRole === 'CUSTOMER' && (
                             <div className="eventDetailsActions">

@@ -47,7 +47,7 @@
 }
 
 .eventDetailsGrid {
-    max-width: 500px;
+    max-width: 650px;
     text-align: left;
     display: grid;
     grid-template-columns: 1fr 4fr;
@@ -76,7 +76,6 @@
 }
 
 @media (max-width: 768px) {
-
     .eventDetails {
         padding: 5px;
     }
@@ -84,5 +83,20 @@
     .eventDetailsGrid {
         grid-template-columns: 1fr;
         gap: 2px;
+        max-width: auto;
     }
+}
+
+.eventDescription {
+    text-align: justify;
+}
+
+.eventParagraph {
+    margin-bottom: 1.2rem;
+    color: #333;
+    font-size: 1rem;
+}
+
+.eventParagraph:last-child {
+    margin-bottom: 0;
 }
